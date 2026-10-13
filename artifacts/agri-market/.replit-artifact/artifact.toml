@@ -1,0 +1,30 @@
+kind = "web"
+previewPath = "/"
+title = "Le7rithe.com"
+description = "Le7rithe.com منصة زراعية موريتانية لبيع وشراء وتأجير الأراضي والآليات والبذور والأسمدة والمنتجات الزراعية."
+version = "1.0.0"
+id = "artifacts/agri-market"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19061
+
+[services.development]
+run = "pnpm --filter @workspace/agri-market run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/agri-market", "run", "build" ]
+
+
+[services.production.run]
+args = ["node", "artifacts/agri-market/server.mjs"]
+
+[services.production.run.env]
+PORT = "19061"
+NODE_ENV = "production"
+
+[services.env]
+PORT = "19061"
+BASE_PATH = "/"

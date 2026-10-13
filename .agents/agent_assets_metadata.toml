@@ -1,0 +1,198 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "NPxLRaAOtVV2XF3X6d-oZ"
+uri = "file://exports/agri-market-source.zip"
+type = "unspecified"
+title = "كود موقع لحريثه"
+description = "نسخة المصدر الحالية للموقع، وتشمل الواجهة والـAPI وملفات قاعدة البيانات والإعدادات والاختبارات، بدون node_modules أو ملفات البناء أو الأسرار."
+logical_id = "cfc807bc-c9aa-4bd8-889b-059b61f9b91f"
+content_hash = "sha256:c973911cbd79e2462147f2fb9b27bf4df864070c588f6688dfefdb9116db0682"
+size = 33574137
+mtime_ms = 1789036541512
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/cfc807bc-c9aa-4bd8-889b-059b61f9b91f/c1f91593-ac43-4d56-97f9-7b7ae8ab5a37"
+storage_version_token = "1789036549477559"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "KBmpxw1LoVbrXF8_3RdxM"
+uri = "file://screenshots/sign-in-ar-mobile.jpg"
+type = "image"
+title = "صفحة تسجيل الدخول بالعربية"
+description = "لقطة جوال 390×844 بعد تحسين تنسيق صفحة الدخول، مع الهيدر الأصلي والواجهة RTL."
+logical_id = "d9df3af2-f934-4246-ab55-f14838222e82"
+content_hash = "sha256:1cca8e3c02e25aa239693e186b2aa2c81aff6f67b402eb048528055cbb430db8"
+size = 20034
+mtime_ms = 1791064402187
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/d9df3af2-f934-4246-ab55-f14838222e82/e5fc9f3c-50a7-4c38-8bf5-bfe8ff9914b9"
+storage_version_token = "1791064470869521"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "LWcbCFeiBVGabR1RofhEg"
+uri = "file://screenshots/sign-up-ar-mobile.jpg"
+type = "image"
+title = "صفحة إنشاء الحساب بالعربية"
+description = "معاينة الجوال 390×844؛ زر المتابعة منفصل عن حقل كلمة المرور."
+logical_id = "24eba53b-6bdb-4cde-9b25-34b8fdb6464b"
+content_hash = "sha256:68d74615c45fe303deff22f3d096bab2028c1d48d470f0147f267436eb2adb15"
+size = 24729
+mtime_ms = 1791064943662
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/24eba53b-6bdb-4cde-9b25-34b8fdb6464b/d48c1b44-d625-4049-ad8b-9a8053f403a8"
+storage_version_token = "1791065020430847"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "qW-udKfTzCGobt1ywtyoG"
+uri = "file://screenshots/sign-up-ar-arrow-mobile.jpg"
+type = "image"
+title = "إنشاء الحساب: سهم المتابعة"
+description = "معاينة عربية على الجوال؛ سهم المتابعة بمحاذاة النص واتجاه RTL."
+logical_id = "84c19ba0-08d7-473d-910a-f75ab846a32a"
+content_hash = "sha256:697382116ac83488595f17cd7c2db3c3af5ba032dc93ad48736cc4c0534c6ea3"
+size = 24943
+mtime_ms = 1791065376602
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/84c19ba0-08d7-473d-910a-f75ab846a32a/80a96107-b214-4cde-8c8c-27724ea7a93d"
+storage_version_token = "1791065433675914"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "jqhUG2Q5jt4h-KfwdD6x-"
+uri = "file://screenshots/sign-in-ar-footer-mobile.jpg"
+type = "image"
+title = "زر المتابعة في تسجيل الدخول"
+description = "مرجع بصري للمقارنة مع زر إنشاء الحساب بالعربية على الجوال."
+logical_id = "8f091062-b626-4137-8d3f-ddb32c52ca46"
+content_hash = "sha256:87a24e0604dea995d8692c72340f168a5cee552416652bf01b2e22825948a737"
+size = 20174
+mtime_ms = 1791065380970
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/8f091062-b626-4137-8d3f-ddb32c52ca46/71844e8a-0bc1-412b-90bc-c2eabe9506c1"
+storage_version_token = "1791065698783824"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "uGtXeZ__4wzpCUlXcg68W"
+uri = "file://screenshots/sign-up-ar-arrow-matched.jpg"
+type = "image"
+title = "سهم المتابعة في إنشاء الحساب"
+description = "السهم العربي يستخدم الآن الرمز والخط والحجم والمسافة نفسها في صفحة تسجيل الدخول."
+logical_id = "64c2f34f-b207-4bbe-9fab-89b9746afc64"
+content_hash = "sha256:3950844c0acfe93273258c54767817a4494fca2f08e40f4f5239a807ba1ea6e3"
+size = 24887
+mtime_ms = 1791065684491
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/64c2f34f-b207-4bbe-9fab-89b9746afc64/a80e0115-7872-4fd2-890b-706a3722bdef"
+storage_version_token = "1791065698110409"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "-BlsxwojPISz2Y4eJ1Cef"
+uri = "file://screenshots/homepage-categories-ar-mobile.png"
+type = "image"
+title = "بطاقات التصنيفات — العربية على الهاتف"
+description = "لقطة هاتف للبطاقات الموحدة في قسم «من أين نبدأ؟»، وتتضمن ظهور 0 إعلان للبذور."
+logical_id = "9270ffcd-6a5f-4b18-8ecf-fb8b1588f030"
+content_hash = "sha256:333b389492b1d3898750fc9bedb0f13b8de3e9ed242d8c26c565bdb2121e8be6"
+size = 216070
+mtime_ms = 1791089388132
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/9270ffcd-6a5f-4b18-8ecf-fb8b1588f030/ffcea353-6b5d-41c7-af5c-78b080e3fd96"
+storage_version_token = "1791089404388736"
+content_type = "image/png"
+
+[[outputs]]
+id = "ecAXtN2k_brKFlYsOaodF"
+uri = "file://exports/le7rithe-prelaunch-report.html"
+type = "html"
+title = "تقرير فحص Le7rithe.com قبل الإطلاق"
+description = "الإصلاحات المنفذة، نتائج التحقق، والحالات التي تحتاج حساب بائع وإدارة صالحًا قبل اعتماد الإطلاق."
+logical_id = "184ccce9-f71d-42d6-8a69-a26861564f89"
+content_hash = "sha256:c179566aebea5358757b5f0f4479f60c01554c3ca6c43b5770678ea8c2ab6ff6"
+size = 11072
+mtime_ms = 1791366525499
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/184ccce9-f71d-42d6-8a69-a26861564f89/5436b3b2-5ca8-40aa-8efd-85d3305e7110"
+storage_version_token = "1791366580290229"
+content_type = "text/html"
+
+[[outputs]]
+id = "RC_jWVDX2u5IPUhfPJ5_q"
+uri = "file://reports/marketplace-startup-performance.html"
+type = "html"
+title = "تقرير LCP وTBT وأحجام أكبر 10 مكتبات"
+description = "النتائج قبل وبعد، التغييرات، طريقة القياس وحدود الاختبار المحلي."
+logical_id = "4e59ca02-2f8b-4f16-a9d4-490d663e1d04"
+content_hash = "sha256:17a6ae1a42b684ac566d72d2384ac5528e285eec0bc823dde6723dd2d54de925"
+size = 9129
+mtime_ms = 1791402036830
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/4e59ca02-2f8b-4f16-a9d4-490d663e1d04/f1fa45cc-e353-49ef-84b7-747a7a96d4a3"
+storage_version_token = "1791402037856141"
+content_type = "text/html"
+
+[[outputs]]
+id = "xU-De3u_ZXB0c5rPoAo7n"
+uri = "file://generated-artifacts/banner-before.jpg"
+type = "image"
+title = "بانر الصفحة الرئيسية — قبل الإصلاح"
+description = "لقطة قبل التغيير أثناء انتظار الصورة: منطقة البانر فارغة."
+logical_id = "61fc9859-bc92-432b-83a2-9cb0ffe1a1cc"
+content_hash = "sha256:9beb8d3cc2270e73c0b2e2be6585cd6f3470338dcd1a8996542b2660ec92819c"
+size = 69415
+mtime_ms = 1791737844900
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/61fc9859-bc92-432b-83a2-9cb0ffe1a1cc/ccf4eada-ee64-4ec8-aa83-eb396b878b36"
+storage_version_token = "1791738626922236"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "jMONJpi9wc2ULXjnV8jKg"
+uri = "file://generated-artifacts/banner-after-skeleton.jpg"
+type = "image"
+title = "بانر الصفحة الرئيسية — الهيكل أثناء تأخير 5 ثوانٍ"
+description = "التبويب المباشر أثناء تأخير الصورة: مساحة ثابتة مع هيكل تحميل ظاهر، قبل وصول الصورة."
+logical_id = "49d7a7a0-ff0c-4060-b13d-e1a6e1c4d107"
+content_hash = "sha256:c3a0412ac501400bec036ed86d24871209192bc11f349fa6e2626aeb2221c683"
+size = 52095
+mtime_ms = 1791738582098
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/49d7a7a0-ff0c-4060-b13d-e1a6e1c4d107/0d49f584-bf22-4cb6-af43-010f272c3eab"
+storage_version_token = "1791738627613528"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "tyIfATwJt7txPnKp2YWaG"
+uri = "file://generated-artifacts/banner-after.jpg"
+type = "image"
+title = "بانر الصفحة الرئيسية — بعد التحميل"
+description = "التبويب المباشر بعد اكتمال onLoad وdecode واختفاء الهيكل بتلاشٍ قصير."
+logical_id = "0a203e9b-8e95-44a2-9efe-8e4d7bc652fb"
+content_hash = "sha256:3373b4b6c43021a5b052ec0f59c78582f5e7e592ff680ebd4ac56b980fa27eed"
+size = 124289
+mtime_ms = 1791738586886
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/0a203e9b-8e95-44a2-9efe-8e4d7bc652fb/67905f99-34eb-45e1-b6aa-6e7a1e0cc3b2"
+storage_version_token = "1791738628243485"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "4dFG3VEGjNQE_m3gK1Irv"
+uri = "file://screenshots/favorites-public-desktop.jpg"
+type = "image"
+title = "لقطة معاينة بعد التعديل — الحاسوب"
+description = "المعاينة العامة بعد التعديل. لا تعرض حالة حفظ لأن المتصفح غير مسجل الدخول."
+logical_id = "8954b949-5da5-4400-961b-b518a5dc6502"
+content_hash = "sha256:a677654d29ee852f65f5f0d14a848463981dfe40e49db40532e10abb385155c4"
+size = 68302
+mtime_ms = 1791753302873
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/8954b949-5da5-4400-961b-b518a5dc6502/46d0e588-96c3-4bb0-8480-cac7aeeb5cf9"
+storage_version_token = "1791753335331119"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "S3WAaD1Zn-EQWPiDVOIum"
+uri = "file://screenshots/favorites-public-mobile.jpg"
+type = "image"
+title = "لقطة معاينة بعد التعديل — الهاتف"
+description = "المعاينة العامة بعد التعديل على عرض الهاتف. لا تعرض حالة حفظ لأن المتصفح غير مسجل الدخول."
+logical_id = "56eaaa71-8d63-4fc3-a4ba-70a61a6640de"
+content_hash = "sha256:1808f2a10ca50b1b8536fd3eefcd4e3ca022790c7d2e9fc1cf4fcfc028878d5b"
+size = 54609
+mtime_ms = 1791753305089
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:a4df9915-c65b-40a7-95e6-c34de177f320/56eaaa71-8d63-4fc3-a4ba-70a61a6640de/ac4a5a11-b461-4002-9ece-5b7f2f94c7d8"
+storage_version_token = "1791753335904632"
+content_type = "image/jpeg"

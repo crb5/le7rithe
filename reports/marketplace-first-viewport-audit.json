@@ -1,0 +1,421 @@
+{
+  "method": "Separate instrumented DOM/interaction diagnostic; timings excluded from Lighthouse comparison. Temporary application switch was removed after checking.",
+  "results": [
+    {
+      "route": "/",
+      "initialContent": [
+        {
+          "tag": "HEADER",
+          "testId": "site-header",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 0
+        },
+        {
+          "tag": "A",
+          "testId": "link-header-brand",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 20.84375
+        },
+        {
+          "tag": "BUTTON",
+          "testId": "select-language",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 17
+        },
+        {
+          "tag": "BUTTON",
+          "testId": "button-open-menu",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 17
+        },
+        {
+          "tag": "H1",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 180.5
+        },
+        {
+          "tag": "P",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 272.8125
+        },
+        {
+          "tag": "FORM",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 360.8125
+        },
+        {
+          "tag": "A",
+          "testId": "link-category-land",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 585.15625
+        },
+        {
+          "tag": "A",
+          "testId": "link-category-tractors",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 585.15625
+        },
+        {
+          "tag": "A",
+          "testId": "link-category-seeds",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 745.15625
+        },
+        {
+          "tag": "A",
+          "testId": "link-category-fertilizers",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 745.15625
+        },
+        {
+          "tag": "A",
+          "testId": "link-mobile-add",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 780
+        }
+      ],
+      "lcp": {
+        "tag": "H1",
+        "selector": "h1",
+        "homeHeadline": "كل ما تحتاجه لحريثتك في مكان واحد.",
+        "opacity": "1",
+        "animation": "none",
+        "font": "700 32px / 36.16px \"IBM Plex Sans Arabic\", sans-serif",
+        "rect": {
+          "top": 180.5,
+          "width": 310,
+          "height": 72.3125
+        },
+        "lcpMs": 2676
+      },
+      "cardObservations": [],
+      "mode": "on",
+      "zeroOpacityContent": [],
+      "activeAnimations": [],
+      "interactionCheck": {
+        "reveals": 1,
+        "hoverY": -3,
+        "savePulse": true
+      },
+      "drawerTransition": "0.2s"
+    },
+    {
+      "route": "/",
+      "initialContent": [
+        {
+          "tag": "HEADER",
+          "testId": "site-header",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 0
+        },
+        {
+          "tag": "A",
+          "testId": "link-header-brand",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 20.84375
+        },
+        {
+          "tag": "BUTTON",
+          "testId": "select-language",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 17
+        },
+        {
+          "tag": "BUTTON",
+          "testId": "button-open-menu",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 17
+        },
+        {
+          "tag": "H1",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 180.5
+        },
+        {
+          "tag": "P",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 272.8125
+        },
+        {
+          "tag": "FORM",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 360.8125
+        },
+        {
+          "tag": "A",
+          "testId": "link-category-land",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 585.15625
+        },
+        {
+          "tag": "A",
+          "testId": "link-category-tractors",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 585.15625
+        },
+        {
+          "tag": "A",
+          "testId": "link-category-seeds",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 745.15625
+        },
+        {
+          "tag": "A",
+          "testId": "link-category-fertilizers",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 745.15625
+        },
+        {
+          "tag": "A",
+          "testId": "link-mobile-add",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 780
+        }
+      ],
+      "lcp": {
+        "tag": "H1",
+        "selector": "h1",
+        "homeHeadline": "كل ما تحتاجه لحريثتك في مكان واحد.",
+        "opacity": "1",
+        "animation": "none",
+        "font": "700 32px / 36.16px \"IBM Plex Sans Arabic\", sans-serif",
+        "rect": {
+          "top": 180.5,
+          "width": 310,
+          "height": 72.3125
+        },
+        "lcpMs": 2664
+      },
+      "cardObservations": [],
+      "mode": "off",
+      "zeroOpacityContent": [],
+      "activeAnimations": [],
+      "interactionCheck": {
+        "reveals": 0,
+        "hoverY": 0,
+        "savePulse": false
+      },
+      "drawerTransition": "0s"
+    },
+    {
+      "route": "/listings/55",
+      "initialContent": [
+        {
+          "tag": "HEADER",
+          "testId": "site-header",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 0
+        },
+        {
+          "tag": "A",
+          "testId": "link-header-brand",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 20.84375
+        },
+        {
+          "tag": "BUTTON",
+          "testId": "select-language",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 17
+        },
+        {
+          "tag": "BUTTON",
+          "testId": "button-open-menu",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 17
+        },
+        {
+          "tag": "A",
+          "testId": "link-mobile-add",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 780
+        },
+        {
+          "tag": "IMG",
+          "testId": "img-detail-main",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 193
+        },
+        {
+          "tag": "H1",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 461.96875
+        },
+        {
+          "tag": "P",
+          "testId": "listing-description-text",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 574.96875
+        }
+      ],
+      "lcp": {
+        "tag": "IMG",
+        "testId": "img-detail-main",
+        "selector": "[data-testid=\"img-detail-main\"]",
+        "opacity": "1",
+        "animation": "none",
+        "font": "16px / 24px \"IBM Plex Sans Arabic\", sans-serif",
+        "rect": {
+          "top": 193,
+          "width": 358,
+          "height": 216.96875
+        },
+        "lcpMs": 3288
+      },
+      "cardObservations": [],
+      "mode": "on",
+      "zeroOpacityContent": [],
+      "activeAnimations": []
+    },
+    {
+      "route": "/listings/55",
+      "initialContent": [
+        {
+          "tag": "HEADER",
+          "testId": "site-header",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 0
+        },
+        {
+          "tag": "A",
+          "testId": "link-header-brand",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 20.84375
+        },
+        {
+          "tag": "BUTTON",
+          "testId": "select-language",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 17
+        },
+        {
+          "tag": "BUTTON",
+          "testId": "button-open-menu",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 17
+        },
+        {
+          "tag": "A",
+          "testId": "link-mobile-add",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 780
+        },
+        {
+          "tag": "IMG",
+          "testId": "img-detail-main",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 193
+        },
+        {
+          "tag": "H1",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 461.96875
+        },
+        {
+          "tag": "P",
+          "testId": "listing-description-text",
+          "opacity": 1,
+          "animation": "none",
+          "visibility": "visible",
+          "top": 574.96875
+        }
+      ],
+      "lcp": {
+        "tag": "IMG",
+        "testId": "img-detail-main",
+        "selector": "[data-testid=\"img-detail-main\"]",
+        "opacity": "1",
+        "animation": "none",
+        "font": "16px / 24px \"IBM Plex Sans Arabic\", sans-serif",
+        "rect": {
+          "top": 193,
+          "width": 358,
+          "height": 216.96875
+        },
+        "lcpMs": 3428
+      },
+      "cardObservations": [],
+      "mode": "off",
+      "zeroOpacityContent": [],
+      "activeAnimations": []
+    }
+  ]
+}

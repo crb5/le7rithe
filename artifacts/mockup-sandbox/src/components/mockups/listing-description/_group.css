@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  --background: 42 37% 96%;
+  --foreground: 154 26% 15%;
+  --border: 38 22% 86%;
+  --card: 40 33% 99%;
+  --card-foreground: 154 26% 15%;
+  --card-border: 38 22% 88%;
+  --primary: 155 33% 23%;
+  --primary-foreground: 42 34% 96%;
+  --secondary: 42 48% 90%;
+  --muted: 42 29% 92%;
+  --muted-foreground: 153 12% 43%;
+  --accent: 42 87% 61%;
+  --accent-foreground: 154 26% 15%;
+  --destructive: 4 62% 48%;
+  --ring: 155 33% 23%;
+  --app-font-sans: 'IBM Plex Sans Arabic', sans-serif;
+  --app-font-mono: 'Manrope', monospace;
+}
+
+.dark {
+  --background: 154 25% 10%;
+  --foreground: 42 34% 95%;
+  --border: 154 18% 26%;
+  --card: 154 22% 14%;
+  --card-foreground: 42 34% 95%;
+  --card-border: 154 18% 26%;
+  --primary: 42 87% 61%;
+  --primary-foreground: 154 26% 15%;
+  --secondary: 154 21% 20%;
+  --muted: 154 18% 20%;
+  --muted-foreground: 42 16% 68%;
+  --accent: 42 87% 61%;
+  --accent-foreground: 154 26% 15%;
+  --destructive: 4 62% 58%;
+  --ring: 42 87% 61%;
+}
+
+.listing-description-showcase {
+  min-height: 100vh;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--app-font-sans);
+}

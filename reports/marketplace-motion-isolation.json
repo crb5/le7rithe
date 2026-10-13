@@ -1,0 +1,3182 @@
+{
+  "method": "9 cold-browser runs per condition and route; alternating paired order; same immutable build; Lighthouse actual DevTools throttling",
+  "settings": {
+    "width": 390,
+    "height": 844,
+    "dpr": 1,
+    "cpu": 4,
+    "downloadKbps": 1600,
+    "uploadKbps": 750,
+    "latencyMs": 150
+  },
+  "buildHash": "b7a70df2ecdbb4fb0b8ca9e278985590bfd47905c38795671a733ffc4f787a3f",
+  "conditions": [
+    "on",
+    "off"
+  ],
+  "repetitions": 9,
+  "pages": {
+    "/": {
+      "on": [
+        {
+          "round": 1,
+          "lcpMs": 2897.553,
+          "tbtMs": 496.58299999904557,
+          "cls": 0.0005384388251813176,
+          "fcpMs": 2897.553,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532504,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1569.6269999999884,
+              "scriptingMs": 951.6099999999882,
+              "parseMs": 9.482
+            },
+            {
+              "source": "unknown",
+              "totalMs": 618.6609999999948,
+              "scriptingMs": 42.451000000000015,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 335.7169999999999,
+              "scriptingMs": 41.98400000000002,
+              "parseMs": 1.2049999999999996
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 190.5390000000001,
+              "scriptingMs": 154.8110000000001,
+              "parseMs": 26.345
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 145.82100000000003,
+              "scriptingMs": 132.69400000000002,
+              "parseMs": 11.983
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 114.94600000000004,
+              "scriptingMs": 100.27900000000004,
+              "parseMs": 14.612
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 110.54100000000014,
+              "scriptingMs": 94.17800000000014,
+              "parseMs": 9.318999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 79.01100000000001,
+              "scriptingMs": 24.26300000000001,
+              "parseMs": 53.589
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1549.0859999999814
+            },
+            {
+              "group": "other",
+              "duration": 772.9729999999929
+            },
+            {
+              "group": "styleLayout",
+              "duration": 637.0339999999999
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 128.818
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 74.41100000000004
+            },
+            {
+              "group": "parseHTML",
+              "duration": 22.594
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 8.309999999999999
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "lcpMs": 2806.972,
+          "tbtMs": 609.0679999990448,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2806.972,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532416,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1495.9759999999937,
+              "scriptingMs": 844.6079999999934,
+              "parseMs": 7.043
+            },
+            {
+              "source": "unknown",
+              "totalMs": 592.627999999994,
+              "scriptingMs": 42.43699999999998,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 381.201,
+              "scriptingMs": 42.658,
+              "parseMs": 1.269
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 232.12900000000002,
+              "scriptingMs": 184.036,
+              "parseMs": 35.703
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 157.67099999999996,
+              "scriptingMs": 137.40599999999995,
+              "parseMs": 19.133
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 152.56299999999993,
+              "scriptingMs": 138.94099999999995,
+              "parseMs": 13.224
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 136.9930000000001,
+              "scriptingMs": 106.73700000000011,
+              "parseMs": 19.871000000000002
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 84.68,
+              "scriptingMs": 39.824000000000005,
+              "parseMs": 43.800999999999995
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1545.4789999999848
+            },
+            {
+              "group": "styleLayout",
+              "duration": 756.395
+            },
+            {
+              "group": "other",
+              "duration": 698.4999999999947
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 142.50000000000003
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 94.453
+            },
+            {
+              "group": "parseHTML",
+              "duration": 27.037
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 1.9989999999999997
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "lcpMs": 2634.882,
+          "tbtMs": 516.7769999999982,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2634.882,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532542,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1287.939999999993,
+              "scriptingMs": 745.6419999999929,
+              "parseMs": 6.462
+            },
+            {
+              "source": "unknown",
+              "totalMs": 498.8379999999996,
+              "scriptingMs": 39.629000000000005,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 484.50700000000006,
+              "scriptingMs": 43.04999999999999,
+              "parseMs": 5.367999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 296.446,
+              "scriptingMs": 256.04600000000005,
+              "parseMs": 30.207
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 137.4360000000001,
+              "scriptingMs": 123.3250000000001,
+              "parseMs": 13.902999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 130.1020000000001,
+              "scriptingMs": 113.27100000000009,
+              "parseMs": 13.245
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 128.088,
+              "scriptingMs": 117.55099999999999,
+              "parseMs": 10.475999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 76.96100000000001,
+              "scriptingMs": 33.02900000000001,
+              "parseMs": 42.722
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1477.1929999999847
+            },
+            {
+              "group": "styleLayout",
+              "duration": 685.1329999999998
+            },
+            {
+              "group": "other",
+              "duration": 628.6799999999929
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 124.73899999999999
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 117.25700000000009
+            },
+            {
+              "group": "parseHTML",
+              "duration": 31.585
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "lcpMs": 2665.786,
+          "tbtMs": 455.9970000000003,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2665.786,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532428,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1364.1589999999917,
+              "scriptingMs": 811.3819999999916,
+              "parseMs": 5.166
+            },
+            {
+              "source": "unknown",
+              "totalMs": 523.7989999999984,
+              "scriptingMs": 25.30700000000001,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 384.003,
+              "scriptingMs": 38.681000000000004,
+              "parseMs": 2.122
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 181.50699999999992,
+              "scriptingMs": 144.9559999999999,
+              "parseMs": 28.626
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 136.34400000000008,
+              "scriptingMs": 112.95800000000008,
+              "parseMs": 14.114
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 126.2910000000001,
+              "scriptingMs": 115.13800000000009,
+              "parseMs": 10.909
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 119.57700000000004,
+              "scriptingMs": 107.50500000000004,
+              "parseMs": 12.01
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 85.395,
+              "scriptingMs": 37.443,
+              "parseMs": 46.619
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1399.0099999999868
+            },
+            {
+              "group": "styleLayout",
+              "duration": 645.562
+            },
+            {
+              "group": "other",
+              "duration": 641.292999999992
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 121.92500000000003
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 106.88500000000006
+            },
+            {
+              "group": "parseHTML",
+              "duration": 25.383000000000003
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 8.027
+            }
+          ]
+        },
+        {
+          "round": 5,
+          "lcpMs": 2846.062,
+          "tbtMs": 529.9649999999992,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2846.062,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532389,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1518.7799999999893,
+              "scriptingMs": 874.1139999999891,
+              "parseMs": 5.664
+            },
+            {
+              "source": "unknown",
+              "totalMs": 512.3849999999993,
+              "scriptingMs": 31.819999999999997,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 397.4460000000001,
+              "scriptingMs": 44.84000000000002,
+              "parseMs": 0.42700000000000005
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 188.04199999999997,
+              "scriptingMs": 152.355,
+              "parseMs": 29.422000000000004
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 141.38600000000005,
+              "scriptingMs": 128.17900000000006,
+              "parseMs": 13.006
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 122.95200000000013,
+              "scriptingMs": 104.11400000000012,
+              "parseMs": 12.405
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 117.43499999999997,
+              "scriptingMs": 102.83899999999998,
+              "parseMs": 14.532
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 87.41000000000001,
+              "scriptingMs": 30.700000000000006,
+              "parseMs": 54.838
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1475.1019999999814
+            },
+            {
+              "group": "styleLayout",
+              "duration": 732.7299999999999
+            },
+            {
+              "group": "other",
+              "duration": 634.7519999999939
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 131.743
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 110.9470000000001
+            },
+            {
+              "group": "parseHTML",
+              "duration": 28.194000000000003
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 4.6469999999999985
+            }
+          ]
+        },
+        {
+          "round": 6,
+          "lcpMs": 2543.21,
+          "tbtMs": 563.942,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2543.21,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532474,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1324.3949999999913,
+              "scriptingMs": 791.7479999999913,
+              "parseMs": 4.701
+            },
+            {
+              "source": "unknown",
+              "totalMs": 502.17999999999864,
+              "scriptingMs": 41.46800000000002,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 404.00400000000013,
+              "scriptingMs": 43.20100000000001,
+              "parseMs": 3.119999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 237.684,
+              "scriptingMs": 189.541,
+              "parseMs": 39.176
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 172.96699999999998,
+              "scriptingMs": 158.63299999999998,
+              "parseMs": 13.033999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 142.81499999999994,
+              "scriptingMs": 128.56199999999995,
+              "parseMs": 13.670999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 102.773,
+              "scriptingMs": 83.192,
+              "parseMs": 13.876
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 81.911,
+              "scriptingMs": 29.816000000000006,
+              "parseMs": 51.601
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1474.3299999999822
+            },
+            {
+              "group": "styleLayout",
+              "duration": 642.5349999999999
+            },
+            {
+              "group": "other",
+              "duration": 599.3729999999956
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 141.89200000000002
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 121.97600000000007
+            },
+            {
+              "group": "parseHTML",
+              "duration": 20.405999999999995
+            }
+          ]
+        },
+        {
+          "round": 7,
+          "lcpMs": 2796.34,
+          "tbtMs": 530.583000000001,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2796.34,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532429,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1548.4259999999913,
+              "scriptingMs": 928.4339999999913,
+              "parseMs": 5.27
+            },
+            {
+              "source": "unknown",
+              "totalMs": 610.9069999999952,
+              "scriptingMs": 22.787000000000013,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 399.44000000000005,
+              "scriptingMs": 41.78600000000001,
+              "parseMs": 7.764999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 219.814,
+              "scriptingMs": 177.15699999999998,
+              "parseMs": 25.556
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 164.82500000000013,
+              "scriptingMs": 136.96300000000014,
+              "parseMs": 12.245999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 139.3550000000001,
+              "scriptingMs": 125.3810000000001,
+              "parseMs": 13.744
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 136.20700000000005,
+              "scriptingMs": 119.39800000000004,
+              "parseMs": 16.253999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 52.80800000000001,
+              "scriptingMs": 17.584,
+              "parseMs": 34.806000000000004
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1576.2319999999859
+            },
+            {
+              "group": "other",
+              "duration": 748.5979999999927
+            },
+            {
+              "group": "styleLayout",
+              "duration": 707.5159999999998
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 117.415
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 114.87500000000004
+            },
+            {
+              "group": "parseHTML",
+              "duration": 32.009
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 6.679999999999999
+            }
+          ]
+        },
+        {
+          "round": 8,
+          "lcpMs": 2656.67,
+          "tbtMs": 505.2369999999996,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2656.67,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532572,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1371.8989999999912,
+              "scriptingMs": 805.6259999999913,
+              "parseMs": 6.542
+            },
+            {
+              "source": "unknown",
+              "totalMs": 544.0899999999986,
+              "scriptingMs": 39.44,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 421.5080000000001,
+              "scriptingMs": 46.32500000000001,
+              "parseMs": 2.31
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 195.8999999999999,
+              "scriptingMs": 155.2949999999999,
+              "parseMs": 32.165
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 129.88499999999993,
+              "scriptingMs": 113.68099999999994,
+              "parseMs": 16.129
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 128.97400000000013,
+              "scriptingMs": 118.22100000000013,
+              "parseMs": 10.562
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 121.01100000000017,
+              "scriptingMs": 93.33400000000017,
+              "parseMs": 22.541
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 89.88900000000001,
+              "scriptingMs": 43.793000000000006,
+              "parseMs": 45.46
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1422.0459999999841
+            },
+            {
+              "group": "styleLayout",
+              "duration": 671.9189999999999
+            },
+            {
+              "group": "other",
+              "duration": 657.9809999999911
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 138.19700000000003
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 111.97500000000008
+            },
+            {
+              "group": "parseHTML",
+              "duration": 19.986000000000008
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 6.691999999999998
+            }
+          ]
+        },
+        {
+          "round": 9,
+          "lcpMs": 2616.247,
+          "tbtMs": 497.965999999999,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2616.247,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532392,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1304.5569999999934,
+              "scriptingMs": 727.2059999999937,
+              "parseMs": 4.55
+            },
+            {
+              "source": "unknown",
+              "totalMs": 557.6499999999983,
+              "scriptingMs": 35.62300000000002,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 364.6460000000001,
+              "scriptingMs": 32.668000000000006,
+              "parseMs": 1.38
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 219.45899999999995,
+              "scriptingMs": 174.10799999999995,
+              "parseMs": 30.618000000000002
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 139.1730000000001,
+              "scriptingMs": 122.70800000000008,
+              "parseMs": 16.245
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 135.184,
+              "scriptingMs": 114.16799999999999,
+              "parseMs": 20.933
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 92.37500000000003,
+              "scriptingMs": 61.79700000000003,
+              "parseMs": 27.826999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 70.915,
+              "scriptingMs": 16.637000000000004,
+              "parseMs": 54.095
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1291.2959999999862
+            },
+            {
+              "group": "styleLayout",
+              "duration": 686.66
+            },
+            {
+              "group": "other",
+              "duration": 650.8729999999929
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 158.86699999999996
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 102.83200000000005
+            },
+            {
+              "group": "parseHTML",
+              "duration": 20.938
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 5.496
+            }
+          ]
+        }
+      ],
+      "off": [
+        {
+          "round": 1,
+          "lcpMs": 2642.327,
+          "tbtMs": 589.2430000000008,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2642.327,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532574,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1345.2879999999923,
+              "scriptingMs": 710.5679999999923,
+              "parseMs": 7.22
+            },
+            {
+              "source": "unknown",
+              "totalMs": 523.6649999999985,
+              "scriptingMs": 28.044000000000008,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 437.842,
+              "scriptingMs": 54.019000000000005,
+              "parseMs": 1.587
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 207.64500000000004,
+              "scriptingMs": 160.33300000000003,
+              "parseMs": 36.436
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 153.41199999999998,
+              "scriptingMs": 36.727000000000004,
+              "parseMs": 115.21199999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 139.31900000000005,
+              "scriptingMs": 115.54300000000003,
+              "parseMs": 23.136
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 132.55400000000003,
+              "scriptingMs": 114.36000000000003,
+              "parseMs": 17.418000000000003
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 126.92800000000005,
+              "scriptingMs": 109.11200000000007,
+              "parseMs": 13.234000000000002
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1335.0569999999866
+            },
+            {
+              "group": "styleLayout",
+              "duration": 734.248
+            },
+            {
+              "group": "other",
+              "duration": 662.9569999999926
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 216.31199999999998
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 120.22300000000004
+            },
+            {
+              "group": "parseHTML",
+              "duration": 48.522
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 3.419999999999999
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "lcpMs": 2714.305,
+          "tbtMs": 531.389999999999,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2714.305,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532539,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1382.9829999999918,
+              "scriptingMs": 798.6379999999916,
+              "parseMs": 6.825
+            },
+            {
+              "source": "unknown",
+              "totalMs": 526.3919999999998,
+              "scriptingMs": 42.047,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 440.92900000000003,
+              "scriptingMs": 45.897999999999996,
+              "parseMs": 3.3489999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 231.69000000000003,
+              "scriptingMs": 185.01400000000004,
+              "parseMs": 29.908
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 142.50400000000002,
+              "scriptingMs": 124.60500000000003,
+              "parseMs": 17.834
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 135.8680000000001,
+              "scriptingMs": 118.9490000000001,
+              "parseMs": 12.852
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 135.4390000000001,
+              "scriptingMs": 111.6730000000001,
+              "parseMs": 17.051
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 80.18500000000002,
+              "scriptingMs": 35.98600000000001,
+              "parseMs": 43.108000000000004
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1469.270999999988
+            },
+            {
+              "group": "styleLayout",
+              "duration": 717.2060000000004
+            },
+            {
+              "group": "other",
+              "duration": 623.0679999999938
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 140.92100000000005
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 134.477
+            },
+            {
+              "group": "parseHTML",
+              "duration": 31.02
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "lcpMs": 2527.977,
+          "tbtMs": 470.3620000000001,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2527.977,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532417,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1258.9319999999916,
+              "scriptingMs": 737.6349999999914,
+              "parseMs": 4.664
+            },
+            {
+              "source": "unknown",
+              "totalMs": 460.5469999999994,
+              "scriptingMs": 27.206000000000014,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 322.84200000000004,
+              "scriptingMs": 29.660999999999994,
+              "parseMs": 2.7929999999999997
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 197.66899999999998,
+              "scriptingMs": 161.375,
+              "parseMs": 27.737000000000002
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 126.05300000000007,
+              "scriptingMs": 112.00200000000007,
+              "parseMs": 13.493
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 118.25500000000007,
+              "scriptingMs": 101.12300000000006,
+              "parseMs": 15.741
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 104.48199999999999,
+              "scriptingMs": 82.72999999999999,
+              "parseMs": 15.015
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 74.408,
+              "scriptingMs": 31.806,
+              "parseMs": 42.115
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1289.373999999985
+            },
+            {
+              "group": "styleLayout",
+              "duration": 616.5749999999998
+            },
+            {
+              "group": "other",
+              "duration": 542.132999999995
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 123.996
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 93.16200000000006
+            },
+            {
+              "group": "parseHTML",
+              "duration": 28.395999999999997
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "lcpMs": 2593.674,
+          "tbtMs": 531.7939999999994,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2593.674,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532432,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1268.0779999999913,
+              "scriptingMs": 695.4579999999914,
+              "parseMs": 4.839
+            },
+            {
+              "source": "unknown",
+              "totalMs": 488.4,
+              "scriptingMs": 29.294999999999998,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 343.21500000000003,
+              "scriptingMs": 45.83100000000002,
+              "parseMs": 1.4719999999999995
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 228.2589999999999,
+              "scriptingMs": 185.7849999999999,
+              "parseMs": 33.027
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 147.5510000000001,
+              "scriptingMs": 127.18600000000008,
+              "parseMs": 19.395000000000003
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 134.81400000000005,
+              "scriptingMs": 122.37600000000003,
+              "parseMs": 12.37
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 109.10700000000003,
+              "scriptingMs": 83.31400000000004,
+              "parseMs": 20.63
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 80.57900000000001,
+              "scriptingMs": 32.27300000000001,
+              "parseMs": 47.168
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1326.6289999999844
+            },
+            {
+              "group": "styleLayout",
+              "duration": 678.586
+            },
+            {
+              "group": "other",
+              "duration": 554.0609999999948
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 140.92
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 93.78600000000007
+            },
+            {
+              "group": "parseHTML",
+              "duration": 33.268
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 6.156
+            }
+          ]
+        },
+        {
+          "round": 5,
+          "lcpMs": 2543.258,
+          "tbtMs": 436.817,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2543.258,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532412,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1199.5349999999921,
+              "scriptingMs": 723.6279999999923,
+              "parseMs": 2.209
+            },
+            {
+              "source": "unknown",
+              "totalMs": 493.8489999999996,
+              "scriptingMs": 27.761000000000006,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 398.80299999999994,
+              "scriptingMs": 44.227,
+              "parseMs": 2.1969999999999996
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 216.06000000000003,
+              "scriptingMs": 172.985,
+              "parseMs": 35.525000000000006
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 120.20500000000001,
+              "scriptingMs": 104.95500000000001,
+              "parseMs": 14.552000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 111.38500000000012,
+              "scriptingMs": 92.88200000000012,
+              "parseMs": 13.535
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 97.04100000000008,
+              "scriptingMs": 84.37700000000008,
+              "parseMs": 12.453000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 84.92,
+              "scriptingMs": 39.760999999999996,
+              "parseMs": 44.566
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1296.5809999999844
+            },
+            {
+              "group": "styleLayout",
+              "duration": 594.2269999999999
+            },
+            {
+              "group": "other",
+              "duration": 592.707999999995
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 126.50500000000001
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 110.21400000000003
+            },
+            {
+              "group": "parseHTML",
+              "duration": 24.485
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 6.601
+            }
+          ]
+        },
+        {
+          "round": 6,
+          "lcpMs": 2654.552,
+          "tbtMs": 613.9429999999993,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2654.552,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532482,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1315.3059999999923,
+              "scriptingMs": 718.3489999999923,
+              "parseMs": 4.974
+            },
+            {
+              "source": "unknown",
+              "totalMs": 443.1239999999998,
+              "scriptingMs": 30.131,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 432.16100000000006,
+              "scriptingMs": 41.431,
+              "parseMs": 0.38499999999999995
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 300.92499999999995,
+              "scriptingMs": 250.63899999999992,
+              "parseMs": 43.443
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 128.64100000000002,
+              "scriptingMs": 111.95900000000003,
+              "parseMs": 16.617
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 116.89600000000003,
+              "scriptingMs": 101.42000000000003,
+              "parseMs": 14.03
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 109.25099999999999,
+              "scriptingMs": 86.925,
+              "parseMs": 14.86
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 83.87400000000002,
+              "scriptingMs": 32.91100000000001,
+              "parseMs": 49.87200000000001
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1378.0819999999846
+            },
+            {
+              "group": "styleLayout",
+              "duration": 738.512
+            },
+            {
+              "group": "other",
+              "duration": 556.8469999999936
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 147.225
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 115.43700000000007
+            },
+            {
+              "group": "parseHTML",
+              "duration": 26.44
+            }
+          ]
+        },
+        {
+          "round": 7,
+          "lcpMs": 2813.865,
+          "tbtMs": 598.8399999999992,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2813.865,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532444,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1448.1299999999924,
+              "scriptingMs": 782.1539999999925,
+              "parseMs": 5.104
+            },
+            {
+              "source": "unknown",
+              "totalMs": 589.8719999999965,
+              "scriptingMs": 35.589999999999996,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 423.41900000000004,
+              "scriptingMs": 37.213,
+              "parseMs": 3.583999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 200.53399999999993,
+              "scriptingMs": 155.49399999999994,
+              "parseMs": 34.158
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 170.43400000000005,
+              "scriptingMs": 153.75500000000005,
+              "parseMs": 15.905
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 136.622,
+              "scriptingMs": 31.801000000000005,
+              "parseMs": 104.32700000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 130.9130000000001,
+              "scriptingMs": 120.6000000000001,
+              "parseMs": 10.126000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 130.74900000000008,
+              "scriptingMs": 110.48800000000008,
+              "parseMs": 13.205000000000002
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1432.9479999999867
+            },
+            {
+              "group": "styleLayout",
+              "duration": 795.3849999999998
+            },
+            {
+              "group": "other",
+              "duration": 682.0749999999929
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 188.70299999999997
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 128.45500000000004
+            },
+            {
+              "group": "parseHTML",
+              "duration": 26.169
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 6.903
+            }
+          ]
+        },
+        {
+          "round": 8,
+          "lcpMs": 2637.479,
+          "tbtMs": 522.3180000000002,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2637.479,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532515,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1408.1649999999909,
+              "scriptingMs": 768.827999999991,
+              "parseMs": 4.925
+            },
+            {
+              "source": "unknown",
+              "totalMs": 497.14699999999885,
+              "scriptingMs": 32.034000000000006,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 351.01000000000005,
+              "scriptingMs": 41.40700000000002,
+              "parseMs": 1.298
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 202.14599999999996,
+              "scriptingMs": 159.63899999999995,
+              "parseMs": 33.595
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 128.40200000000004,
+              "scriptingMs": 114.30600000000004,
+              "parseMs": 12.277
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 115.77500000000015,
+              "scriptingMs": 97.32900000000015,
+              "parseMs": 13.384
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 112.75200000000004,
+              "scriptingMs": 101.62300000000003,
+              "parseMs": 11.058
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 104.71100000000001,
+              "scriptingMs": 44.01400000000001,
+              "parseMs": 59.237
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1365.4299999999848
+            },
+            {
+              "group": "styleLayout",
+              "duration": 718.3919999999999
+            },
+            {
+              "group": "other",
+              "duration": 573.0959999999936
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 137.01199999999997
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 120.15700000000001
+            },
+            {
+              "group": "parseHTML",
+              "duration": 20.647
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 7.427000000000001
+            }
+          ]
+        },
+        {
+          "round": 9,
+          "lcpMs": 2666.932,
+          "tbtMs": 445.3240000000005,
+          "cls": 0.00046728254571884545,
+          "fcpMs": 2666.932,
+          "localJsBytes": 181273,
+          "totalJsBytes": 532447,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1297.442999999991,
+              "scriptingMs": 745.5799999999912,
+              "parseMs": 5.578
+            },
+            {
+              "source": "unknown",
+              "totalMs": 525.4519999999991,
+              "scriptingMs": 26.387000000000004,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/",
+              "totalMs": 394.31500000000005,
+              "scriptingMs": 49.568,
+              "parseMs": 2.0969999999999995
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 215.46399999999997,
+              "scriptingMs": 170.87199999999999,
+              "parseMs": 32.6
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 120.77300000000004,
+              "scriptingMs": 103.75400000000003,
+              "parseMs": 16.945
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 114.97900000000004,
+              "scriptingMs": 107.76000000000003,
+              "parseMs": 6.661
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 114.74800000000005,
+              "scriptingMs": 88.67800000000005,
+              "parseMs": 17.718999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 84.196,
+              "scriptingMs": 32.822,
+              "parseMs": 50.053
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1333.3489999999863
+            },
+            {
+              "group": "styleLayout",
+              "duration": 660.99
+            },
+            {
+              "group": "other",
+              "duration": 625.4329999999923
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 133.17799999999997
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 110.26400000000001
+            },
+            {
+              "group": "parseHTML",
+              "duration": 37.126999999999995
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 8.776000000000003
+            }
+          ]
+        }
+      ]
+    },
+    "/listings/55": {
+      "on": [
+        {
+          "round": 1,
+          "lcpMs": 3517.743,
+          "tbtMs": 918.6319999999996,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2179.727,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542390,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1545.6239999999932,
+              "scriptingMs": 903.9129999999933,
+              "parseMs": 4.988
+            },
+            {
+              "source": "unknown",
+              "totalMs": 511.5329999999991,
+              "scriptingMs": 28.387000000000004,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 261.9,
+              "scriptingMs": 36.708999999999996,
+              "parseMs": 1.348
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 231.01,
+              "scriptingMs": 179.837,
+              "parseMs": 42.146
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 148.37299999999993,
+              "scriptingMs": 134.72599999999994,
+              "parseMs": 13.588999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 137.58100000000005,
+              "scriptingMs": 121.97400000000005,
+              "parseMs": 14.651
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 137.34200000000007,
+              "scriptingMs": 112.23000000000006,
+              "parseMs": 20.412
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 90.352,
+              "scriptingMs": 40.95700000000001,
+              "parseMs": 48.572
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1564.0019999999886
+            },
+            {
+              "group": "styleLayout",
+              "duration": 676.5360000000002
+            },
+            {
+              "group": "other",
+              "duration": 662.2309999999924
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 148.36200000000002
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 53.37399999999993
+            },
+            {
+              "group": "parseHTML",
+              "duration": 25.227999999999998
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "lcpMs": 3281.126,
+          "tbtMs": 709.259,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2067.157,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542391,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1271.254999999993,
+              "scriptingMs": 699.205999999993,
+              "parseMs": 5.232
+            },
+            {
+              "source": "unknown",
+              "totalMs": 400.1159999999993,
+              "scriptingMs": 23.283000000000005,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 240.36499999999998,
+              "scriptingMs": 32.308,
+              "parseMs": 6.666999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 206.109,
+              "scriptingMs": 160.005,
+              "parseMs": 34.827999999999996
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 134.305,
+              "scriptingMs": 118.56400000000002,
+              "parseMs": 14.091999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 133.9460000000001,
+              "scriptingMs": 122.0560000000001,
+              "parseMs": 11.094
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 99.85300000000011,
+              "scriptingMs": 84.90500000000011,
+              "parseMs": 12.494
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 78.816,
+              "scriptingMs": 29.040000000000006,
+              "parseMs": 48.352999999999994
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1284.1739999999857
+            },
+            {
+              "group": "styleLayout",
+              "duration": 561.49
+            },
+            {
+              "group": "other",
+              "duration": 557.224999999995
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 136.15800000000002
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 60.94799999999999
+            },
+            {
+              "group": "parseHTML",
+              "duration": 22.915
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "lcpMs": 3270.357,
+          "tbtMs": 802.2119999999995,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2072.735,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542347,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1223.9479999999933,
+              "scriptingMs": 678.0889999999933,
+              "parseMs": 6.021
+            },
+            {
+              "source": "unknown",
+              "totalMs": 439.23399999999987,
+              "scriptingMs": 24.294,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 291.0779999999999,
+              "scriptingMs": 36.79999999999999,
+              "parseMs": 1.292
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 236.65799999999993,
+              "scriptingMs": 193.94599999999994,
+              "parseMs": 32.057
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 162.75899999999987,
+              "scriptingMs": 147.89199999999988,
+              "parseMs": 14.641
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 135.239,
+              "scriptingMs": 121.18800000000002,
+              "parseMs": 13.982
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 110.56000000000016,
+              "scriptingMs": 89.79700000000017,
+              "parseMs": 15.41
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 91.544,
+              "scriptingMs": 39.708999999999996,
+              "parseMs": 51.168
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1343.0219999999865
+            },
+            {
+              "group": "styleLayout",
+              "duration": 601.0990000000002
+            },
+            {
+              "group": "other",
+              "duration": 582.1429999999941
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 138.62400000000002
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 57.41699999999999
+            },
+            {
+              "group": "parseHTML",
+              "duration": 21.589
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 5.265999999999998
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "lcpMs": 3290.787,
+          "tbtMs": 651.3419999999996,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2106.33,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542361,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1161.483999999992,
+              "scriptingMs": 678.2309999999918,
+              "parseMs": 6.692
+            },
+            {
+              "source": "unknown",
+              "totalMs": 520.9849999999986,
+              "scriptingMs": 32.78000000000001,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 254.523,
+              "scriptingMs": 30.529999999999998,
+              "parseMs": 1.418
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 215.41400000000002,
+              "scriptingMs": 174.363,
+              "parseMs": 32.388000000000005
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 119.38500000000005,
+              "scriptingMs": 106.04400000000005,
+              "parseMs": 13.285
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 117.29000000000009,
+              "scriptingMs": 104.73900000000009,
+              "parseMs": 11.503
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 101.45900000000007,
+              "scriptingMs": 88.14500000000007,
+              "parseMs": 8.527000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 91.667,
+              "scriptingMs": 32.00900000000001,
+              "parseMs": 58.944
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1254.5919999999871
+            },
+            {
+              "group": "other",
+              "duration": 638.8399999999916
+            },
+            {
+              "group": "styleLayout",
+              "duration": 518.5849999999999
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 134.33999999999997
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 54.973999999999975
+            },
+            {
+              "group": "parseHTML",
+              "duration": 26.847
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 2.9289999999999994
+            }
+          ]
+        },
+        {
+          "round": 5,
+          "lcpMs": 3281.455,
+          "tbtMs": 662.2180000000003,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2129.265,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542359,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1268.2039999999927,
+              "scriptingMs": 729.9039999999927,
+              "parseMs": 5.656
+            },
+            {
+              "source": "unknown",
+              "totalMs": 486.6749999999995,
+              "scriptingMs": 27.461000000000002,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 243.08300000000003,
+              "scriptingMs": 36.220000000000006,
+              "parseMs": 1.755
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 190.12600000000003,
+              "scriptingMs": 151.87300000000005,
+              "parseMs": 31.161
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 139.81600000000003,
+              "scriptingMs": 114.83800000000001,
+              "parseMs": 24.392
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 133.9520000000001,
+              "scriptingMs": 122.1790000000001,
+              "parseMs": 11.117
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 111.94400000000006,
+              "scriptingMs": 90.28800000000005,
+              "parseMs": 13.867
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 73.416,
+              "scriptingMs": 26.742000000000008,
+              "parseMs": 45.714999999999996
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1304.7259999999872
+            },
+            {
+              "group": "other",
+              "duration": 610.1799999999914
+            },
+            {
+              "group": "styleLayout",
+              "duration": 567.4739999999999
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 136.323
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 49.53399999999998
+            },
+            {
+              "group": "parseHTML",
+              "duration": 22.721
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 5.1819999999999995
+            }
+          ]
+        },
+        {
+          "round": 6,
+          "lcpMs": 3213.927,
+          "tbtMs": 683.9139999999993,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2020.431,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542353,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1178.8139999999942,
+              "scriptingMs": 686.4739999999941,
+              "parseMs": 4.65
+            },
+            {
+              "source": "unknown",
+              "totalMs": 465.9849999999998,
+              "scriptingMs": 42.13500000000003,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 269.916,
+              "scriptingMs": 39.39200000000001,
+              "parseMs": 2.316
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 194.66900000000004,
+              "scriptingMs": 147.53100000000003,
+              "parseMs": 37.258
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 140.9490000000001,
+              "scriptingMs": 125.4200000000001,
+              "parseMs": 13.894
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 117.67999999999995,
+              "scriptingMs": 99.45899999999996,
+              "parseMs": 12.445
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 111.12200000000003,
+              "scriptingMs": 97.37200000000003,
+              "parseMs": 13.697000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 82.736,
+              "scriptingMs": 29.857000000000006,
+              "parseMs": 51.870999999999995
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1275.4689999999873
+            },
+            {
+              "group": "other",
+              "duration": 586.9459999999953
+            },
+            {
+              "group": "styleLayout",
+              "duration": 528.2620000000001
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 139.053
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 64.84000000000002
+            },
+            {
+              "group": "parseHTML",
+              "duration": 19.753
+            }
+          ]
+        },
+        {
+          "round": 7,
+          "lcpMs": 3323.059,
+          "tbtMs": 740.6600000000003,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2133.85,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542444,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1347.6609999999926,
+              "scriptingMs": 789.2639999999926,
+              "parseMs": 4.788
+            },
+            {
+              "source": "unknown",
+              "totalMs": 444.85299999999853,
+              "scriptingMs": 25.22600000000001,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 252.912,
+              "scriptingMs": 44.228000000000016,
+              "parseMs": 0.9990000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 219.82999999999996,
+              "scriptingMs": 175.41799999999995,
+              "parseMs": 34.146
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 135.484,
+              "scriptingMs": 111.15100000000002,
+              "parseMs": 24.006999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 131.24600000000012,
+              "scriptingMs": 118.30800000000013,
+              "parseMs": 11.561
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 116.9070000000001,
+              "scriptingMs": 94.6510000000001,
+              "parseMs": 17.959
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 97.01100000000001,
+              "scriptingMs": 33.35100000000001,
+              "parseMs": 60.384
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1401.1029999999814
+            },
+            {
+              "group": "other",
+              "duration": 603.0199999999942
+            },
+            {
+              "group": "styleLayout",
+              "duration": 544.0129999999999
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 156.649
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 60.35299999999998
+            },
+            {
+              "group": "parseHTML",
+              "duration": 27.816000000000006
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 8.916
+            }
+          ]
+        },
+        {
+          "round": 8,
+          "lcpMs": 3371.756,
+          "tbtMs": 722.7879999999996,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2129.347,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542402,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1357.2169999999928,
+              "scriptingMs": 795.3769999999928,
+              "parseMs": 7.078
+            },
+            {
+              "source": "unknown",
+              "totalMs": 466.7149999999988,
+              "scriptingMs": 26.360999999999997,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 275.40900000000005,
+              "scriptingMs": 41.485000000000014,
+              "parseMs": 2.1959999999999997
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 226.692,
+              "scriptingMs": 180.619,
+              "parseMs": 36.585
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 131.962,
+              "scriptingMs": 113.73299999999998,
+              "parseMs": 17.205000000000002
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 118.98700000000017,
+              "scriptingMs": 97.95300000000016,
+              "parseMs": 14.866999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 110.571,
+              "scriptingMs": 97.131,
+              "parseMs": 12.054
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 75.652,
+              "scriptingMs": 28.152,
+              "parseMs": 46.028
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1386.2829999999842
+            },
+            {
+              "group": "other",
+              "duration": 628.5929999999921
+            },
+            {
+              "group": "styleLayout",
+              "duration": 582.3470000000001
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 144.02400000000003
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 58.98300000000002
+            },
+            {
+              "group": "parseHTML",
+              "duration": 27.282999999999998
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 3.0789999999999997
+            }
+          ]
+        },
+        {
+          "round": 9,
+          "lcpMs": 3323.425,
+          "tbtMs": 666.2570000000014,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2154.541,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542421,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1239.7069999999924,
+              "scriptingMs": 715.4249999999923,
+              "parseMs": 5.76
+            },
+            {
+              "source": "unknown",
+              "totalMs": 446.1359999999997,
+              "scriptingMs": 20.796999999999997,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 238.12199999999999,
+              "scriptingMs": 33.733000000000004,
+              "parseMs": 1.2209999999999996
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 198.83000000000007,
+              "scriptingMs": 164.18100000000007,
+              "parseMs": 25.502000000000002
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 121.15300000000009,
+              "scriptingMs": 105.75700000000009,
+              "parseMs": 15.337
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 112.93600000000013,
+              "scriptingMs": 99.71000000000014,
+              "parseMs": 12.626
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 98.12000000000005,
+              "scriptingMs": 85.27000000000005,
+              "parseMs": 6.829999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 92.79000000000002,
+              "scriptingMs": 32.481000000000016,
+              "parseMs": 60.078
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1263.2369999999844
+            },
+            {
+              "group": "other",
+              "duration": 585.2569999999938
+            },
+            {
+              "group": "styleLayout",
+              "duration": 537.6500000000001
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 129.85599999999997
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 48.840999999999994
+            },
+            {
+              "group": "parseHTML",
+              "duration": 24.908
+            }
+          ]
+        }
+      ],
+      "off": [
+        {
+          "round": 1,
+          "lcpMs": 4497.836,
+          "tbtMs": 1363.7570000000005,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2383.375,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542404,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1939.2639999999942,
+              "scriptingMs": 1192.4019999999941,
+              "parseMs": 9.943
+            },
+            {
+              "source": "unknown",
+              "totalMs": 780.9329999999942,
+              "scriptingMs": 30.48100000000001,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 330.71299999999997,
+              "scriptingMs": 67.41499999999999,
+              "parseMs": 1.1789999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 261.7489999999999,
+              "scriptingMs": 212.2269999999999,
+              "parseMs": 38.10600000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 206.64499999999995,
+              "scriptingMs": 192.22499999999997,
+              "parseMs": 13.791999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 145.52200000000002,
+              "scriptingMs": 84.25400000000002,
+              "parseMs": 61.066
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 139.14600000000004,
+              "scriptingMs": 124.06700000000004,
+              "parseMs": 14.098
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 122.05600000000015,
+              "scriptingMs": 94.05900000000014,
+              "parseMs": 17.615000000000002
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 2005.4009999999887
+            },
+            {
+              "group": "other",
+              "duration": 947.7819999999926
+            },
+            {
+              "group": "styleLayout",
+              "duration": 764.1490000000001
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 157.985
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 81.64300000000003
+            },
+            {
+              "group": "parseHTML",
+              "duration": 33.51499999999999
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "lcpMs": 3469.843,
+          "tbtMs": 776.1419999999994,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2209.92,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542423,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1345.5859999999923,
+              "scriptingMs": 805.0489999999924,
+              "parseMs": 5.275
+            },
+            {
+              "source": "unknown",
+              "totalMs": 541.2529999999985,
+              "scriptingMs": 34.35700000000001,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 261.38200000000006,
+              "scriptingMs": 39.63600000000001,
+              "parseMs": 1.5949999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 219.58399999999995,
+              "scriptingMs": 161.40599999999995,
+              "parseMs": 49.608000000000004
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 137.70800000000006,
+              "scriptingMs": 121.50700000000005,
+              "parseMs": 15.098999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 135.40700000000004,
+              "scriptingMs": 120.12900000000005,
+              "parseMs": 14.572000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 124.5020000000001,
+              "scriptingMs": 97.9720000000001,
+              "parseMs": 21.989
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 103.09800000000001,
+              "scriptingMs": 36.955000000000005,
+              "parseMs": 64.56400000000001
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1424.1909999999855
+            },
+            {
+              "group": "other",
+              "duration": 633.8829999999933
+            },
+            {
+              "group": "styleLayout",
+              "duration": 570.262
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 175.15799999999993
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 74.86000000000004
+            },
+            {
+              "group": "parseHTML",
+              "duration": 41.013999999999996
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "lcpMs": 3300.892,
+          "tbtMs": 703.181000000001,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2099.399,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542345,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1207.1939999999947,
+              "scriptingMs": 688.1129999999946,
+              "parseMs": 4.885
+            },
+            {
+              "source": "unknown",
+              "totalMs": 451.0359999999989,
+              "scriptingMs": 23.453,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 262.811,
+              "scriptingMs": 44.55200000000002,
+              "parseMs": 2.77
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 195.54599999999996,
+              "scriptingMs": 156.53099999999998,
+              "parseMs": 29.398000000000003
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 132.487,
+              "scriptingMs": 114.11499999999998,
+              "parseMs": 18.289
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 113.51400000000008,
+              "scriptingMs": 96.74100000000008,
+              "parseMs": 16.514
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 102.10400000000001,
+              "scriptingMs": 83.59400000000002,
+              "parseMs": 13.576
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 90.924,
+              "scriptingMs": 39.20000000000002,
+              "parseMs": 50.321
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1252.9069999999886
+            },
+            {
+              "group": "styleLayout",
+              "duration": 581.4610000000001
+            },
+            {
+              "group": "other",
+              "duration": 542.2559999999937
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 138.37699999999998
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 57.40799999999999
+            },
+            {
+              "group": "parseHTML",
+              "duration": 25.576000000000004
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 6.269
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "lcpMs": 3277.992,
+          "tbtMs": 619.5349999999999,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2087.634,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542490,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1137.0409999999922,
+              "scriptingMs": 678.9469999999923,
+              "parseMs": 4.708
+            },
+            {
+              "source": "unknown",
+              "totalMs": 388.7529999999999,
+              "scriptingMs": 26.309000000000008,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 248.80900000000003,
+              "scriptingMs": 39.21500000000002,
+              "parseMs": 8.407
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 196.03599999999997,
+              "scriptingMs": 164.266,
+              "parseMs": 25.92
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 125.29600000000003,
+              "scriptingMs": 110.85400000000003,
+              "parseMs": 14.384999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 111.4880000000001,
+              "scriptingMs": 99.7860000000001,
+              "parseMs": 10.978
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 86.89199999999997,
+              "scriptingMs": 71.12599999999996,
+              "parseMs": 12.274999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 73.80199999999999,
+              "scriptingMs": 28.908,
+              "parseMs": 44.739999999999995
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1225.3959999999836
+            },
+            {
+              "group": "styleLayout",
+              "duration": 515.8289999999998
+            },
+            {
+              "group": "other",
+              "duration": 475.16199999999935
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 125.74700000000001
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 50.26699999999998
+            },
+            {
+              "group": "parseHTML",
+              "duration": 24.735
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 3.1529999999999996
+            }
+          ]
+        },
+        {
+          "round": 5,
+          "lcpMs": 3366.128,
+          "tbtMs": 703.2810000000013,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2134.197,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542381,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1298.213999999995,
+              "scriptingMs": 791.106999999995,
+              "parseMs": 5.258
+            },
+            {
+              "source": "unknown",
+              "totalMs": 468.21799999999934,
+              "scriptingMs": 27.103,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 253.56799999999998,
+              "scriptingMs": 46.02,
+              "parseMs": 1.4619999999999997
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 210.83599999999998,
+              "scriptingMs": 170.84199999999998,
+              "parseMs": 33.141999999999996
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 129.023,
+              "scriptingMs": 112.43900000000001,
+              "parseMs": 14.878
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 118.76500000000013,
+              "scriptingMs": 107.01100000000012,
+              "parseMs": 10.446
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 101.60200000000003,
+              "scriptingMs": 82.49900000000002,
+              "parseMs": 16.329
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 72.19300000000001,
+              "scriptingMs": 20.439000000000004,
+              "parseMs": 51.583000000000006
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1368.054999999985
+            },
+            {
+              "group": "other",
+              "duration": 565.9379999999948
+            },
+            {
+              "group": "styleLayout",
+              "duration": 558.2600000000001
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 135.59200000000004
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 58.909
+            },
+            {
+              "group": "parseHTML",
+              "duration": 27.786000000000005
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 3.0269999999999992
+            }
+          ]
+        },
+        {
+          "round": 6,
+          "lcpMs": 3400.739,
+          "tbtMs": 761.8279999990455,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2169.277,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542447,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1369.157999999995,
+              "scriptingMs": 788.244999999995,
+              "parseMs": 15.637
+            },
+            {
+              "source": "unknown",
+              "totalMs": 478.67399999999907,
+              "scriptingMs": 30.30100000000001,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 239.09399999999994,
+              "scriptingMs": 38.466,
+              "parseMs": 2.641
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 199.4239999999999,
+              "scriptingMs": 160.39699999999988,
+              "parseMs": 30.537
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 136.796,
+              "scriptingMs": 122.51299999999999,
+              "parseMs": 14.222999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 133.3990000000001,
+              "scriptingMs": 120.41800000000009,
+              "parseMs": 11.687999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 121.11700000000005,
+              "scriptingMs": 100.12100000000004,
+              "parseMs": 14.341000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 95.457,
+              "scriptingMs": 43.717999999999996,
+              "parseMs": 50.664
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1411.9519999999893
+            },
+            {
+              "group": "other",
+              "duration": 604.9199999999929
+            },
+            {
+              "group": "styleLayout",
+              "duration": 574.958
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 142.3
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 62.658999999999985
+            },
+            {
+              "group": "parseHTML",
+              "duration": 23.288000000000004
+            },
+            {
+              "group": "garbageCollection",
+              "duration": 3.8719999999999994
+            }
+          ]
+        },
+        {
+          "round": 7,
+          "lcpMs": 3447.711,
+          "tbtMs": 837.6579999999999,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2216.531,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542470,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1315.8619999999935,
+              "scriptingMs": 762.5039999999933,
+              "parseMs": 3.946
+            },
+            {
+              "source": "unknown",
+              "totalMs": 468.59999999999934,
+              "scriptingMs": 25.002999999999997,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 285.47599999999994,
+              "scriptingMs": 43.45100000000001,
+              "parseMs": 1.924
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 261.0879999999999,
+              "scriptingMs": 222.92799999999994,
+              "parseMs": 30.617
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 157.713,
+              "scriptingMs": 142.412,
+              "parseMs": 15.222999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 134.96000000000012,
+              "scriptingMs": 121.39600000000011,
+              "parseMs": 11.096999999999998
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 83.68299999999996,
+              "scriptingMs": 67.53399999999998,
+              "parseMs": 11.713
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 77.05000000000001,
+              "scriptingMs": 31.409000000000002,
+              "parseMs": 44.845
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1422.1309999999853
+            },
+            {
+              "group": "styleLayout",
+              "duration": 605.6430000000001
+            },
+            {
+              "group": "other",
+              "duration": 601.8859999999925
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 121.616
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 62.00699999999998
+            },
+            {
+              "group": "parseHTML",
+              "duration": 31.12
+            }
+          ]
+        },
+        {
+          "round": 8,
+          "lcpMs": 3260.125,
+          "tbtMs": 624.0989999999997,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2083.703,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542384,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1171.9059999999927,
+              "scriptingMs": 695.2739999999927,
+              "parseMs": 6.229
+            },
+            {
+              "source": "unknown",
+              "totalMs": 419.12200000000007,
+              "scriptingMs": 35.14900000000001,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 231.37599999999998,
+              "scriptingMs": 35.588,
+              "parseMs": 1.748
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 204.31000000000006,
+              "scriptingMs": 163.87200000000004,
+              "parseMs": 30.102
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 135.84799999999998,
+              "scriptingMs": 119.416,
+              "parseMs": 16.368
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 117.34500000000003,
+              "scriptingMs": 102.86100000000002,
+              "parseMs": 13.088000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 102.55500000000004,
+              "scriptingMs": 82.71200000000003,
+              "parseMs": 13.597999999999999
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 84.55099999999999,
+              "scriptingMs": 33.75399999999999,
+              "parseMs": 50.623999999999995
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1273.9069999999874
+            },
+            {
+              "group": "styleLayout",
+              "duration": 522.857
+            },
+            {
+              "group": "other",
+              "duration": 504.1349999999998
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 136.87499999999997
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 58.232999999999976
+            },
+            {
+              "group": "parseHTML",
+              "duration": 21.777
+            }
+          ]
+        },
+        {
+          "round": 9,
+          "lcpMs": 3373.254,
+          "tbtMs": 808.2579999999984,
+          "cls": 0.000006004081047319071,
+          "fcpMs": 2094.74,
+          "localJsBytes": 191227,
+          "totalJsBytes": 542361,
+          "scriptCpu": [
+            {
+              "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+              "totalMs": 1361.9669999999937,
+              "scriptingMs": 779.7329999999938,
+              "parseMs": 4.335
+            },
+            {
+              "source": "unknown",
+              "totalMs": 426.6239999999986,
+              "scriptingMs": 33.55300000000001,
+              "parseMs": 0
+            },
+            {
+              "source": "http://127.0.0.1:19062/listings/55",
+              "totalMs": 253.051,
+              "scriptingMs": 39.98800000000001,
+              "parseMs": 2.923
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 211.927,
+              "scriptingMs": 171.17899999999997,
+              "parseMs": 32.299
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 146.96900000000005,
+              "scriptingMs": 131.92500000000004,
+              "parseMs": 14.518
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 120.93200000000012,
+              "scriptingMs": 108.03900000000012,
+              "parseMs": 12.684000000000001
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 106.42000000000004,
+              "scriptingMs": 91.41800000000005,
+              "parseMs": 11.094
+            },
+            {
+              "source": "https://usable-colt-3486.clerk.accounts.dev",
+              "totalMs": 86.4,
+              "scriptingMs": 35.11800000000001,
+              "parseMs": 50.428
+            }
+          ],
+          "mainThread": [
+            {
+              "group": "scriptEvaluation",
+              "duration": 1399.0669999999861
+            },
+            {
+              "group": "styleLayout",
+              "duration": 631.5159999999997
+            },
+            {
+              "group": "other",
+              "duration": 515.7279999999981
+            },
+            {
+              "group": "scriptParseCompile",
+              "duration": 131.052
+            },
+            {
+              "group": "paintCompositeRender",
+              "duration": 62.56899999999999
+            },
+            {
+              "group": "parseHTML",
+              "duration": 21.594999999999995
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "startedAt": "2026-10-07T21:41:42.790Z",
+  "finishedAt": "2026-10-07T21:54:33.570Z"
+}

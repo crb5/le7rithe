@@ -1,0 +1,137 @@
+/* Animations only use compositor-friendly transform/scale/opacity. No hidden defaults,
+   layout properties, libraries, permanent will-change, or page-entry animation. */
+@layer components {
+  .listing-card {
+    @apply relative h-full min-w-0 rounded-2xl border border-[hsl(var(--card-border))] bg-[hsl(var(--card))];
+    box-shadow: 0 5px 18px hsl(155 20% 18% / .045);
+  }
+  .listing-card--featured {
+    box-shadow: 0 0 0 2px hsl(var(--accent) / .55), 0 8px 24px hsl(42 87% 45% / .14);
+  }
+  .listing-card-body { @apply flex h-full min-w-0 flex-col gap-3 p-3; }
+  .listing-card-row { @apply flex min-w-0 items-start gap-3; }
+  .listing-card-photo { @apply relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-[hsl(var(--secondary))] sm:h-28 sm:w-28 lg:h-32 lg:w-32; }
+  .listing-card-content { @apply min-w-0 flex-1; }
+  .listing-card-labels { @apply mb-1 flex min-w-0 flex-wrap items-center gap-1.5; }
+  .listing-card-seller { @apply mt-1 flex min-w-0 items-center gap-1.5 text-[10px] text-[hsl(var(--muted-foreground))]; }
+  .listing-card-price-line { @apply mt-1 flex min-w-0 flex-wrap items-center justify-between gap-x-2 gap-y-1; }
+  .listing-card-actions { @apply flex min-w-0 items-center justify-end gap-2; }
+  .listing-save {
+    @apply flex shrink-0 items-center justify-center rounded-full p-0 backdrop-blur-md;
+    background: hsl(var(--primary) / .72);
+    color: white;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+  .listing-save[aria-pressed="true"] {
+    background: hsl(var(--accent));
+    color: hsl(var(--primary));
+  }
+  .listing-save[aria-pressed="false"]:hover { background: hsl(var(--primary)); }
+  .listing-share {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-[hsl(var(--border))] px-3 py-2.5 text-xs font-bold text-[hsl(var(--primary))] hover:bg-[hsl(var(--secondary))] disabled:cursor-wait disabled:opacity-60;
+  }
+  .listing-share--compact {
+    @apply shrink-0 gap-1 rounded-lg px-2 py-1.5 text-[10px];
+  }
+  .category-card {
+    @apply flex h-[148px] min-w-0 flex-col rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4 text-start text-[hsl(var(--primary))] shadow-[0_4px_14px_hsl(155_20%_18%/.05)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))] focus-visible:ring-offset-2;
+  }
+  .category-card-icon {
+    @apply mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[hsl(var(--primary))] text-[hsl(var(--accent))];
+  }
+  .category-card-title { @apply line-clamp-2 h-10 w-full overflow-hidden text-sm leading-5 text-[hsl(var(--primary))]; }
+  .category-card-count { @apply mt-1 flex h-4 min-h-4 w-full items-center text-[11px] leading-4 text-[hsl(var(--muted-foreground))]; }
+  .market-stat { @apply rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5; }
+  .market-stat[data-accent] { @apply border-[hsl(var(--primary))] bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]; }
+  .market-stat-icon { @apply rounded-xl bg-[hsl(var(--secondary))] p-2.5 text-[hsl(var(--primary))]; }
+  .market-stat[data-accent] .market-stat-icon { @apply bg-white/10 text-[hsl(var(--accent))]; }
+  .market-stat-arrow { @apply text-[hsl(var(--muted-foreground))]; }
+  .market-stat[data-accent] .market-stat-arrow { @apply text-white/40; }
+  .market-stat-label { @apply mt-1 text-xs text-[hsl(var(--muted-foreground))]; }
+  .market-stat[data-accent] .market-stat-label { @apply text-white/60; }
+}
+
+/* Override legacy transition-all/color/height utilities without changing states.
+   A translucent overlay supplies soft button tint using opacity, not color. */
+:where(.grain, [role="dialog"], [role="alertdialog"]) *,
+:where(.grain, [role="dialog"], [role="alertdialog"]) *::before,
+:where(.grain, [role="dialog"], [role="alertdialog"]) *::after {
+  transition-property: transform, scale, opacity !important;
+  transition-duration: 200ms !important;
+  transition-timing-function: cubic-bezier(.2,.7,.3,1) !important;
+}
+.animate-rise, .animate-fade { animation: none !important; }
+:where(.grain, [role="dialog"], [role="alertdialog"]) :is(input, textarea, select, [contenteditable]) {
+  animation: none !important;
+  transition: none !important;
+}
+@media (hover: hover) {
+  .grain button:not(:disabled):not([aria-disabled="true"]):not(:active):hover { scale: 1.01; }
+}
+.grain button:not(:disabled):not([aria-disabled="true"]):active { transform: scale(.985); }
+.grain button:not(.sh-menu-trigger):not(.absolute):not(.fixed):not(.sticky) {
+  position: relative;
+}
+.grain button:not(.sh-menu-trigger)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: currentColor;
+  opacity: 0;
+}
+.grain button:not(:disabled):is(:hover, :active)::after { opacity: .07; }
+.listing-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: 0 13px 28px hsl(155 20% 18% / .11);
+  opacity: 0;
+}
+@media (hover: hover) {
+  .listing-card:hover { transform: translateY(-3px); }
+  .listing-card:hover::after { opacity: 1; }
+}
+.listing-card:active { transform: translateY(-3px); }
+.listing-card:active::after { opacity: 1; }
+.marketplace-navigation-drawer {
+  translate: none !important;
+  transform: translateX(0);
+}
+.marketplace-navigation-drawer--rtl[aria-hidden="true"] { transform: translateX(100%); }
+.marketplace-navigation-drawer--ltr[aria-hidden="true"] { transform: translateX(-100%); }
+[data-floating-visibility] { translate: none !important; }
+[data-floating-visibility="visible"] { transform: translateY(0); }
+[data-floating-visibility="hidden"] { transform: translateY(12px); }
+.motion-enter {
+  animation: card-enter 220ms cubic-bezier(.2,.7,.3,1) 1 backwards;
+}
+.motion-enter:nth-child(even) { animation-delay: 25ms; }
+.motion-photo { animation: photo-loaded 180ms ease-out 1; }
+.motion-save { animation: save-pulse 200ms ease-out 1; }
+.mobile-modal-panel, .motion-dialog, [role="dialog"], [role="alertdialog"] {
+  animation: short-fade 200ms ease-out 1;
+}
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes photo-loaded { from { opacity: .55; } to { opacity: 1; } }
+@keyframes save-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+@keyframes short-fade { from { opacity: .65; } to { opacity: 1; } }
+/* Closed drawer transforms follow the existing RTL/LTR classes and aria state. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .listing-card:is(:hover, :active),
+  .grain button:is(:hover, :active) { transform: none !important; scale: none !important; }
+}

@@ -1,0 +1,46 @@
+modules = ["nodejs-24", "python-base-3.13", "postgresql-16"]
+
+[deployment]
+router = "application"
+deploymentTarget = "autoscale"
+build = ["sh", "-c", "pnpm --filter @workspace/agri-market run build && pnpm --filter @workspace/api-server run build"]
+
+[deployment.postBuild]
+args = ["pnpm", "store", "prune"]
+env = { "CI" = "true" }
+
+[workflows]
+runButton = "Project"
+
+[agent]
+stack = "PNPM_WORKSPACE"
+expertMode = true
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 20000
+
+[nix]
+channel = "stable-25_05"
+packages = ["ffmpeg"]
+
+[userenv]
+
+[userenv.shared]
+ADMIN_ALLOWED_EMAILS = "cheikobeyrouk@gmail.com"
+ENABLE_MARKETPLACE_DEMO_SEED = "false"
+
+[objectStorage]
+defaultBucketID = "replit-objstore-0aa9a4d0-80ff-4dbd-a161-8181db91dbec"
+
+[[ports]]
+localPort = 8080
+externalPort = 80
+
+[[ports]]
+localPort = 8081
+externalPort = 8081
+
+[[ports]]
+localPort = 19061
+externalPort = 3000

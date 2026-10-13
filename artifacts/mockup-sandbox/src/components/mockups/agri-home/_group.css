@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  --background: 42 37% 96%;
+  --foreground: 154 26% 15%;
+  --border: 38 22% 86%;
+  --card: 40 33% 99%;
+  --card-border: 38 22% 88%;
+  --sidebar: 155 33% 16%;
+  --sidebar-foreground: 42 34% 94%;
+  --sidebar-accent: 153 26% 23%;
+  --primary: 155 33% 23%;
+  --primary-foreground: 42 34% 96%;
+  --secondary: 42 48% 90%;
+  --muted: 42 29% 92%;
+  --muted-foreground: 153 12% 43%;
+  --accent: 42 87% 61%;
+  --accent-foreground: 154 26% 15%;
+  --destructive: 4 62% 48%;
+  --input: 38 22% 82%;
+  --ring: 155 33% 23%;
+  --app-font-sans: 'IBM Plex Sans Arabic', sans-serif;
+  --app-font-mono: 'Manrope', monospace;
+}
+
+html { direction: rtl; }
+.agri-home { font-family: var(--app-font-sans); background: hsl(var(--background)); color: hsl(var(--foreground)); }
+.agri-home .font-numeric { font-family: var(--app-font-mono); direction: ltr; }
+.agri-home .grain::after { content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .028; z-index: 50; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); }
+.agri-home .animate-rise { animation: agri-rise .55s cubic-bezier(.22,1,.36,1) both; }
+.agri-home .stagger-1 { animation-delay: .06s; } .agri-home .stagger-2 { animation-delay: .12s; } .agri-home .stagger-3 { animation-delay: .18s; }
+.agri-home .featured-marquee { overflow: hidden; direction: ltr; mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent); }
+.agri-home .featured-marquee__track { display: flex; gap: 1.25rem; padding: .25rem .15rem .75rem; }
+.agri-home .featured-marquee__group { display: flex; flex: 0 0 auto; gap: 1.25rem; }
+@keyframes agri-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }

@@ -1,0 +1,12 @@
+.listing-card__content { gap: 0; }
+
+.listing-card__title:focus-visible { outline-offset: 3px; }
+
+@container (max-width: 540px) {
+  .listing-card__media { min-height: 138px; }
+}
+
+@container (max-width: 390px) {
+  .listing-card__media { flex-basis: 84px; }
+  .listing-card__title { font-size: 13px; }
+}

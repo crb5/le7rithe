@@ -1,0 +1,148 @@
+{
+  "before": {
+    "method": "Lighthouse, actual DevTools throttling, cold browser per run; median of 3; 390x844, CPU 4x, 1.6Mbps down, 750Kbps up, 150ms latency; local bundle and real development records",
+    "builtJsBytes": 1310889,
+    "pages": {
+      "/": {
+        "runs": [
+          {
+            "lcpMs": 4031.796,
+            "tbtMs": 352.64600000000064,
+            "cls": 0.047618217010472294,
+            "localJsBytes": 181210,
+            "totalJsBytes": 532395
+          },
+          {
+            "lcpMs": 3119.767,
+            "tbtMs": 435.8499999999999,
+            "cls": 0.00046728254571884545,
+            "localJsBytes": 181210,
+            "totalJsBytes": 532392
+          },
+          {
+            "lcpMs": 3252.593,
+            "tbtMs": 460.45099999999957,
+            "cls": 0.00046728254571884545,
+            "localJsBytes": 181210,
+            "totalJsBytes": 532350
+          }
+        ],
+        "median": {
+          "lcpMs": 3252.593,
+          "tbtMs": 435.8499999999999,
+          "cls": 0.00046728254571884545,
+          "localJsBytes": 181210,
+          "totalJsBytes": 532392
+        }
+      },
+      "/listings/55": {
+        "runs": [
+          {
+            "lcpMs": 3269.249,
+            "tbtMs": 626.4849999999997,
+            "cls": 0.000006004081047319071,
+            "localJsBytes": 191139,
+            "totalJsBytes": 542285
+          },
+          {
+            "lcpMs": 3454.153,
+            "tbtMs": 675.7140000000004,
+            "cls": 0.000006004081047319071,
+            "localJsBytes": 191139,
+            "totalJsBytes": 542345
+          },
+          {
+            "lcpMs": 3194.817,
+            "tbtMs": 578.1089999997616,
+            "cls": 0.0003288994787608153,
+            "localJsBytes": 191139,
+            "totalJsBytes": 542368
+          }
+        ],
+        "median": {
+          "lcpMs": 3269.249,
+          "tbtMs": 626.4849999999997,
+          "cls": 0.000006004081047319071,
+          "localJsBytes": 191139,
+          "totalJsBytes": 542345
+        }
+      }
+    }
+  },
+  "after": {
+    "method": "Lighthouse, actual DevTools throttling, cold browser per run; median of 3; 390x844, CPU 4x, 1.6Mbps down, 750Kbps up, 150ms latency; local bundle and real development records",
+    "builtJsBytes": 1308893,
+    "pages": {
+      "/": {
+        "runs": [
+          {
+            "lcpMs": 4017.657,
+            "tbtMs": 929.6570000000002,
+            "cls": 0.00046728254571884545,
+            "localJsBytes": 181072,
+            "totalJsBytes": 532357
+          },
+          {
+            "lcpMs": 4310.097,
+            "tbtMs": 1782.608999999523,
+            "cls": 0.0005384388251813176,
+            "localJsBytes": 181072,
+            "totalJsBytes": 532347
+          },
+          {
+            "lcpMs": 3418.012,
+            "tbtMs": 713.1210000000001,
+            "cls": 0.0005384388251813176,
+            "localJsBytes": 181072,
+            "totalJsBytes": 532266
+          }
+        ],
+        "median": {
+          "lcpMs": 4017.657,
+          "tbtMs": 929.6570000000002,
+          "cls": 0.0005384388251813176,
+          "localJsBytes": 181072,
+          "totalJsBytes": 532347
+        }
+      },
+      "/listings/55": {
+        "runs": [
+          {
+            "lcpMs": 3787.164,
+            "tbtMs": 1040.3669999999993,
+            "cls": 0.000006004081047319071,
+            "localJsBytes": 191011,
+            "totalJsBytes": 542344
+          },
+          {
+            "lcpMs": 3674.097,
+            "tbtMs": 802.0489999999991,
+            "cls": 0.000006004081047319071,
+            "localJsBytes": 191011,
+            "totalJsBytes": 542247
+          },
+          {
+            "lcpMs": 3298.449,
+            "tbtMs": 775.9719999999993,
+            "cls": 0.000006004081047319071,
+            "localJsBytes": 191011,
+            "totalJsBytes": 542161
+          }
+        ],
+        "median": {
+          "lcpMs": 3674.097,
+          "tbtMs": 802.0489999999991,
+          "cls": 0.000006004081047319071,
+          "localJsBytes": 191011,
+          "totalJsBytes": 542247
+        }
+      }
+    }
+  },
+  "gate": {
+    "passed": false,
+    "maxMetricRegressionPercent": 5,
+    "maxJavaScriptGrowthBytes": 0
+  },
+  "causalInterpretation": "Unmatched before/after builds do not isolate motion. Use marketplace-motion-isolation-summary.json for the later same-build, nine-pair causal comparison."
+}

@@ -1,0 +1,61 @@
+- [Clerk workspace setup](clerk-integration.md) — install per-package and keep the canonical proxy/provider wiring for production.
+- [Marketplace category catalog](category-catalog.md) — categories/subcategories are database records; listing-specific fields use JSON attributes.
+- [Category icon matching](category-icon-matching.md) — specific translated category terms must win before broader machinery matches.
+- [Admin authorization and retention](admin-authorization.md) — Clerk-backed roles guard server routes; admin “deletes” retain referenced marketplace records.
+- [Administrator password boundary](admin-password-boundary.md) — the admin password is a second backend session boundary layered on top of Clerk.
+- [Clerk locale gaps](clerk-locale-gaps.md) — official bundles can leave individual placeholders undefined; preserve tested locale-specific overrides.
+- [Public marketplace with protected actions](authenticated-only-marketplace.md) — guest save prompts before sign-in; publishing and user-owned actions still require Clerk.
+- [Payment proof storage](payment-proof-storage.md) — proof images use private App Storage only and fail clearly when it is unavailable.
+- [Payment proof ownership](payment-proof-ownership.md) — bind upload paths to the requesting seller before accepting payment confirmation.
+- [Clerk profile attributes](clerk-profile-attributes.md) — account name edits require first and last name attributes enabled in the Clerk instance.
+- [Payment-gated publishing](payment-gated-publishing.md) — listings stay hidden until an administrator confirms a linked payment; listing moderation cannot bypass that gate.
+- [Admin notification isolation](admin-notifications.md) — listing notifications are linked to listings and excluded from ordinary user notification routes.
+- [Boolean query filters](boolean-query-filters.md) — normalize `"true"` and `"false"` before Zod boolean coercion.
+- [Preview E2E response timing](preview-e2e-response-timing.md) — capture created IDs from rendered state when preview navigation can invalidate Playwright response bodies.
+- [Playwright browser runtime](playwright-browser-runtime.md) — the managed Chromium binary launches directly, but this runner may still require its own downloaded browser cache.
+- [Historical Playwright trace credentials](git-history-playwright-traces.md) — old browser traces may retain Clerk sessions; treat trace/network artifacts as credentials even after expiration.
+- [Playwright CLI argument forwarding](playwright-cli-arguments.md) — invoke filtered tests with `pnpm exec playwright` and confirm the selection with `--list`.
+- [Playwright preview routing](playwright-preview-routing.md) — E2E tests for multi-service artifacts need the Replit preview host so API requests use the shared route.
+- [Language picker browser tests](language-picker-e2e.md) — verify the active locale, then choose a different locale from the open menu before testing another switch.
+- [Payment review E2E authentication](payment-review-auth.md) — a fresh Clerk session still needs local administrator-role validation before review checks run.
+- [Private bucket release gate](private-bucket-release-gate.md) — release receipt checks must use the internal private App Storage path, never a local fallback or public URL.
+- [Local browser auth state](local-browser-auth.md) — a present Clerk storage state can still be expired, sending authenticated browser checks to sign-in.
+- [Report reply notifications](report-reply-notifications.md) — reuse shared notifications, link to reports, and enforce reporter ownership on every user read.
+- [Development schema alignment](development-schema-alignment.md) — check the local database against the current Drizzle model before diagnosing notification-flow E2E failures.
+- [Database migration safety](database-change-safety.md) — show and approve exact SQL first; checkpoint, preserve data and tables/columns, use development only, and do not publish.
+- [Database test isolation](database-test-isolation.md) — tests must never touch heliumdb unless an explicit development-database opt-in is set.
+- [Logout E2E session state](logout-e2e-session-state.md) — real Clerk sign-out invalidates the saved session, so destructive logout cases must run last or use fresh state.
+- [Marketplace listing lifecycle](listing-lifecycle.md) — no automatic expiry; photos/description have a shared ten-minute window, unlike price and contact numbers.
+- [Admin browser identity](admin-browser-identity.md) — browser checks must use a Clerk identity covered by the explicit admin allowlist.
+- [TypeScript project-reference cache](typescript-project-reference-cache.md) — force-rebuild database declarations after schema edits when API types appear stale.
+- [API unit-test runtime](api-unit-test-runtime.md) — use the workspace TSX runner when Node ESM cannot resolve extensionless generated API imports.
+- [Marquee interaction testing](marquee-interaction-testing.md) — scroll the target into view and separate touch/pointer and mouse drag paths in Chromium.
+- [Artifact build defaults](artifact-build-defaults.md) — production builds should use safe artifact routing defaults when workflow variables are absent.
+- [Performance measurement constraints](performance-measurement.md) — use existing marketplace records; do not add mock data to benchmark performance.
+- [Mutation request limits](mutation-request-limits.md) — sensitive mutation endpoints need explicit 429 limits without changing their API contracts.
+- [Marketplace currency rules](marketplace-number-formatting.md) — new listings use MRU; preserve legacy currencies and display each explicit code.
+- [Long JSX line editing](long-jsx-line-editing.md) — prefer narrow hunks when generated JSX is kept on a single line.
+- [Vite environment access in unit tests](vite-environment-access.md) — guard import.meta.env reads in shared UI modules that are imported directly by Node-based tests.
+- [Homepage banner source](featured-banner-source.md) — homepage banners are independent content records, separate from listings and featured offers.
+- [Storefront image banners](storefront-banners.md) — use only admin-uploaded images; keep carousel controls and all text outside the image.
+- [Mockup preview paths](mockup-preview-path.md) — iframe URLs use the full preview route; screenshot paths omit its prefix.
+- [Drawer focus restoration](header-focus-restoration.md) — focus the navigation opener before closing the drawer so the scroll-hidden header is not inert.
+- [Sidebar touch testing](sidebar-touch-testing.md) — Chromium touch emulation does not confirm scroll-lock behavior in iPhone Safari.
+- [Header locale ordering](header-locale-ordering.md) — keep outer headers LTR while Arabic and French/English place identity and tools on opposite physical sides.
+- [Load-more pagination state](load-more-pagination.md) — base “has more” on the last page received so the button remains available while the next page loads.
+- [Listing photo fallback](listing-photo-fallback.md) — prefer the first loadable listing photo across array and legacy sources; show the category placeholder only when none load.
+- [Listing image preservation](listing-image-preservation.md) — delete new upload sources only after derivatives succeed; retain active display media and guard legacy cleanup.
+- [Phone validation scope](phone-validation-scope.md) — keep phone-validation changes limited to existing phone fields and preserve unrelated marketplace behavior.
+- [Phone sign-in challenge separation](phone-sign-in-challenges.md) — keep public sign-in OTP proofs separate from authenticated phone-link proofs.
+- [Account sign-in options](account-sign-in-options.md) — phone OTP, email, and Google are alternatives; adding a second contact method remains optional.
+- [Marketplace localization boundary](marketplace-localization-boundary.md) — translate display labels without changing stored values, filters, or routes.
+- [OpenAPI response schema naming](openapi-response-schema-naming.md) — inline operation array responses when named wrappers collide with generated operation exports.
+- [Independent CSS transitions](css-transition-e2e.md) — opacity finishing does not mean a separate translate transition has settled.
+- [Published dependency advisories](published-dependency-advisories.md) — only remediate with a verified published fix; do not invent overrides for an unpatched advisory.
+- [Moorsyl delivery diagnostics](moorsyl-delivery-diagnostics.md) — send acceptance is not SMS delivery; correlate historical attempts before interpreting missing workflow logs.
+- [React unit-test runtime](react-unit-test-runtime.md) — Node/TSX does not inherit Vite's JSX transform or the mounted app's providers.
+- [Touch carousel autoplay](touch-carousel-autoplay.md) — gate hover pause/resume by pointer type; compatibility mouse-enter events after touch can leave autoplay paused.
+- [Homepage motion stability](homepage-motion-stability.md) — keep entrance fades and staggered reveals off the home route; they caused whole-page jumps on iOS browsers.
+- [pnpm lockfile drift](pnpm-lockfile-drift.md) — dependency removal can refresh unrelated transitive lock entries; compare against the pre-change baseline and keep only intended graph changes.
+- [Replit forwarded IP chain](replit-forwarded-ip.md) — preview replaced client-supplied XFF values and delivered three entries; keep Express proxy trust pinned to the verified hop count.
+- [Rental season lifecycle](rental-season-lifecycle.md) — season close archives rentals without deleting them; reopening requires owner renewal, with fees set to zero initially.

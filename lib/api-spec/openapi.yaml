@@ -1,0 +1,1749 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: legal
+    description: Public policy metadata and authenticated policy consent
+  - name: marketplace
+    description: Marketplace browsing and listings
+  - name: account
+    description: Account and saved listings
+  - name: messages
+    description: Buyer and seller messages
+  - name: support
+    description: Direct support contact
+  - name: dashboard
+    description: Marketplace metrics
+paths:
+  /listing-image/uploads/process:
+    post:
+      operationId: processListingImageUpload
+      tags: [marketplace]
+      summary: Validate and create full and thumbnail WebP variants of an owned new upload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingImageProcessingInput"
+      responses:
+        "200":
+          description: Processed image paths and dimensions
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [objectPath, originalBytes, fullBytes, thumbnailBytes, width, height]
+                properties:
+                  objectPath:
+                    type: string
+                  originalBytes:
+                    type: integer
+                  fullBytes:
+                    type: integer
+                  thumbnailBytes:
+                    type: integer
+                  width:
+                    type: integer
+                  height:
+                    type: integer
+        "400":
+          description: Invalid, oversized, corrupt, or unowned image
+        "401":
+          description: Sign-in required
+        "403":
+          description: Account cannot upload
+        "503":
+          description: Image storage or processing temporarily unavailable
+  /admin/banners/uploads/request-url:
+    post:
+      operationId: requestBannerImageUpload
+      tags: [dashboard]
+      summary: Request a private upload URL for a banner image
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BannerImageUploadInput"
+      responses:
+        "200":
+          description: Private upload URL and temporary object path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BannerImageUploadUrl"
+        "400":
+          description: Invalid image metadata
+        "401":
+          description: Administrator password required
+        "404":
+          description: Administrator access denied
+        "503":
+          description: Image storage temporarily unavailable
+  /admin/banners/uploads/process:
+    post:
+      operationId: processAdminBannerImageUpload
+      tags: [dashboard]
+      summary: Validate and convert a banner upload to a private WebP image
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BannerImageProcessingInput"
+      responses:
+        "200":
+          description: Processed private WebP image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BannerImageProcessingResult"
+        "400":
+          description: Invalid, corrupt, unsupported, or oversized image
+        "401":
+          description: Administrator password required
+        "404":
+          description: Administrator access denied
+        "503":
+          description: Image storage or processing temporarily unavailable
+  /banners:
+    get:
+      operationId: listBanners
+      tags: [marketplace]
+      summary: List currently visible homepage banners
+      responses:
+        "200":
+          description: Visible banners
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Banner"
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /legal-policy:
+    get:
+      operationId: getLegalPolicy
+      tags: [legal]
+      summary: Get current public policy versions and localized last-updated labels
+      responses:
+        "200":
+          description: Current public legal policy metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LegalPolicy"
+  /legal-policy/consent:
+    get:
+      operationId: getMyLegalConsent
+      tags: [legal]
+      summary: Get whether the authenticated user accepted the current policy versions
+      responses:
+        "200":
+          description: Current policy consent status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LegalConsentStatus"
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    post:
+      operationId: recordLegalConsent
+      tags: [legal]
+      summary: Record the authenticated user's acceptance of current policy versions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LegalConsentInput"
+      responses:
+        "200":
+          description: Existing or newly recorded acceptance for the current versions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LegalConsentRecord"
+        "400":
+          description: Invalid request body
+        "401":
+          description: Authentication required
+  /categories:
+    get:
+      operationId: listCategories
+      tags: [marketplace]
+      summary: List marketplace categories
+      responses:
+        "200":
+          description: Categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+  /categories/{slug}/subcategories:
+    get:
+      operationId: listSubcategories
+      tags: [marketplace]
+      summary: List subcategories for a category
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Subcategories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Subcategory"
+  /admin/categories:
+    get:
+      operationId: listAdminCategories
+      tags: [dashboard]
+      summary: List categories for administration
+      responses:
+        "200":
+          description: Admin category catalog
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Category" }
+    post:
+      operationId: createCategory
+      tags: [dashboard]
+      summary: Create a marketplace category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/CategoryInput" }
+      responses:
+        "201":
+          description: Created category
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Category" }
+  /admin/categories/{id}:
+    patch:
+      operationId: updateCategory
+      tags: [dashboard]
+      summary: Update a marketplace category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/CategoryUpdate" }
+      responses:
+        "200":
+          description: Updated category
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Category" }
+    delete:
+      operationId: deleteCategory
+      tags: [dashboard]
+      summary: Delete a marketplace category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204": { description: Deleted }
+  /admin/categories/{id}/subcategories:
+    post:
+      operationId: createSubcategory
+      tags: [dashboard]
+      summary: Create a subcategory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SubcategoryInput" }
+      responses:
+        "201":
+          description: Created subcategory
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Subcategory" }
+  /admin/subcategories/{id}:
+    patch:
+      operationId: updateSubcategory
+      tags: [dashboard]
+      summary: Update a subcategory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SubcategoryUpdate" }
+      responses:
+        "200":
+          description: Updated subcategory
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Subcategory" }
+    delete:
+      operationId: deleteSubcategory
+      tags: [dashboard]
+      summary: Delete a subcategory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204": { description: Deleted }
+  /locations:
+    get:
+      operationId: listLocations
+      tags: [marketplace]
+      summary: List marketplace locations
+      responses:
+        "200":
+          description: Locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Location"
+  /market-pulse:
+    get:
+      operationId: getMarketPulse
+      tags: [marketplace]
+      summary: Get current marketplace activity
+      responses:
+        "200":
+          description: Marketplace activity summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarketPulse"
+  /listings:
+    get:
+      operationId: listListings
+      tags: [marketplace]
+      summary: Search and filter listings
+      parameters:
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Category"
+        - $ref: "#/components/parameters/Subcategory"
+        - $ref: "#/components/parameters/Location"
+        - $ref: "#/components/parameters/SaleType"
+        - $ref: "#/components/parameters/Reference"
+        - $ref: "#/components/parameters/Brand"
+        - $ref: "#/components/parameters/ProductType"
+        - $ref: "#/components/parameters/MinPrice"
+        - $ref: "#/components/parameters/MaxPrice"
+        - $ref: "#/components/parameters/Condition"
+        - $ref: "#/components/parameters/Manufacturer"
+        - $ref: "#/components/parameters/Model"
+        - $ref: "#/components/parameters/Year"
+        - $ref: "#/components/parameters/Sort"
+        - $ref: "#/components/parameters/Featured"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Listing search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListingSearchResult"
+    post:
+      operationId: createListing
+      tags: [marketplace]
+      summary: Create a marketplace listing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingInput"
+      responses:
+        "201":
+          description: Created listing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+  /listings/{id}:
+    get:
+      operationId: getListing
+      tags: [marketplace]
+      summary: Get listing details
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      responses:
+        "200":
+          description: Listing details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+        "404":
+          description: Listing not found
+    patch:
+      operationId: updateListing
+      tags: [marketplace]
+      summary: Update a listing
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingUpdate"
+      responses:
+        "200":
+          description: Updated listing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+    delete:
+      operationId: deleteListing
+      tags: [marketplace]
+      summary: Delete a listing
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      responses:
+        "204":
+          description: Deleted
+  /listings/{id}/sold:
+    post:
+      operationId: markListingSold
+      tags: [marketplace]
+      summary: Mark a seller-owned listing as sold
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      responses:
+        "200":
+          description: Listing marked as sold
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+        "409":
+          description: Listing cannot be marked as sold
+  /listings/{id}/revert-sale:
+    post:
+      operationId: revertListingSale
+      tags: [marketplace]
+      summary: Revert a recent sale within the five-minute window
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      responses:
+        "200":
+          description: Listing sale reverted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+        "409":
+          description: Sale reversal window has expired
+  /listings/{id}/lease:
+    post:
+      operationId: markListingLeased
+      tags: [marketplace]
+      summary: Mark an owner-controlled rental listing as leased
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      responses:
+        "200":
+          description: Rental listing marked as leased
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+        "409":
+          description: Listing is not an available rental
+  /listings/{id}/renew:
+    post:
+      operationId: renewRentalListing
+      tags: [marketplace]
+      summary: Renew an archived rental listing while the season is open
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      responses:
+        "200":
+          description: Rental listing renewed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+        "409":
+          description: Rental season is closed or listing cannot be renewed
+  /listings/{id}/favorite:
+    post:
+      operationId: setListingFavorite
+      tags: [account]
+      summary: Set a listing's saved state
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FavoriteState"
+      responses:
+        "200":
+          description: Favorite state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FavoriteState"
+  /saved-listings:
+    get:
+      operationId: listSavedListings
+      tags: [account]
+      summary: List saved listings
+      responses:
+        "200":
+          description: Saved listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Listing"
+  /messages:
+    get:
+      operationId: listMessages
+      tags: [messages]
+      summary: List account messages
+      responses:
+        "200":
+          description: Messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Message"
+    post:
+      operationId: sendMessage
+      tags: [messages]
+      summary: Send a message to a seller
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageInput"
+      responses:
+        "201":
+          description: Sent message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  /messages/{id}/read:
+    patch:
+      operationId: markMessageRead
+      tags: [messages]
+      summary: Mark a received message as read
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        "200":
+          description: Message marked as read
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok]
+                properties:
+                  ok: { type: boolean }
+  /support:
+    get:
+      operationId: getSupportSettings
+      tags: [support]
+      summary: Get support contact settings
+      responses:
+        "200":
+          description: Support contact settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SupportSettings"
+    post:
+      operationId: sendSupportMessage
+      tags: [support]
+      summary: Send a direct support message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupportMessageInput"
+      responses:
+        "201":
+          description: Support message saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SupportMessage"
+  /reports:
+    get:
+      operationId: listReports
+      tags: [support]
+      summary: List the current user's reports and support requests
+      responses:
+        "200":
+          description: User reports
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items: { $ref: "#/components/schemas/Report" }
+    post:
+      operationId: createReport
+      tags: [support]
+      summary: Report a listing or user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ReportInput" }
+      responses:
+        "201":
+          description: Report created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Report" }
+  /reports/{id}:
+    get:
+      operationId: getReport
+      tags: [support]
+      summary: Get a report belonging to the current user
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      responses:
+        "200":
+          description: Report details
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReportDetails" }
+  /reports/{id}/read:
+    patch:
+      operationId: markReportRead
+      tags: [support]
+      summary: Mark report replies as read
+      parameters:
+        - $ref: "#/components/parameters/ListingId"
+      responses:
+        "204": { description: Marked as read }
+  /account/me:
+    get:
+      operationId: getMyAccountProfile
+      tags: [account]
+      summary: Get the current user's marketplace profile, display name, and verified phone
+      responses:
+        "200":
+          description: Current user's marketplace profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MyAccountProfile"
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    patch:
+      operationId: updateMyAccountProfile
+      tags: [account]
+      summary: Update the current user's marketplace display name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MyAccountProfileUpdate"
+      responses:
+        "200":
+          description: Updated current user's marketplace profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MyAccountProfile"
+        "400":
+          description: Invalid display name
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    delete:
+      operationId: deleteMyAccount
+      tags: [account]
+      summary: Permanently delete the current user's account and personal marketplace data
+      description: Removes the Clerk identity, personal marketplace data, listings and photos. Pending payment requests are cancelled; anonymized payment records and legal-consent version and time are retained.
+      responses:
+        "204":
+          description: Account and personal data deleted
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Deletion could not be completed; the request can be retried
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /account/me/email/sync:
+    post:
+      operationId: syncMyAccountEmail
+      tags: [account]
+      summary: Sync the current user's verified primary email to the marketplace profile
+      responses:
+        "200":
+          description: Verified email status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MyAccountEmail"
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Email status could not be synchronized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /auth/phone/send:
+    post:
+      operationId: sendPhoneVerification
+      tags: [account]
+      summary: Send an OTP to verify a phone number for the signed-in account
+      description: Requires the current Clerk session. This endpoint does not create an account or authenticate a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneVerificationSendInput"
+      responses:
+        "200":
+          description: Verification code sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneVerificationSendResponse"
+        "400":
+          description: Invalid Mauritanian phone number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "429":
+          description: Too many verification requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Verification provider unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Verification is not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /auth/phone/verify:
+    post:
+      operationId: verifyPhoneNumber
+      tags: [account]
+      summary: Verify and link a phone number to the signed-in account
+      description: Requires the Clerk user who requested the OTP. Only an approved provider response links the phone.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneVerificationCheckInput"
+      responses:
+        "200":
+          description: Phone verified and linked to the account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneVerificationResult"
+        "400":
+          description: Invalid, expired, or incorrect verification code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "409":
+          description: Phone number is already linked to another account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "429":
+          description: Too many verification attempts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Verification provider unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Verification is not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /auth/send-code:
+    post:
+      operationId: sendPhoneCode
+      tags: [account]
+      summary: Send a Moorsyl OTP for phone sign-in
+      description: Public endpoint for sign-in or sign-up. The server binds the requested mode to a short-lived challenge and does not reveal whether an account exists.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneAuthSendInput"
+      responses:
+        "200":
+          description: Verification code sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneVerificationSendResponse"
+        "400":
+          description: Invalid Mauritanian phone number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "409":
+          description: Already signed in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "429":
+          description: Too many verification requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Verification provider unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Verification service is not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /auth/verify-code:
+    post:
+      operationId: verifyPhoneCode
+      tags: [account]
+      summary: Verify a phone OTP and create a short-lived Clerk sign-in ticket
+      description: Only a server-approved Moorsyl challenge authorizes a ticket. Sign-up requires a name and rejects existing numbers after OTP approval; the mode is read from the server's stored challenge.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneAuthCheckInput"
+      responses:
+        "200":
+          description: Moorsyl approved the code and a Clerk ticket was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneSignInResult"
+        "400":
+          description: Invalid, expired, or incorrect verification code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "403":
+          description: The linked marketplace account is inactive
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "409":
+          description: Already signed in, existing number during sign-up, or conflicting accounts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "429":
+          description: Too many verification attempts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Verification provider unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Verification service is not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /auth/phone/sign-in/send:
+    post:
+      operationId: sendPhoneSignInCode
+      tags: [account]
+      summary: Send a Moorsyl OTP for phone sign-in
+      description: Public endpoint for sign-in or sign-up. The server binds the requested mode to a short-lived challenge and does not reveal whether an account exists.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneAuthSendInput"
+      responses:
+        "200":
+          description: Verification code sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneVerificationSendResponse"
+        "400":
+          description: Invalid Mauritanian phone number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "409":
+          description: Already signed in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "429":
+          description: Too many verification requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Verification provider unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Verification service is not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /auth/phone/sign-in/verify:
+    post:
+      operationId: verifyPhoneSignInCode
+      tags: [account]
+      summary: Verify a phone OTP and create a short-lived Clerk sign-in ticket
+      description: Only a server-approved Moorsyl challenge authorizes a ticket. Sign-up requires a name and rejects existing numbers after OTP approval; the mode is read from the server's stored challenge.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneAuthCheckInput"
+      responses:
+        "200":
+          description: Moorsyl approved the code and a Clerk ticket was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneSignInResult"
+        "400":
+          description: Invalid, expired, or incorrect verification code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "409":
+          description: Already signed in, existing number during sign-up, or conflicting accounts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "403":
+          description: The linked marketplace account is inactive
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "429":
+          description: Too many verification attempts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Verification provider unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Authentication service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /account/me/phone-signup-profile:
+    patch:
+      operationId: completePhoneSignupProfile
+      tags: [account]
+      summary: Save the required name for a new phone-authenticated account
+      description: Requires the newly authenticated Clerk user and clears its server-managed name-completion flag.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneSignupProfileInput"
+      responses:
+        "200":
+          description: Name saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneSignupProfileResponse"
+        "400":
+          description: Invalid name
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "403":
+          description: Account cannot complete onboarding
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get marketplace dashboard summary
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+  /dashboard/active-listings:
+    get:
+      operationId: listSellerActiveListings
+      tags: [dashboard]
+      summary: List the current seller's active listings
+      responses:
+        "200":
+          description: Active listings owned by the current seller
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Listing"
+components:
+  parameters:
+    ListingId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    Search:
+      name: q
+      in: query
+      schema:
+        type: string
+    Category:
+      name: category
+      in: query
+      schema:
+        type: string
+    Subcategory:
+      name: subcategory
+      in: query
+      schema:
+        type: string
+    SaleType:
+      name: saleType
+      in: query
+      schema:
+        type: string
+    Reference:
+      name: reference
+      in: query
+      schema:
+        type: string
+    Brand:
+      name: brand
+      in: query
+      schema:
+        type: string
+    ProductType:
+      name: productType
+      in: query
+      schema:
+        type: string
+    Location:
+      name: location
+      in: query
+      schema:
+        type: string
+    MinPrice:
+      name: minPrice
+      in: query
+      schema:
+        type: number
+    MaxPrice:
+      name: maxPrice
+      in: query
+      schema:
+        type: number
+    Condition:
+      name: condition
+      in: query
+      schema:
+        type: string
+        enum: [new, used]
+    Manufacturer:
+      name: manufacturer
+      in: query
+      schema:
+        type: string
+    Model:
+      name: model
+      in: query
+      schema:
+        type: string
+    Year:
+      name: year
+      in: query
+      schema:
+        type: integer
+    Sort:
+      name: sort
+      in: query
+      schema:
+        type: string
+        enum: [newest, price_asc, price_desc]
+        default: newest
+    Featured:
+      name: featured
+      in: query
+      schema:
+        type: boolean
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 12
+  schemas:
+    ListingImageProcessingInput:
+      type: object
+      required: [objectPath]
+      properties:
+        objectPath:
+          type: string
+    LegalPolicy:
+      type: object
+      required: [termsVersion, privacyVersion, lastUpdated]
+      properties:
+        termsVersion: { type: string }
+        privacyVersion: { type: string }
+        lastUpdated:
+          type: object
+          required: [ar, fr, en]
+          properties:
+            ar: { type: string }
+            fr: { type: string }
+            en: { type: string }
+    LegalConsentStatus:
+      type: object
+      required: [termsVersion, privacyVersion, needsConsent, acceptedAt]
+      properties:
+        termsVersion: { type: string }
+        privacyVersion: { type: string }
+        needsConsent: { type: boolean }
+        acceptedAt: { type: ["string", "null"], format: date-time }
+    LegalConsentInput:
+      type: object
+      additionalProperties: false
+      required: [accepted, locale]
+      properties:
+        accepted: { type: boolean, enum: [true] }
+        locale: { type: string, enum: [ar, fr, en] }
+    LegalConsentRecord:
+      type: object
+      required: [termsVersion, privacyVersion, acceptedAt]
+      properties:
+        termsVersion: { type: string }
+        privacyVersion: { type: string }
+        acceptedAt: { type: string, format: date-time }
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    Banner:
+      type: object
+      required: [id, active, sortOrder, startsAt, endsAt, createdAt, updatedAt]
+      properties:
+        id: { type: integer }
+        title: { type: ["string", "null"] }
+        subtitle: { type: ["string", "null"] }
+        additionalText: { type: ["string", "null"] }
+        imageAlt: { type: ["string", "null"] }
+        imageUrl: { type: ["string", "null"] }
+        ctaLabel: { type: ["string", "null"] }
+        targetUrl: { type: ["string", "null"] }
+        active: { type: boolean }
+        sortOrder: { type: integer }
+        startsAt: { type: ["string", "null"], format: date-time }
+        endsAt: { type: ["string", "null"], format: date-time }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    BannerImageUploadInput:
+      type: object
+      required: [name, size, contentType]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 255 }
+        size: { type: integer, minimum: 1, maximum: 8000000 }
+        contentType:
+          type: string
+          enum: [image/jpeg, image/png, image/webp]
+    BannerImageUploadUrl:
+      type: object
+      required: [uploadURL, objectPath]
+      properties:
+        uploadURL: { type: string, format: uri }
+        objectPath: { type: string, minLength: 1, maxLength: 512 }
+    BannerImageProcessingInput:
+      type: object
+      required: [objectPath]
+      properties:
+        objectPath: { type: string, minLength: 1, maxLength: 512 }
+    BannerImageProcessingResult:
+      type: object
+      required: [imagePath, originalBytes, webpBytes, width, height]
+      properties:
+        imagePath: { type: string, minLength: 1, maxLength: 512 }
+        originalBytes: { type: integer, minimum: 1 }
+        webpBytes: { type: integer, minimum: 1 }
+        width: { type: integer, minimum: 1 }
+        height: { type: integer, minimum: 1 }
+    Category:
+      type: object
+      required: [id, name, nameFr, nameEn, slug, icon, sortOrder, active, count, subcategories]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        nameFr: { type: string }
+        nameEn: { type: string }
+        slug: { type: string }
+        icon: { type: string }
+        sortOrder: { type: integer }
+        active: { type: boolean }
+        count: { type: integer }
+        subcategories:
+          type: array
+          items: { $ref: "#/components/schemas/Subcategory" }
+    Subcategory:
+      type: object
+      required: [id, categoryId, name, nameFr, nameEn, slug, sortOrder, active]
+      properties:
+        id: { type: integer }
+        categoryId: { type: integer }
+        name: { type: string }
+        nameFr: { type: string }
+        nameEn: { type: string }
+        slug: { type: string }
+        sortOrder: { type: integer }
+        active: { type: boolean }
+    CategoryInput:
+      type: object
+      required: [name, nameFr, nameEn, slug, icon]
+      properties:
+        name: { type: string, minLength: 1 }
+        nameFr: { type: string, minLength: 1 }
+        nameEn: { type: string, minLength: 1 }
+        slug: { type: string, minLength: 2 }
+        icon: { type: string }
+        sortOrder: { type: integer, default: 0 }
+        active: { type: boolean, default: true }
+    CategoryUpdate:
+      allOf:
+        - $ref: "#/components/schemas/CategoryInput"
+    SubcategoryInput:
+      type: object
+      required: [name, nameFr, nameEn, slug]
+      properties:
+        name: { type: string, minLength: 1 }
+        nameFr: { type: string, minLength: 1 }
+        nameEn: { type: string, minLength: 1 }
+        slug: { type: string, minLength: 2 }
+        sortOrder: { type: integer, default: 0 }
+        active: { type: boolean, default: true }
+    SubcategoryUpdate:
+      allOf:
+        - $ref: "#/components/schemas/SubcategoryInput"
+    Location:
+      type: object
+      required: [id, name, country, listingCount]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        country: { type: string }
+        listingCount: { type: integer }
+    MarketPulse:
+      type: object
+      required: [availableCount, newThisWeekCount, soldThisWeekCount, topCategory, recentListings]
+      properties:
+        availableCount: { type: integer }
+        newThisWeekCount: { type: integer }
+        soldThisWeekCount: { type: integer }
+        topCategory:
+          type: object
+          nullable: true
+          required: [name, nameFr, nameEn, slug, count]
+          properties:
+            name: { type: string }
+            nameFr: { type: string }
+            nameEn: { type: string }
+            slug: { type: string }
+            count: { type: integer }
+        recentListings:
+          type: array
+          items: { $ref: "#/components/schemas/Listing" }
+    Seller:
+      type: object
+      required: [id, name, initials, verified]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        initials: { type: string }
+        verified: { type: boolean }
+        phone: { type: ["string", "null"] }
+    Listing:
+      type: object
+      required: [id, title, category, categorySlug, price, currency, location, condition, imageUrl, images, seller, createdAt, featured, attributes, contactPhone, whatsappPhone, saleStatus, soldAt, saleRevertUntil, canRevertSale, rentalStatus, rentalSeasonArchivedAt, rentalAdminHiddenAt, rentedAt]
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        category: { type: string }
+        categorySlug: { type: string }
+        subcategory: { type: ["string", "null"] }
+        subcategorySlug: { type: ["string", "null"] }
+        price: { type: number }
+        currency: { type: string }
+        location: { type: string }
+        condition: { type: string, enum: [new, used] }
+        year: { type: ["integer", "null"] }
+        manufacturer: { type: ["string", "null"] }
+        model: { type: ["string", "null"] }
+        hours: { type: ["integer", "null"] }
+        area: { type: ["number", "null"] }
+        waterAvailable: { type: ["boolean", "null"] }
+        electricityAvailable: { type: ["boolean", "null"] }
+        ownershipType: { type: ["string", "null"] }
+        contactPhone: { type: ["string", "null"] }
+        whatsappPhone: { type: ["string", "null"] }
+        attributes:
+          type: object
+          additionalProperties: true
+        description: { type: string }
+        imageUrl: { type: string }
+        images:
+          type: array
+          items: { type: string }
+        seller: { $ref: "#/components/schemas/Seller" }
+        createdAt: { type: string, format: date-time }
+        featured: { type: boolean }
+        isSaved: { type: boolean }
+        saleStatus: { type: string, enum: [available, sold] }
+        soldAt: { type: ["string", "null"], format: date-time }
+        saleRevertUntil: { type: ["string", "null"], format: date-time }
+        canRevertSale: { type: boolean }
+        rentalStatus: { type: string, enum: [available, leased] }
+        rentalSeasonArchivedAt: { type: ["string", "null"], format: date-time }
+        rentalAdminHiddenAt: { type: ["string", "null"], format: date-time }
+        rentedAt: { type: ["string", "null"], format: date-time }
+    ListingInput:
+      type: object
+      required: [title, category, price, currency, location, condition, description, contactPhone]
+      properties:
+        title: { type: string, minLength: 3 }
+        category: { type: string }
+        subcategory: { type: ["string", "null"] }
+        price: { type: number, minimum: 0 }
+        currency: { type: string }
+        location: { type: string }
+        condition: { type: string, enum: [new, used] }
+        year: { type: ["integer", "null"] }
+        manufacturer: { type: ["string", "null"] }
+        model: { type: ["string", "null"] }
+        hours: { type: ["integer", "null"] }
+        area: { type: ["number", "null"] }
+        waterAvailable: { type: ["boolean", "null"] }
+        electricityAvailable: { type: ["boolean", "null"] }
+        ownershipType: { type: ["string", "null"] }
+        attributes:
+          type: object
+          additionalProperties: true
+        description: { type: string, minLength: 10 }
+        contactPhone: { type: string, minLength: 5, maxLength: 80 }
+        whatsappPhone: { type: ["string", "null"], minLength: 5, maxLength: 80 }
+        imageUrl: { type: string }
+        images:
+          type: array
+          items: { type: string }
+    ListingUpdate:
+      type: object
+      required: [price, currency, contactPhone]
+      properties:
+        price: { type: number, minimum: 0 }
+        currency: { type: string }
+        contactPhone: { type: string, minLength: 5, maxLength: 80 }
+        whatsappPhone: { type: ["string", "null"], minLength: 5, maxLength: 80 }
+        description: { type: string, minLength: 10, maxLength: 10000 }
+        images:
+          type: array
+          maxItems: 8
+          items: { type: string }
+    ListingSearchResult:
+      type: object
+      required: [items, total, page, limit]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/Listing" }
+        total: { type: integer }
+        page: { type: integer }
+        limit: { type: integer }
+    FavoriteState:
+      type: object
+      required: [saved]
+      properties:
+        saved: { type: boolean }
+    Message:
+      type: object
+      required: [id, listingId, listingTitle, senderName, preview, createdAt, unread]
+      properties:
+        id: { type: integer }
+        listingId: { type: integer }
+        listingTitle: { type: string }
+        senderName: { type: string }
+        preview: { type: string }
+        createdAt: { type: string, format: date-time }
+        unread: { type: boolean }
+    MessageInput:
+      type: object
+      required: [listingId, body]
+      properties:
+        listingId: { type: integer }
+        body: { type: string, minLength: 1 }
+    SupportSettings:
+      type: object
+      required: [phone, whatsappPhone]
+      properties:
+        phone: { type: string }
+        whatsappPhone: { type: string }
+    SupportMessageInput:
+      type: object
+      required: [message, requestContact]
+      properties:
+        message: { type: string, minLength: 1, maxLength: 5000 }
+        requestContact: { type: boolean }
+    SupportMessage:
+      type: object
+      required: [id, createdAt]
+      properties:
+        id: { type: integer }
+        createdAt: { type: string, format: date-time }
+    ReportInput:
+      type: object
+      required: [reason, details]
+      properties:
+        listingId: { type: integer }
+        reportedUserId: { type: integer }
+        reason:
+          type: string
+          enum: [spam, inappropriate, fraud, misleading, other]
+        details: { type: string, minLength: 10, maxLength: 5000 }
+        contactRequested: { type: boolean }
+    Report:
+      type: object
+      required: [id, reporterId, reason, details, contactRequested, status, createdAt]
+      properties:
+        id: { type: integer }
+        reporterId: { type: integer }
+        listingId: { type: integer, nullable: true }
+        reportedUserId: { type: integer, nullable: true }
+        reason: { type: string }
+        details: { type: string }
+        contactRequested: { type: boolean }
+        status: { type: string, enum: [open, resolved] }
+        action: { type: string, nullable: true }
+        resolvedAt: { type: string, format: date-time, nullable: true }
+        createdAt: { type: string, format: date-time }
+        listing:
+          type: object
+          nullable: true
+          properties:
+            id: { type: integer }
+            title: { type: string }
+    ReportDetails:
+      allOf:
+        - $ref: "#/components/schemas/Report"
+        - type: object
+          required: [replies]
+          properties:
+            replies:
+              type: array
+              items:
+                type: object
+                required: [id, body, createdAt]
+                properties:
+                  id: { type: integer }
+                  body: { type: string }
+                  createdAt: { type: string, format: date-time }
+    ApiError:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string }
+        code: { type: string }
+        retryAfterSeconds: { type: integer, minimum: 1 }
+    MyAccountProfile:
+      type: object
+      required: [id, name, verified, phone, phoneVerified]
+      properties:
+        id: { type: ["integer", "null"] }
+        name: { type: string, maxLength: 120 }
+        verified: { type: boolean }
+        phone: { type: ["string", "null"] }
+        phoneVerified: { type: boolean }
+    MyAccountProfileUpdate:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 120 }
+    MyAccountEmail:
+      type: object
+      required: [email]
+      properties:
+        email: { type: ["string", "null"] }
+    PhoneVerificationSendInput:
+      type: object
+      required: [phone]
+      properties:
+        phone: { type: string, minLength: 1, maxLength: 40 }
+    PhoneAuthSendInput:
+      type: object
+      required: [phone]
+      properties:
+        phone: { type: string, minLength: 1, maxLength: 40 }
+        mode: { type: string, enum: [sign-in, sign-up], default: sign-in }
+    PhoneAuthCheckInput:
+      type: object
+      required: [verificationId, code]
+      properties:
+        verificationId: { type: string, minLength: 1, maxLength: 200 }
+        code:
+          type: string
+          minLength: 4
+          maxLength: 8
+          pattern: '^[0-9٠-٩۰-۹]{4,8}$'
+        name: { type: string, minLength: 1, maxLength: 120 }
+        firstName: { type: string, minLength: 1, maxLength: 120 }
+        lastName: { type: string, minLength: 1, maxLength: 120 }
+        password: { type: string, minLength: 8, maxLength: 128, writeOnly: true }
+    PhoneVerificationCheckInput:
+      type: object
+      required: [verificationId, code]
+      properties:
+        verificationId: { type: string, minLength: 1, maxLength: 200 }
+        code:
+          type: string
+          minLength: 4
+          maxLength: 8
+          pattern: '^[0-9٠-٩۰-۹]{4,8}$'
+    PhoneVerificationSendResponse:
+      type: object
+      required: [verificationId, resendAfterSeconds]
+      properties:
+        verificationId: { type: string }
+        resendAfterSeconds: { type: integer, minimum: 1 }
+    PhoneVerificationResult:
+      type: object
+      required: [phone, phoneVerified]
+      properties:
+        phone: { type: string }
+        phoneVerified: { type: boolean }
+    PhoneSignInResult:
+      type: object
+      required: [ticket, requiresName]
+      properties:
+        ticket: { type: string, minLength: 1 }
+        requiresName: { type: boolean }
+    PhoneSignupProfileInput:
+      type: object
+      required: [firstName]
+      properties:
+        firstName: { type: string, minLength: 1, maxLength: 120 }
+        lastName: { type: string, minLength: 1, maxLength: 120 }
+    PhoneSignupProfileResponse:
+      type: object
+      required: [complete]
+      properties:
+        complete: { type: boolean }
+    DashboardSummary:
+      type: object
+      required: [listingCount, userCount, messageCount, savedCount, categoryCounts, recentListings, archivedRentalListings, rentalSeasonOpen, renewalFee]
+      properties:
+        listingCount: { type: integer }
+        userCount: { type: integer }
+        messageCount: { type: integer }
+        savedCount: { type: integer }
+        categoryCounts:
+          type: array
+          items:
+            type: object
+            required: [category, count]
+            properties:
+              category: { type: string }
+              count: { type: integer }
+        recentListings:
+          type: array
+          items: { $ref: "#/components/schemas/Listing" }
+        archivedRentalListings:
+          type: array
+          items: { $ref: "#/components/schemas/Listing" }
+        rentalSeasonOpen: { type: boolean }
+        renewalFee: { type: number }
+

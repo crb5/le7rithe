@@ -1,0 +1,2 @@
+test-results/header-navigation-shared-m-6151e-om-narrow-phones-to-desktop-general-e2e/trace.zip filter=lfs diff=lfs merge=lfs -text
+test-results/language-switching-desktop-c7b96--direction-without-a-reload-general-e2e/trace.zip filter=lfs diff=lfs merge=lfs -text

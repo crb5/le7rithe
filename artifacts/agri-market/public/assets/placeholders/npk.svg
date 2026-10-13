@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 288" width="288" height="288">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34503f"/><stop offset="1" stop-color="#4a6b57"/></linearGradient></defs>
+<rect width="288" height="288" rx="40" fill="url(#bg)"/>
+<g transform="translate(144 144) scale(0.939) translate(-144 -146)"><g fill="none" stroke="#E8BC52" stroke-width="7.46" stroke-linecap="round" stroke-linejoin="round"><path d="M96 94 H192 L200 114 V206 Q200 216 190 216 H98 Q88 216 88 206 V114 Z"/><path d="M88 114 H200"/><path d="M110 94 L118 76 H170 L178 94"/><text x="144" y="178" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#E8BC52" stroke="none">NPK</text></g></g>
+</svg>

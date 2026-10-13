@@ -1,0 +1,303 @@
+{
+  "buildHash": "b7a70df2ecdbb4fb0b8ca9e278985590bfd47905c38795671a733ffc4f787a3f",
+  "settings": {
+    "width": 390,
+    "height": 844,
+    "dpr": 1,
+    "cpu": 4,
+    "downloadKbps": 1600,
+    "uploadKbps": 750,
+    "latencyMs": 150
+  },
+  "interpretation": "Paired randomization of median differences (all 512 label swaps for nine pairs); paired bootstrap 95% CI, 20000 resamples. A regression requires >5%, CI above zero, and p<0.05. No rejection is not proof of zero effect.",
+  "pages": {
+    "/": {
+      "sampleSizePerCondition": 9,
+      "metrics": {
+        "lcpMs": {
+          "on": {
+            "median": 2665.786,
+            "min": 2543.21,
+            "max": 2897.553
+          },
+          "off": {
+            "median": 2642.327,
+            "min": 2527.977,
+            "max": 2813.865
+          },
+          "difference": 23.458999999999833,
+          "percent": 0.8878159289141666,
+          "ci95": [
+            -38.30500000000029,
+            213.29800000000023
+          ],
+          "p": 0.5,
+          "credibleRegression": false
+        },
+        "tbtMs": {
+          "on": {
+            "median": 516.7769999999982,
+            "min": 455.9970000000003,
+            "max": 609.0679999990448
+          },
+          "off": {
+            "median": 531.389999999999,
+            "min": 436.817,
+            "max": 613.9429999999993
+          },
+          "difference": -14.613000000000739,
+          "percent": -2.749957658217273,
+          "ci95": [
+            -84.00600000000122,
+            59.602999999999156
+          ],
+          "p": 0.4375,
+          "credibleRegression": false
+        },
+        "cls": {
+          "on": {
+            "median": 0.00046728254571884545,
+            "min": 0.00046728254571884545,
+            "max": 0.0005384388251813176
+          },
+          "off": {
+            "median": 0.00046728254571884545,
+            "min": 0.00046728254571884545,
+            "max": 0.00046728254571884545
+          },
+          "difference": 0,
+          "percent": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "p": 1,
+          "credibleRegression": false
+        },
+        "localJsBytes": {
+          "on": {
+            "median": 181273,
+            "min": 181273,
+            "max": 181273
+          },
+          "off": {
+            "median": 181273,
+            "min": 181273,
+            "max": 181273
+          },
+          "difference": 0,
+          "percent": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "p": 1,
+          "credibleRegression": false
+        },
+        "totalJsBytes": {
+          "on": {
+            "median": 532429,
+            "min": 532389,
+            "max": 532572
+          },
+          "off": {
+            "median": 532447,
+            "min": 532412,
+            "max": 532574
+          },
+          "difference": -18,
+          "percent": -0.003380618164812648,
+          "ci95": [
+            -99,
+            72
+          ],
+          "p": 0.625,
+          "credibleRegression": false
+        }
+      },
+      "sameOwnJavaScriptTransfer": true,
+      "cpuAttribution": {
+        "on": [
+          {
+            "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+            "medianTotalMs": 1371.8989999999912
+          },
+          {
+            "source": "https://usable-colt-3486.clerk.accounts.dev",
+            "medianTotalMs": 665.6590000000002
+          },
+          {
+            "source": "unknown",
+            "medianTotalMs": 544.0899999999986
+          },
+          {
+            "source": "http://127.0.0.1:19062/",
+            "medianTotalMs": 397.4460000000001
+          }
+        ],
+        "off": [
+          {
+            "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+            "medianTotalMs": 1315.3059999999923
+          },
+          {
+            "source": "https://usable-colt-3486.clerk.accounts.dev",
+            "medianTotalMs": 700.31
+          },
+          {
+            "source": "unknown",
+            "medianTotalMs": 497.14699999999885
+          },
+          {
+            "source": "http://127.0.0.1:19062/",
+            "medianTotalMs": 398.80299999999994
+          }
+        ]
+      }
+    },
+    "/listings/55": {
+      "sampleSizePerCondition": 9,
+      "metrics": {
+        "lcpMs": {
+          "on": {
+            "median": 3290.787,
+            "min": 3213.927,
+            "max": 3517.743
+          },
+          "off": {
+            "median": 3373.254,
+            "min": 3260.125,
+            "max": 4497.836
+          },
+          "difference": -82.4670000000001,
+          "percent": -2.4447314077149276,
+          "ci95": [
+            -166.58499999999958,
+            22.533000000000357
+          ],
+          "p": 0.2109375,
+          "credibleRegression": false
+        },
+        "tbtMs": {
+          "on": {
+            "median": 709.259,
+            "min": 651.3419999999996,
+            "max": 918.6319999999996
+          },
+          "off": {
+            "median": 761.8279999990455,
+            "min": 619.5349999999999,
+            "max": 1363.7570000000005
+          },
+          "difference": -52.568999999045445,
+          "percent": -6.900376462811988,
+          "ci95": [
+            -124.34399999999914,
+            98.68899999999985
+          ],
+          "p": 0.40625,
+          "credibleRegression": false
+        },
+        "cls": {
+          "on": {
+            "median": 0.000006004081047319071,
+            "min": 0.000006004081047319071,
+            "max": 0.000006004081047319071
+          },
+          "off": {
+            "median": 0.000006004081047319071,
+            "min": 0.000006004081047319071,
+            "max": 0.000006004081047319071
+          },
+          "difference": 0,
+          "percent": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "p": 1,
+          "credibleRegression": false
+        },
+        "localJsBytes": {
+          "on": {
+            "median": 191227,
+            "min": 191227,
+            "max": 191227
+          },
+          "off": {
+            "median": 191227,
+            "min": 191227,
+            "max": 191227
+          },
+          "difference": 0,
+          "percent": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "p": 1,
+          "credibleRegression": false
+        },
+        "totalJsBytes": {
+          "on": {
+            "median": 542390,
+            "min": 542347,
+            "max": 542444
+          },
+          "off": {
+            "median": 542404,
+            "min": 542345,
+            "max": 542490
+          },
+          "difference": -14,
+          "percent": -0.002581101909277955,
+          "ci95": [
+            -88,
+            29
+          ],
+          "p": 0.609375,
+          "credibleRegression": false
+        }
+      },
+      "sameOwnJavaScriptTransfer": true,
+      "cpuAttribution": {
+        "on": [
+          {
+            "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+            "medianTotalMs": 1268.2039999999927
+          },
+          {
+            "source": "https://usable-colt-3486.clerk.accounts.dev",
+            "medianTotalMs": 653.0290000000002
+          },
+          {
+            "source": "unknown",
+            "medianTotalMs": 465.9849999999998
+          },
+          {
+            "source": "http://127.0.0.1:19062/listings/55",
+            "medianTotalMs": 254.523
+          }
+        ],
+        "off": [
+          {
+            "source": "http://127.0.0.1:19062/assets/index-JvJ4ahgS.js",
+            "medianTotalMs": 1315.8619999999935
+          },
+          {
+            "source": "https://usable-colt-3486.clerk.accounts.dev",
+            "medianTotalMs": 672.6480000000003
+          },
+          {
+            "source": "unknown",
+            "medianTotalMs": 468.21799999999934
+          },
+          {
+            "source": "http://127.0.0.1:19062/listings/55",
+            "medianTotalMs": 253.56799999999998
+          }
+        ]
+      }
+    }
+  }
+}

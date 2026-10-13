@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;600;700;800&display=swap');
+
+.phone-nav-shell {
+  font-family: 'Tajawal', 'DM Sans', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.phone-nav-scrollbar {
+  scrollbar-width: none;
+}
+
+.phone-nav-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.phone-nav-sheet {
+  animation: phone-nav-sheet-in 220ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes phone-nav-sheet-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phone-nav-sheet { animation: none; }
+}

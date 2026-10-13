@@ -1,0 +1,19 @@
+{
+  "name": "@workspace/scripts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "hello": "tsx ./src/hello.ts",
+    "measure:marketplace": "node ./src/measure-marketplace-performance.mjs",
+    "measure:image-lcp": "node ./src/measure-image-lcp.mjs",
+    "benchmark:serve": "node ./src/image-benchmark-server.mjs",
+    "cleanup:legacy-listing-image-originals": "tsx ./src/cleanup-legacy-listing-image-originals.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "lighthouse": "^13.5.0",
+    "tsx": "catalog:"
+  }
+}

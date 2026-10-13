@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  --background: 42 37% 96%;
+  --foreground: 154 26% 15%;
+  --border: 38 22% 86%;
+  --card: 40 33% 99%;
+  --card-border: 38 22% 88%;
+  --sidebar: 155 33% 16%;
+  --sidebar-foreground: 42 34% 94%;
+  --sidebar-accent: 153 26% 23%;
+  --popover: 40 33% 99%;
+  --primary: 155 33% 23%;
+  --primary-foreground: 42 34% 96%;
+  --secondary: 42 48% 90%;
+  --muted-foreground: 153 12% 43%;
+  --accent: 42 87% 61%;
+  --destructive: 4 62% 48%;
+  --app-font-sans: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+.dark {
+  --background: 154 25% 10%;
+  --foreground: 42 34% 95%;
+  --border: 154 18% 26%;
+  --card: 154 22% 14%;
+  --card-border: 154 18% 26%;
+  --sidebar: 154 29% 9%;
+  --sidebar-foreground: 42 34% 95%;
+  --sidebar-accent: 154 21% 18%;
+  --popover: 154 22% 14%;
+  --primary: 42 87% 61%;
+  --primary-foreground: 154 26% 15%;
+  --secondary: 154 21% 20%;
+  --muted-foreground: 42 16% 68%;
+  --accent: 42 87% 61%;
+  --destructive: 4 62% 58%;
+}
+
+html,
+body,
+#root {
+  min-width: 0;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--app-font-sans);
+}

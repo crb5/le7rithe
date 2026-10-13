@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le7rithe.com | السوق الزراعي الموريتاني</title>
+    <meta name="application-name" content="Le7rithe.com" />
+    <meta name="description" content="Le7rithe.com لبيع وشراء وتأجير الأراضي والآليات والبذور والأسمدة والمنتجات الزراعية في موريتانيا، مع تواصل مباشر بين البائعين والمشترين في مختلف الولايات." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:site_name" content="Le7rithe.com" />
+    <meta property="og:title" content="Le7rithe.com | السوق الزراعي الموريتاني" />
+    <meta property="og:description" content="Le7rithe.com لبيع وشراء وتأجير الأراضي والآليات والبذور والأسمدة والمنتجات الزراعية في موريتانيا، مع تواصل مباشر بين البائعين والمشترين في مختلف الولايات." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Le7rithe.com | السوق الزراعي الموريتاني" />
+    <meta name="twitter:description" content="Le7rithe.com لبيع وشراء وتأجير الأراضي والآليات والبذور والأسمدة والمنتجات الزراعية في موريتانيا، مع تواصل مباشر بين البائعين والمشترين في مختلف الولايات." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/src/assets/fonts/ibm-plex-sans-arabic-arabic-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      .initial-loading {
+        display: grid;
+        min-height: 100vh;
+        min-height: 100dvh;
+        place-items: center;
+      }
+      .initial-loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #F4BF3A;
+        border-top-color: #173D32;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+    </style>
+    <script>
+      if (new URLSearchParams(window.location.search).get('debug') === '1') {
+        (() => {
+          const startupEntries = [];
+          const recentEntries = [];
+          const startedAt = performance.now();
+          let lastScrollSampleAt = -Infinity;
+          const debugState = {};
+          Object.defineProperty(debugState, 'entries', {
+            enumerable: true,
+            get: () => [...startupEntries, ...recentEntries],
+          });
+          const add = (event) => {
+            const elapsed = performance.now() - startedAt;
+            if (event.label === 'scroll') {
+              if (elapsed - lastScrollSampleAt < 120) return;
+              lastScrollSampleAt = elapsed;
+            }
+            const entry = { atMs: Math.round(elapsed), event };
+            if (startupEntries.length < 60) {
+              startupEntries.push(entry);
+              return;
+            }
+            if (recentEntries.length >= 140) recentEntries.shift();
+            recentEntries.push(entry);
+          };
+          const sample = (label) => {
+            const sections = Array.from(document.querySelectorAll(
+              'main, [data-testid="marketplace-header"], [data-testid^="section-"], [data-testid="storefronts-loading"], [data-testid="storefronts-section"], [data-testid="storefronts-rail"], [data-testid="storefronts-dots"]',
+            )).slice(0, 24).map((element) => {
+              const rect = element.getBoundingClientRect();
+              return {
+                tag: element.tagName,
+                testId: element.getAttribute('data-testid'),
+                top: Math.round(rect.top),
+                height: Math.round(rect.height),
+              };
+            });
+            add({
+              label,
+              scrollY: Math.round(window.scrollY),
+              documentHeight: document.documentElement.scrollHeight,
+              viewportHeight: window.innerHeight,
+              visualViewport: window.visualViewport ? {
+                height: Math.round(window.visualViewport.height),
+                offsetTop: Math.round(window.visualViewport.offsetTop),
+                pageTop: Math.round(window.visualViewport.pageTop),
+              } : null,
+              sections,
+            });
+          };
+          window.__homeLoadDebug = debugState;
+          sample('head-start');
+          ['DOMContentLoaded', 'load', 'pageshow', 'scroll', 'resize'].forEach((name) => {
+            window.addEventListener(name, () => sample(name), { passive: true });
+          });
+          ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'scrollend'].forEach((name) => {
+            window.addEventListener(name, (event) => {
+              const target = event.target instanceof Element
+                ? event.target.closest('[data-testid]')
+                : null;
+              const touch = event.changedTouches?.[0] || event.touches?.[0];
+              add({
+                label: name,
+                targetTestId: target?.getAttribute('data-testid') || null,
+                x: Math.round(event.clientX ?? touch?.clientX ?? 0),
+                y: Math.round(event.clientY ?? touch?.clientY ?? 0),
+              });
+            }, { passive: true, capture: true });
+          });
+          window.visualViewport?.addEventListener('resize', () => sample('visualViewport.resize'), { passive: true });
+          window.visualViewport?.addEventListener('scroll', () => sample('visualViewport.scroll'), { passive: true });
+          [0, 50, 150, 300, 600, 900, 1200, 1800, 3000, 5000, 8000].forEach((delay) => {
+            window.setTimeout(() => sample(`timer-${delay}ms`), delay);
+          });
+          if ('PerformanceObserver' in window) {
+            try {
+              new PerformanceObserver((list) => {
+                list.getEntries().forEach((entry) => {
+                  if (entry.hadRecentInput) return;
+                  add({
+                    label: 'layout-shift',
+                    value: entry.value,
+                    sources: entry.sources?.map((source) => ({
+                      tag: source.node?.nodeName,
+                      testId: source.node?.getAttribute?.('data-testid') || null,
+                      previousHeight: Math.round(source.previousRect?.height ?? 0),
+                      currentHeight: Math.round(source.currentRect?.height ?? 0),
+                    })),
+                  });
+                });
+              }).observe({ type: 'layout-shift', buffered: true });
+            } catch {
+              add({ label: 'layout-shift-observer-unavailable' });
+            }
+          }
+        })();
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <div class="initial-loading" role="status" aria-label="جارٍ التحميل">
+        <span class="initial-loading-spinner"></span>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

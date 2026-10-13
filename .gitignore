@@ -1,0 +1,70 @@
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# compiled output
+dist
+.test-dist
+tmp
+out-tsc
+*.tsbuildinfo
+.expo
+.expo-shared
+
+# dependencies
+node_modules
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/generated-artifacts/
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
+
+# Replit
+.cache/
+.local/
+.data/
+
+# Playwright authentication sessions
+/e2e/.auth/
+
+# Playwright output can contain page data and network recordings
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Sensitive audit uploads should remain local
+/attached_assets/Pasted--Security-Secrets-Audit--*.txt
+/attached_assets/Pasted--SECRET-SECURITY-AUDIT-*.txt
