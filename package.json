@@ -2,18 +2,23 @@
   "name": "workspace",
   "version": "0.0.0",
   "license": "MIT",
+  "packageManager": "yarn@4.6.0",
+  "workspaces": [
+    "artifacts/*",
+    "lib/*",
+    "lib/integrations/*"
+  ],
   "scripts": {
-    "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
-    "build": "pnpm run typecheck && pnpm -r --if-present run build",
-    "validate:development-schema": "pnpm --filter @workspace/db run check:development-schema",
+    "build": "yarn run typecheck && yarn workspaces foreach -Ap --exclude workspace run build",
+    "validate:development-schema": "yarn workspace @workspace/db run check:development-schema",
     "setup:e2e-auth": "node e2e/setup-auth.mjs",
     "test:e2e": "playwright test --config=e2e/playwright.config.ts",
     "test:e2e:private-payment-review": "node scripts/run-private-payment-review.mjs",
     "test:private-payment-review-runner": "node --test scripts/run-private-payment-review.test.mjs",
-    "test:private-object-storage-cleanup": "pnpm --filter @workspace/api-server run test:live-object-storage-cleanup",
+    "test:private-object-storage-cleanup": "yarn workspace @workspace/api-server run test:live-object-storage-cleanup",
     "typecheck:e2e": "tsc -p e2e/tsconfig.json --noEmit",
     "typecheck:libs": "tsc --build",
-    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck && pnpm run typecheck:e2e"
+    "typecheck": "yarn run typecheck:libs && yarn workspaces foreach -Ap --include @workspace/agri-market --include @workspace/api-server --include @workspace/mockup-sandbox --include @workspace/scripts run typecheck && yarn run typecheck:e2e"
   },
   "private": true,
   "dependencies": {
@@ -21,8 +26,14 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
-    "@types/node": "catalog:",
+    "@types/node": "^25.3.3",
     "prettier": "^3.9.6",
     "typescript": "~5.9.3"
+  },
+  "resolutions": {
+    "@esbuild-kit/esm-loader": "npm:tsx@^4.21.0",
+    "esbuild": "0.28.1",
+    "proxy-addr": "2.0.8",
+    "source-map-js": "1.2.2"
   }
 }

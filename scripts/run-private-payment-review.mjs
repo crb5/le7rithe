@@ -42,7 +42,7 @@ const forwardedArgs = process.argv.slice(2);
 if (forwardedArgs[0] === "--") forwardedArgs.shift();
 
 const child = spawn(
-  "pnpm",
+  "yarn",
   [
     "exec",
     "playwright",

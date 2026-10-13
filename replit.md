@@ -4,19 +4,19 @@ Le7rithe.com منصة زراعية موريتانية لبيع وشراء وتأ
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run test:e2e:private-payment-review` — run the release receipt gate against a provisioned private bucket
-- `pnpm run test:private-object-storage-cleanup` — verify stale private receipt cleanup against a provisioned bucket
-- `pnpm run validate:development-schema` — verify the development notification schema before report/payment browser suites
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
+- `yarn workspace @workspace/api-server run dev` — run the API server (port 5000)
+- `yarn typecheck` — full typecheck across all packages
+- `yarn test:e2e:private-payment-review` — run the release receipt gate against a provisioned private bucket
+- `yarn test:private-object-storage-cleanup` — verify stale private receipt cleanup against a provisioned bucket
+- `yarn validate:development-schema` — verify the development notification schema before report/payment browser suites
+- `yarn build` — typecheck + build all packages
+- `yarn workspace @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
+- `yarn workspace @workspace/db run push` — push DB schema changes (dev only)
 - Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
+- Yarn 4 (Modern) workspaces, Node.js 24, TypeScript 5.9
 - API: Express 5
 - DB: PostgreSQL + Drizzle ORM
 - Validation: Zod (`zod/v4`), `drizzle-zod`
@@ -58,8 +58,8 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 - بعد تعديل `lib/api-spec/openapi.yaml` يجب تشغيل codegen قبل فحص أو استخدام hooks الواجهة.
 - قيم PostgreSQL الرقمية تُحوّل إلى أرقام قبل تمريرها إلى Zod response schemas.
-- يجب تشغيل `pnpm --filter @workspace/api-spec run codegen` بعد أي تعديل في عقد الفئات أو الإعلانات.
+- يجب تشغيل `yarn workspace @workspace/api-spec run codegen` بعد أي تعديل في عقد الفئات أو الإعلانات.
 
 ## Pointers
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- Yarn 4 (Modern) workspaces with `nodeLinker: node-modules` (see `.yarnrc.yml`); run commands with `yarn workspace <name> run <script>` or the root scripts above

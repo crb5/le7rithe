@@ -3,8 +3,8 @@ import { pathToFileURL } from "node:url";
 
 const args = new Set(process.argv.slice(2));
 const usage = [
-  "Dry run (default): NODE_ENV=development pnpm --filter @workspace/scripts cleanup:legacy-listing-image-originals",
-  "Apply: NODE_ENV=development pnpm --filter @workspace/scripts cleanup:legacy-listing-image-originals -- --apply --backup-confirmed",
+  "Dry run (default): NODE_ENV=development yarn workspace @workspace/scripts run cleanup:legacy-listing-image-originals",
+  "Apply: NODE_ENV=development yarn workspace @workspace/scripts run cleanup:legacy-listing-image-originals -- --apply --backup-confirmed",
   "Only apply after independently confirming a restorable backup of the development bucket exists.",
 ].join("\n");
 

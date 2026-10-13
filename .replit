@@ -3,10 +3,10 @@ modules = ["nodejs-24", "python-base-3.13", "postgresql-16"]
 [deployment]
 router = "application"
 deploymentTarget = "autoscale"
-build = ["sh", "-c", "pnpm --filter @workspace/agri-market run build && pnpm --filter @workspace/api-server run build"]
+build = ["sh", "-c", "yarn workspace @workspace/agri-market run build && yarn workspace @workspace/api-server run build"]
 
 [deployment.postBuild]
-args = ["pnpm", "store", "prune"]
+args = ["yarn", "cache", "clean"]
 env = { "CI" = "true" }
 
 [workflows]

@@ -7,7 +7,7 @@ const execFileAsync = promisify(execFile);
 
 setup("provision fresh Clerk sessions", async () => {
   try {
-    await execFileAsync("pnpm", ["run", "validate:development-schema"], {
+    await execFileAsync("yarn", ["run", "validate:development-schema"], {
       env: process.env,
       maxBuffer: 10 * 1024 * 1024,
     });

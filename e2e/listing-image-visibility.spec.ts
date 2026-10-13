@@ -193,7 +193,7 @@ async function evictLocalImageCache(
 test.describe('listing image visibility', () => {
   test.skip(
     missingConfiguration,
-    'Set E2E_BASE_URL and create seller/admin storage states with pnpm setup:e2e-auth to run the listing image regression.',
+    'Set E2E_BASE_URL and create seller/admin storage states with yarn setup:e2e-auth to run the listing image regression.',
   );
   test.skip(!paidListingsEnabled, 'This image lifecycle regression includes the temporarily disabled paid-listing flow.');
 

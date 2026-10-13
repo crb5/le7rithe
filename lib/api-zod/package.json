@@ -8,6 +8,6 @@
     "./listing-edit-window": "./src/listing-edit-window.ts"
   },
   "dependencies": {
-    "zod": "catalog:"
+    "zod": "^3.25.76"
   }
 }

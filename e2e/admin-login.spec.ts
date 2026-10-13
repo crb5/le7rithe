@@ -71,7 +71,7 @@ async function createClerkSignInTicket(userId: string) {
 
 async function createAdminSignInTicket() {
   const adminId = configuredAdminUserId ?? await findClerkUserIdByEmail(adminEmail);
-  expect(adminId, `No Clerk user exists for ${adminEmail}. Run pnpm setup:e2e-auth first.`).toBeTruthy();
+  expect(adminId, `No Clerk user exists for ${adminEmail}. Run yarn setup:e2e-auth first.`).toBeTruthy();
   return createClerkSignInTicket(adminId!);
 }
 

@@ -12,8 +12,9 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@types/node": "catalog:",
+    "@types/node": "^25.3.3",
     "lighthouse": "^13.5.0",
-    "tsx": "catalog:"
+    "tsx": "^4.21.0",
+    "typescript": "~5.9.3"
   }
 }

@@ -102,18 +102,18 @@ test("redacts receipt details from child validation failures", async () => {
   const temporaryDirectory = await mkdtemp(
     join(tmpdir(), "private-payment-review-test-"),
   );
-  const fakePnpmPath = join(temporaryDirectory, "pnpm");
+  const fakeYarnPath = join(temporaryDirectory, "yarn");
 
   try {
     await writeFile(
-      fakePnpmPath,
+      fakeYarnPath,
       `#!/bin/sh
 printf '%s\\n' 'child validation failed for ${privateObjectPath}' >&2
 printf '%s\\n' 'upload URL: ${signedURL}' >&2
 exit 7
 `,
     );
-    await chmod(fakePnpmPath, 0o755);
+    await chmod(fakeYarnPath, 0o755);
 
     const result = await runRunner(
       environmentWith({

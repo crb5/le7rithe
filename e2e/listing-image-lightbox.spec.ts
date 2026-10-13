@@ -116,7 +116,7 @@ async function swipeLightbox(page: Page, deltaX: number) {
 test.describe('listing image lightbox', () => {
   test.skip(
     missingConfiguration,
-    'Set E2E_BASE_URL and create the seller storage state with pnpm setup:e2e-auth to run the listing image lightbox regression.',
+    'Set E2E_BASE_URL and create the seller storage state with yarn setup:e2e-auth to run the listing image lightbox regression.',
   );
 
   test.use({

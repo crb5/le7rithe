@@ -17,7 +17,7 @@ const isMarketplaceApiRequest = (url: string) => url.includes('/api/');
 test.describe('authenticated marketplace requests', () => {
   test.skip(
     missingConfiguration,
-    'Set E2E_BASE_URL and create the seller storage state with pnpm setup:e2e-auth to run the authenticated marketplace regression.',
+    'Set E2E_BASE_URL and create the seller storage state with yarn setup:e2e-auth to run the authenticated marketplace regression.',
   );
 
   test.use({ storageState: sellerStorageState });

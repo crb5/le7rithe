@@ -192,7 +192,7 @@ async function prepareMarquee(page: Page) {
 test.describe('featured listings marquee touch dragging', () => {
   test.skip(
     missingConfiguration,
-    'Set E2E_BASE_URL and create the seller storage state with pnpm setup:e2e-auth to run the marquee interaction regression.',
+    'Set E2E_BASE_URL and create the seller storage state with yarn setup:e2e-auth to run the marquee interaction regression.',
   );
 
   test.use({ storageState: sellerStorageState, hasTouch: true, isMobile: true });
@@ -236,7 +236,7 @@ test.describe('featured listings marquee touch dragging', () => {
 test.describe('featured listings marquee mouse dragging', () => {
   test.skip(
     missingConfiguration,
-    'Set E2E_BASE_URL and create the seller storage state with pnpm setup:e2e-auth to run the marquee interaction regression.',
+    'Set E2E_BASE_URL and create the seller storage state with yarn setup:e2e-auth to run the marquee interaction regression.',
   );
 
   test.use({

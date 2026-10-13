@@ -131,7 +131,7 @@ function signInPath(url: URL) {
 test.describe('marketplace logout confirmation', () => {
   test.skip(
     missingMarketplaceConfiguration,
-    'Set E2E_BASE_URL (or REPLIT_DEV_DOMAIN) and create the seller storage state with pnpm setup:e2e-auth to run the logout regression.',
+    'Set E2E_BASE_URL (or REPLIT_DEV_DOMAIN) and create the seller storage state with yarn setup:e2e-auth to run the logout regression.',
   );
 
   test.use({ storageState: sellerStorageState });
@@ -153,7 +153,7 @@ test.describe('marketplace logout confirmation', () => {
 test.describe('administrator logout confirmation', () => {
   test.skip(
     missingAdminConfiguration,
-    'Set E2E_BASE_URL (or REPLIT_DEV_DOMAIN) and create the administrator storage state with pnpm setup:e2e-auth to run the logout regression.',
+    'Set E2E_BASE_URL (or REPLIT_DEV_DOMAIN) and create the administrator storage state with yarn setup:e2e-auth to run the logout regression.',
   );
 
   test.use({ storageState: adminStorageState });
