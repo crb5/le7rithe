@@ -1,12 +1,12 @@
 # Automatic HTTPS (Let's Encrypt) for the app and Authentik.
-# Point nougta.com and auth.nougta.com DNS A/AAAA records at this host, and
+# Point le7rithe.com and auth.le7rithe.com DNS A/AAAA records at this host, and
 # open ports 80 and 443. Caddy terminates TLS and forwards plain HTTP to the
 # containers, setting X-Forwarded-Proto so the app issues secure cookies.
 
-nougta.com {
+le7rithe.com {
 	reverse_proxy app:3000
 }
 
-auth.nougta.com {
+auth.le7rithe.com {
 	reverse_proxy authentik-server:9000
 }

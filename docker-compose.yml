@@ -99,7 +99,7 @@ services:
         condition: service_healthy
       authentik-redis:
         condition: service_started
-    # No public port: Caddy fronts it as auth.nougta.com → authentik-server:9000.
+    # No public port: Caddy fronts it as auth.le7rithe.com → authentik-server:9000.
 
   authentik-worker:
     image: ghcr.io/goauthentik/server:2024.10
