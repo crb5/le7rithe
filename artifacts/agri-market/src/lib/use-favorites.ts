@@ -1,4 +1,4 @@
-import { useAuth } from '@clerk/react';
+import { useAuth } from '@/lib/auth';
 import { useQueryClient, type QueryKey } from '@tanstack/react-query';
 import { getGetMyLegalConsentQueryKey, useSetListingFavorite, type Listing } from '@workspace/api-client-react';
 import { useToast } from '@/hooks/use-toast';

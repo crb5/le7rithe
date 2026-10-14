@@ -1,5 +1,5 @@
 import { createElement, useEffect, useRef, useState } from 'react';
-import { Show, useClerk, useUser } from '@clerk/react';
+import { Show, useClerk, useUser } from '@/lib/auth';
 import { Link, useLocation } from 'wouter';
 import { useIsMutating } from '@tanstack/react-query';
 import { motion, useReducedMotion } from 'framer-motion';

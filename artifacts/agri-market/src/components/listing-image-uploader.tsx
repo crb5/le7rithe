@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '@clerk/react';
+import { useAuth } from '@/lib/auth';
 import { ArrowDown, ArrowUp, ImagePlus, LoaderCircle, Upload, X } from 'lucide-react';
 import { useLanguage } from '@/lib/language';
 import { ViewportImage } from '@/components/viewport-image';

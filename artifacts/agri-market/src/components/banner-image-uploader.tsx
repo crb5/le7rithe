@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '@clerk/react';
+import { useAuth } from '@/lib/auth';
 import { ImagePlus, LoaderCircle, Upload, X } from 'lucide-react';
 import { processAdminBannerImageUpload, requestBannerImageUpload } from '@workspace/api-client-react';
 import { useLanguage } from '@/lib/language';

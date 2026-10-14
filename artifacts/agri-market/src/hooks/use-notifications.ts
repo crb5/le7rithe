@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useAuth } from '@clerk/react';
+import { useAuth } from '@/lib/auth';
 
 export type MarketplaceNotification = {
   id: number;

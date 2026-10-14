@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useClerk } from '@clerk/react';
+import { useClerk } from '@/lib/auth';
 import {
   getGetMyLegalConsentQueryKey,
   useGetMyLegalConsent,

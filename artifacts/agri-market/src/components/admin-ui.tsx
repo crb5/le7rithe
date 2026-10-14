@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, ReactNode } from 'react';
 import { Link, useLocation } from 'wouter';
-import { useAuth, useClerk } from '@clerk/react';
+import { useAuth, useClerk } from '@/lib/auth';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
   LayoutDashboard,

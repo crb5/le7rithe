@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useUser } from '@clerk/react';
+import { useUser, useSignInRedirect } from '@/lib/auth';
 import { useLocation } from 'wouter';
 import { Loader2, LockKeyhole } from 'lucide-react';
 import { Logo } from '@/components/marketplace-ui';
@@ -12,6 +12,7 @@ type AdminPasswordLoginError = Error & { code?: string };
 
 export function AdminLogin() {
   const { user, isLoaded } = useUser();
+  const signInRedirect = useSignInRedirect();
   const [, setLocation] = useLocation();
   const { language, meta, t } = useLanguage();
   const { data: me, isLoading: isMeLoading } = useAdminMe();
@@ -22,11 +23,16 @@ export function AdminLogin() {
     if (user && me?.adminSessionActive) setLocation('/admin', { replace: true });
   }, [me?.adminSessionActive, setLocation, user]);
 
+  // A signed-out visitor authenticates with the identity provider first.
+  useEffect(() => {
+    if (isLoaded && !user) void signInRedirect('/admin/login');
+  }, [isLoaded, user, signInRedirect]);
+
   if (!isLoaded || (user && isMeLoading)) {
     return null;
   }
 
-  if (!user) return <NotFound />;
+  if (!user) return null;
 
   if (!me || me.role !== 'admin') return <NotFound />;
 

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useAuth } from '@clerk/react';
+import { useAuth } from '@/lib/auth';
 import { LoaderCircle, Upload, ShieldCheck } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import { useQuery } from '@tanstack/react-query';

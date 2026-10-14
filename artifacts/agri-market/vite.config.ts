@@ -17,16 +17,7 @@ const basePath = process.env.BASE_PATH || '/';
 // Where the API server is reachable during local development.
 const apiProxyTarget = process.env.API_PROXY_TARGET || 'http://localhost:5000';
 
-export default defineConfig(async ({ command, mode }) => {
-  if (command === 'build' && mode === 'production') {
-    const publishableKey = process.env.VITE_CLERK_PUBLISHABLE_KEY;
-    if (!publishableKey?.startsWith('pk_live_')) {
-      throw new Error(
-        'Production builds require a live-mode Clerk publishable key.',
-      );
-    }
-  }
-
+export default defineConfig(async () => {
   return {
   base: basePath,
   plugins: [

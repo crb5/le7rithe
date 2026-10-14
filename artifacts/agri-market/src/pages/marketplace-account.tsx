@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAuth, useClerk, useUser } from '@clerk/react';
+import { useAuth, useClerk, useUser } from '@/lib/auth';
 import { AlertTriangle, CheckCircle2, LoaderCircle, Trash2, UserRound } from 'lucide-react';
 import {
   getGetMyAccountProfileQueryKey,
@@ -16,7 +16,6 @@ import { useLanguage } from '@/lib/language';
 import { hasAllowedMauritaniaPhonePrefix, normalizeMauritaniaPhone } from '@/lib/mauritania-phone';
 import { useToast } from '@/hooks/use-toast';
 import { VerifiedBadge } from '@/components/verified-badge';
-import { AccountEmailLink } from '@/components/account-email-link';
 
 
 export type PendingPhoneVerification = { verificationId: string };
@@ -307,7 +306,6 @@ export function Account() {
         <div className="flex justify-end border-t border-[hsl(var(--border))] pt-5"><button type="submit" disabled={isSaving} className="flex items-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] disabled:cursor-not-allowed disabled:opacity-60" data-testid="button-save-account">{isSaving && <LoaderCircle size={15} className="animate-spin" />}{isSaving ? t('saving') : pendingPhone ? t('verifyAndContinue') : t('saveChanges')}</button></div>
       </form>
     </div>
-    <AccountEmailLink />
     <section className="rounded-2xl border border-red-200 bg-red-50 p-5 sm:p-6" aria-labelledby="delete-account-heading" data-testid="account-deletion-section">
       <div className="flex items-start gap-3">
         <AlertTriangle size={19} className="mt-0.5 shrink-0 text-red-700" />

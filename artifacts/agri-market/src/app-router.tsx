@@ -1,16 +1,15 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { ClerkProvider, useAuth, useClerk, useUser } from '@clerk/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { setAuthTokenGetter } from '@workspace/api-client-react';
+import { AuthProvider, useAuth, useSignInRedirect } from '@/lib/auth';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Spinner } from '@/components/ui/spinner';
 import { useImageLoadingHints } from '@/components/viewport-image';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { LanguageProvider, useLanguage } from '@/lib/language';
+import { LanguageProvider } from '@/lib/language';
 import { signupReturnPath } from '@/lib/signup-contact-flow';
 import { LegalConsentGate } from '@/components/legal-consent-gate';
-import { readPendingLegalConsent } from '@/lib/legal-consent-flow';
 import {
   clearSavedStateFromPublicListingData,
   isIdentityProtectedPath,
@@ -22,81 +21,40 @@ import { ENABLE_PAID_LISTINGS } from '@/lib/features';
 import NotFound from '@/pages/not-found';
 import { Home } from '@/pages/marketplace-home';
 import { Route, Switch, useLocation, useSearch, Router as WouterRouter } from 'wouter';
-const SignInPage = lazy(() => import('./auth-pages').then(m => ({ default: m.SignInPage })));
-const PhoneLinkAfterSignup = lazy(() => import('@/components/phone-link-after-signup').then(m => ({ default: m.PhoneLinkAfterSignup })));
-const EmailLinkAfterSignup = lazy(() => import('@/components/email-link-after-signup').then(m => ({ default: m.EmailLinkAfterSignup })));
-const PhoneSignupNamePage = lazy(() => import('./auth-pages').then(m => ({ default: m.PhoneSignupNamePage })));
-const SignUpPage = lazy(() => import('./auth-pages').then(m => ({ default: m.SignUpPage })));
-const PublishAuthPrompt = lazy(() => import('./auth-pages').then(m => ({ default: m.PublishAuthPrompt })));
-
 
 const Account = lazy(() => import('@/pages/marketplace-account').then(m => ({ default: m.Account })));
-
 const AddListing = lazy(() => import('@/pages/add-listing').then(m => ({ default: m.AddListing })));
-
 const Dashboard = lazy(() => import('@/pages/marketplace-dashboard').then(m => ({ default: m.Dashboard })));
-
 const Listings = lazy(() => import('@/pages/marketplace-listings').then(m => ({ default: m.Listings })));
-
 const SellerActiveListings = lazy(() => import('@/pages/marketplace-seller-active-listings').then(m => ({ default: m.SellerActiveListings })));
-
 const Support = lazy(() => import('@/pages/marketplace-support').then(m => ({ default: m.Support })));
-
 const Saved = lazy(() => import('@/pages/marketplace-saved').then(m => ({ default: m.Saved })));
-
 const AdminGuard = lazy(() => import('@/components/admin-ui').then(m => ({ default: m.AdminGuard })));
-
 const AdminLogin = lazy(() => import('@/pages/admin/login').then(m => ({ default: m.AdminLogin })));
-
 const ListingDetail = lazy(() => import('@/pages/listing-detail').then((module) => ({ default: module.ListingDetail })));
-
 const Notifications = lazy(() => import('@/pages/notifications').then((module) => ({ default: module.Notifications })));
-
 const ReportDetails = lazy(() => import('@/pages/report-details').then((module) => ({ default: module.ReportDetails })));
-
 const Payments = lazy(() => import('@/pages/payments').then((module) => ({ default: module.Payments })));
-
 const AdminCategories = lazy(() => import('@/pages/category-pages').then((module) => ({ default: module.AdminCategories })));
-
 const Categories = lazy(() => import('@/pages/category-pages').then((module) => ({ default: module.Categories })));
-
 const PrivacyPolicy = lazy(() => import('@/pages/legal').then((module) => ({ default: module.PrivacyPolicy })));
-
 const TermsOfService = lazy(() => import('@/pages/legal').then((module) => ({ default: module.TermsOfService })));
-
 const AdminOverview = lazy(() => import('@/pages/admin/overview').then((module) => ({ default: module.AdminOverview })));
-
 const AdminListings = lazy(() => import('@/pages/admin/listings').then((module) => ({ default: module.AdminListings })));
 const AdminRentalSeason = lazy(() => import('@/pages/admin/rental-season').then((module) => ({ default: module.AdminRentalSeason })));
-
 const AdminBanners = lazy(() => import('@/pages/admin/banners').then((module) => ({ default: module.AdminBanners })));
-
 const AdminUsers = lazy(() => import('@/pages/admin/users').then((module) => ({ default: module.AdminUsers })));
-
 const AdminPayments = lazy(() => import('@/pages/admin/payments').then((module) => ({ default: module.AdminPayments })));
-
 const AdminPackages = lazy(() => import('@/pages/admin/packages').then((module) => ({ default: module.AdminPackages })));
-
 const AdminPaymentMethods = lazy(() => import('@/pages/admin/payment-methods').then((module) => ({ default: module.AdminPaymentMethods })));
-
 const AdminReports = lazy(() => import('@/pages/admin/reports').then((module) => ({ default: module.AdminReports })));
-
 const AdminAuditLogs = lazy(() => import('@/pages/admin/audit-logs').then((module) => ({ default: module.AdminAuditLogs })));
-
 const AdminNotifications = lazy(() => import('@/pages/admin/notifications').then((module) => ({ default: module.AdminNotifications })));
-
 const AdminSupportSettings = lazy(() => import('@/pages/admin/support-settings').then((module) => ({ default: module.AdminSupportSettings })));
-
 const AdminSecurity = lazy(() => import('@/pages/admin/security').then((module) => ({ default: module.AdminSecurity })));
 
-
 const queryClient = new QueryClient();
-
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-// Auth publishable key is taken only from the explicit environment variable.
-const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
 
 function PaymentsRoute() {
   const [, setLocation] = useLocation();
@@ -105,21 +63,6 @@ function PaymentsRoute() {
   }, [setLocation]);
   return ENABLE_PAID_LISTINGS ? <Payments /> : null;
 }
-
-function stripBase(path: string): string {
-  return basePath && path.startsWith(basePath)
-    ? path.slice(basePath.length) || '/'
-    : path;
-}
-
-
-const phoneNameCompletionRoute = '/account/complete-phone-profile';
-
-
-function authRoute(path: '/sign-in' | '/sign-up', redirectPath: string): string {
-  return `${path}?redirect_url=${encodeURIComponent(redirectPath)}`;
-}
-
 
 function isPublicMarketplaceRoute(path: string): boolean {
   return path === '/'
@@ -132,88 +75,68 @@ function isPublicMarketplaceRoute(path: string): boolean {
     || path === '/add-listing';
 }
 
-
 function isKnownMarketplaceRoute(path: string): boolean {
   return isPublicMarketplaceRoute(path)
     || ['/saved', '/support', '/notifications', '/payments', '/dashboard',
-      '/dashboard/active-listings', '/account', phoneNameCompletionRoute].includes(path)
+      '/dashboard/active-listings', '/account'].includes(path)
     || /^\/reports\/[^/]+$/.test(path);
 }
 
+const loadingScreen = (
+  <div className="flex min-h-[100dvh] items-center justify-center bg-[hsl(var(--background))]"><Spinner /></div>
+);
 
 function Router() {
-  const { t } = useLanguage();
   const { isLoaded, userId } = useAuth();
-  const { user, isLoaded: isUserLoaded } = useUser();
+  const signInRedirect = useSignInRedirect();
   const [location, setLocation] = useLocation();
   const search = useSearch();
-  const requiresPhoneName = user?.publicMetadata.phoneSignInNeedsName === true;
-  const isSignUpRoute = location === '/sign-up' || location.startsWith('/sign-up/');
+
+  const isAuthCallbackRoute = location.startsWith('/auth/callback');
   const isSignInRoute = location === '/sign-in' || location.startsWith('/sign-in/');
-  const isPhoneSignupLinkRoute = location.startsWith('/account/complete-signup-phone');
-  const isEmailSignupLinkRoute = location.startsWith('/account/complete-signup-email');
-  const isAdminPath = location === '/admin' || location.startsWith('/admin/');
+  const isSignUpRoute = location === '/sign-up' || location.startsWith('/sign-up/');
   const isAuthRoute = isSignInRoute || isSignUpRoute;
-  const isAddListingRoute = location === '/add-listing';
-  const pendingSignup = isSignUpRoute ? readPendingLegalConsent() : null;
-  const redirectPath = pendingSignup?.redirectPath ?? signupReturnPath(search, 'redirect_url');
-  const phoneNameReturnPath = signupReturnPath(search);
+  const isAdminPath = location === '/admin' || location.startsWith('/admin/');
+  const isAdminLogin = location === '/admin/login';
+  const redirectPath = signupReturnPath(search, 'redirect_url');
 
+  // Sign-in / sign-up now redirect to the identity provider.
   useEffect(() => {
-    if (!isLoaded || (userId && !isUserLoaded)) return;
-    if (userId && requiresPhoneName) {
-      if (!location.startsWith(phoneNameCompletionRoute)) {
-        const target = redirectPath.startsWith(phoneNameCompletionRoute)
-          ? redirectPath
-          : `${phoneNameCompletionRoute}?return_to=${encodeURIComponent(
-            isEmailSignupLinkRoute || isPhoneSignupLinkRoute ? `${location}${search ? `?${search}` : ''}` : redirectPath,
-          )}`;
-        setLocation(target, { replace: true });
-      }
-    } else if (userId && location.startsWith(phoneNameCompletionRoute)) {
-      setLocation(phoneNameReturnPath, { replace: true });
-    } else if (!userId && isKnownMarketplaceRoute(location) && !isAdminPath && !isAuthRoute && !isPhoneSignupLinkRoute && !isEmailSignupLinkRoute && !isPublicMarketplaceRoute(location)) {
-      setLocation(authRoute('/sign-in', location), { replace: true });
-    } else if (userId && (isSignInRoute || (isSignUpRoute && !isPhoneSignupLinkRoute))) {
-      setLocation(redirectPath, { replace: true });
+    if (!isLoaded) return;
+    if (userId) {
+      if (isAuthRoute) setLocation(redirectPath, { replace: true });
+      return;
     }
-  }, [isAdminPath, isAuthRoute, isLoaded, isUserLoaded, isSignInRoute, isSignUpRoute, isPhoneSignupLinkRoute, isEmailSignupLinkRoute, location, search, phoneNameReturnPath, redirectPath, requiresPhoneName, setLocation, userId]);
+    if (isAuthRoute) {
+      void signInRedirect(redirectPath);
+      return;
+    }
+    // A protected (known, non-public, non-admin) route requires sign-in.
+    if (
+      isKnownMarketplaceRoute(location) &&
+      !isPublicMarketplaceRoute(location) &&
+      !isAdminPath
+    ) {
+      void signInRedirect(location);
+    }
+  }, [isAuthRoute, isAdminPath, isLoaded, location, redirectPath, setLocation, signInRedirect, userId]);
 
-  // Only browsing can paint before identity is known. Publishing, account and
-  // administration still wait for the original authentication/consent guards.
+  if (isAuthCallbackRoute) return loadingScreen;
+
   const isProtectedRoute = isIdentityProtectedPath(location);
-  if (shouldShowAuthLoadingScreen(isProtectedRoute, isLoaded, userId, isUserLoaded)) return <div className="flex min-h-[100dvh] items-center justify-center bg-[hsl(var(--background))]"><Spinner /></div>;
-  if (!userId && isAdminPath) return <NotFound />;
-  if (!isAuthRoute && !isAdminPath && !isPhoneSignupLinkRoute && !isEmailSignupLinkRoute && !isKnownMarketplaceRoute(location)) return <NotFound />;
-  if (userId && requiresPhoneName) {
-    return (
-      <LegalConsentGate enabled>
-        <RoutedErrorBoundary>
-          <PhoneSignupNamePage />
-        </RoutedErrorBoundary>
-      </LegalConsentGate>
-    );
+  if (shouldShowAuthLoadingScreen(isProtectedRoute, isLoaded, userId, isLoaded)) return loadingScreen;
+
+  // Admin area (except its login) is hidden from anonymous visitors.
+  if (!userId && isAdminPath && !isAdminLogin) return <NotFound />;
+  // Auth routes are mid-redirect; render nothing.
+  if (isAuthRoute) return loadingScreen;
+  if (!isAdminPath && !isKnownMarketplaceRoute(location)) return <NotFound />;
+  // A protected route without a session is redirecting to the IdP.
+  if (!userId && isKnownMarketplaceRoute(location) && !isPublicMarketplaceRoute(location)) {
+    return loadingScreen;
   }
-  if (isPhoneSignupLinkRoute || isEmailSignupLinkRoute) {
-    return userId ? (
-      <LegalConsentGate enabled>
-        <RoutedErrorBoundary>
-          {isEmailSignupLinkRoute ? <EmailLinkAfterSignup /> : <PhoneLinkAfterSignup />}
-        </RoutedErrorBoundary>
-      </LegalConsentGate>
-    ) : null;
-  }
-  if (!userId) {
-    if (isSignUpRoute) return <SignUpPage redirectPath={redirectPath} />;
-    if (isSignInRoute) return <SignInPage />;
-    if (isAddListingRoute) return <PublishAuthPrompt />;
-    if (!isPublicMarketplaceRoute(location)) return null;
-  }
-  if (isAuthRoute) return null;
 
   return (
-    // Keep a shared shell (sidebar, navbar) outside the boundary so it
-    // survives a page crash.
     <LegalConsentGate enabled={Boolean(userId)}>
       <RoutedErrorBoundary>
         <Suspense fallback={<div className="flex min-h-[40vh] items-center justify-center"><Spinner /></div>}>
@@ -257,52 +180,39 @@ function Router() {
   );
 }
 
-
-function ClerkQueryClientCacheInvalidator() {
-  const { addListener } = useClerk();
+// Clears user-scoped cached data when the signed-in identity changes, and
+// refreshes public listing data so saved-state flags are recomputed.
+function QueryCacheIdentityReset() {
   const { isLoaded, userId } = useAuth();
   const previousUserRef = useRef<string | null | undefined>(undefined);
-  const shouldRefreshPublicListingsRef = useRef(false);
 
   useEffect(() => {
-    const unsubscribe = addListener(({ user }) => {
-      const userId = user?.id ?? null;
-      if (
-        previousUserRef.current !== undefined &&
-        previousUserRef.current !== userId
-      ) {
-        for (const query of queryClient.getQueryCache().getAll()) {
-          if (!isPublicMarketplaceQueryKey(query.queryKey)) {
-            queryClient.removeQueries({ queryKey: query.queryKey, exact: true });
-            continue;
-          }
-          if (isPublicListingDataQueryKey(query.queryKey) && query.state.data !== undefined) {
-            queryClient.setQueryData(
-              query.queryKey,
-              clearSavedStateFromPublicListingData(query.state.data),
-            );
-          }
+    if (!isLoaded) return;
+    const current = userId ?? null;
+    if (previousUserRef.current !== undefined && previousUserRef.current !== current) {
+      for (const query of queryClient.getQueryCache().getAll()) {
+        if (!isPublicMarketplaceQueryKey(query.queryKey)) {
+          queryClient.removeQueries({ queryKey: query.queryKey, exact: true });
+          continue;
         }
-        shouldRefreshPublicListingsRef.current = true;
+        if (isPublicListingDataQueryKey(query.queryKey) && query.state.data !== undefined) {
+          queryClient.setQueryData(
+            query.queryKey,
+            clearSavedStateFromPublicListingData(query.state.data),
+          );
+        }
       }
-      previousUserRef.current = userId;
-    });
-    return unsubscribe;
-  }, [addListener]);
-
-  useEffect(() => {
-    if (!isLoaded || !shouldRefreshPublicListingsRef.current) return;
-    shouldRefreshPublicListingsRef.current = false;
-    void queryClient.invalidateQueries({
-      predicate: (query) => isPublicListingDataQueryKey(query.queryKey),
-    });
+      void queryClient.invalidateQueries({
+        predicate: (query) => isPublicListingDataQueryKey(query.queryKey),
+      });
+    }
+    previousUserRef.current = current;
   }, [isLoaded, userId]);
 
   return null;
 }
 
-
-function ClerkApiAuthBridge({ children }: { children: ReactNode }) {
+function ApiAuthBridge({ children }: { children: ReactNode }) {
   const { getToken, isLoaded } = useAuth();
   const tokenGetter = useRef(getToken);
   tokenGetter.current = getToken;
@@ -311,17 +221,13 @@ function ClerkApiAuthBridge({ children }: { children: ReactNode }) {
   const [registered, setRegistered] = useState(false);
 
   useLayoutEffect(() => {
-    // Public queries must not await Clerk's remote SDK/token initialization.
-    // Protected routes stay gated in Router; register the real getter before
-    // mounting them when identity becomes ready.
+    // Public queries must not await identity initialization. Protected routes
+    // stay gated in Router; register the real getter before mounting them.
     setAuthTokenGetter(async () => {
       if (!authReady.current) return null;
       try {
         return await tokenGetter.current();
       } catch {
-        // A transient Clerk token-refresh failure should not prevent a
-        // same-origin request from using the browser's session cookies.
-        console.warn('[api-auth] Session token retrieval failed; continuing with same-origin credentials.');
         return null;
       }
     });
@@ -329,100 +235,43 @@ function ClerkApiAuthBridge({ children }: { children: ReactNode }) {
     return () => setAuthTokenGetter(null);
   }, []);
 
-  // Protected query hooks can start fetching as soon as their components
-  // render. Register the token getter before rendering those components so
-  // the first request cannot race the auth bridge effect.
-  // Keep the same public subtree when Clerk becomes ready: remounting here
-  // would reset search input and restart the hero's entry animation/LCP.
   return registered ? children : null;
 }
-
-
-function ClerkProfileNameSynchronizer() {
-  const { isLoaded, user } = useUser();
-  const firstName = typeof user?.unsafeMetadata?.firstName === 'string'
-    ? user.unsafeMetadata.firstName.trim()
-    : '';
-  const lastName = typeof user?.unsafeMetadata?.lastName === 'string'
-    ? user.unsafeMetadata.lastName.trim()
-    : '';
-
-  useEffect(() => {
-    if (!isLoaded || !user || !firstName || !lastName) return;
-    if (user.firstName === firstName && user.lastName === lastName) return;
-    void user.update({ firstName, lastName }).catch((error) => {
-      console.error(
-        'Clerk profile name sync failed. Enable first_name and last_name in the active Clerk instance.',
-        error,
-      );
-    });
-  }, [firstName, isLoaded, lastName, user]);
-
-  return null;
-}
-
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>;
 }
 
-
-function ClerkProviderWithRoutes() {
-  const [location, setLocation] = useLocation();
-  const { language, t } = useLanguage();
-  const [presentation, setPresentation] = useState<typeof import('@/lib/clerkTheme') | null>(null);
-  const [presentationError, setPresentationError] = useState<Error | null>(null);
-  const needsPresentation = location.startsWith('/sign-in') || location.startsWith('/sign-up');
-  useEffect(() => {
-    if (!needsPresentation || presentation) return;
-    let active = true;
-    void import('@/lib/clerkTheme').then(module => {
-      if (active) setPresentation(module);
-    }).catch(() => {
-      if (active) setPresentationError(new Error('Unable to load sign-in presentation'));
-    });
-    return () => { active = false; };
-  }, [needsPresentation, presentation]);
-  if (needsPresentation && presentationError) throw presentationError;
-
+function ProviderWithRoutes() {
   return (
-    <ClerkProvider
-      publishableKey={clerkPubKey}
-      appearance={presentation?.clerkAppearance}
-      localization={presentation?.clerkLocalizationByLanguage[language]}
-      signInUrl={`${basePath}/sign-in`}
-      signUpUrl={`${basePath}/sign-up`}
-      routerPush={(to) => setLocation(stripBase(to))}
-      routerReplace={(to) => setLocation(stripBase(to), { replace: true })}
-    >
-      <QueryClientProvider client={queryClient}>
-        <ClerkApiAuthBridge>
-          <ClerkQueryClientCacheInvalidator />
-          <ClerkProfileNameSynchronizer />
-          <TooltipProvider>
+    <QueryClientProvider client={queryClient}>
+      <ApiAuthBridge>
+        <QueryCacheIdentityReset />
+        <TooltipProvider>
           <Suspense fallback={<div className="flex min-h-[40vh] items-center justify-center"><Spinner /></div>}>
-            {!needsPresentation || presentation ? <Router /> : <div className="flex min-h-[40vh] items-center justify-center"><Spinner /></div>}
+            <Router />
           </Suspense>
-              <Toaster />
-          </TooltipProvider>
-        </ClerkApiAuthBridge>
-      </QueryClientProvider>
-    </ClerkProvider>
+          <Toaster />
+        </TooltipProvider>
+      </ApiAuthBridge>
+    </QueryClientProvider>
   );
 }
-
 
 function App() {
   useImageLoadingHints();
   return (
     <LanguageProvider>
       <WouterRouter base={basePath}>
-        <ErrorBoundary><ClerkProviderWithRoutes /></ErrorBoundary>
+        <ErrorBoundary>
+          <AuthProvider>
+            <ProviderWithRoutes />
+          </AuthProvider>
+        </ErrorBoundary>
       </WouterRouter>
     </LanguageProvider>
   );
 }
-
 
 export default App;
