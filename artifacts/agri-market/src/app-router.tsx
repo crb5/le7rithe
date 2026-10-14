@@ -94,8 +94,7 @@ const queryClient = new QueryClient();
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// External Clerk is selected only by the owner's explicit key, never the
-// Replit preview/custom hostname or a managed Clerk proxy.
+// Auth publishable key is taken only from the explicit environment variable.
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 

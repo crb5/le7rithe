@@ -21,9 +21,6 @@
     "typecheck": "yarn run typecheck:libs && yarn workspaces foreach -Ap --include @workspace/agri-market --include @workspace/api-server --include @workspace/mockup-sandbox --include @workspace/scripts run typecheck && yarn run typecheck:e2e"
   },
   "private": true,
-  "dependencies": {
-    "@replit/connectors-sdk": "^0.4.1"
-  },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "@types/node": "^25.3.3",
