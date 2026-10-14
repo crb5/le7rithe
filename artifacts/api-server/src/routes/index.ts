@@ -3,8 +3,6 @@ import healthRouter from "./health";
 import marketplaceRouter from "./marketplace";
 import adminRouter from "./admin";
 import legalPolicyRouter from "./legal-policy";
-import phoneVerificationRouter from "./phone-verification";
-import phoneSignInRouter from "./phone-sign-in";
 
 const router: IRouter = Router();
 
@@ -17,7 +15,5 @@ router.use(healthRouter);
 router.use(adminRouter);
 router.use(marketplaceRouter);
 router.use(legalPolicyRouter);
-router.use(phoneVerificationRouter);
-router.use(phoneSignInRouter);
 
 export default router;

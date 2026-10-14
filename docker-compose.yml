@@ -1,0 +1,107 @@
+# Self-hosted stack for Le7rithe: the app (API + SPA in one image), its own
+# Postgres, and Authentik (OIDC identity provider) with its Postgres + Redis.
+#
+# First run:
+#   1. Set the variables below (a .env next to this file works), especially
+#      AUTHENTIK_SECRET_KEY (openssl rand -base64 48), PG passwords, SESSION_SECRET.
+#   2. docker compose up -d
+#   3. Open http://localhost:9000/if/flow/initial-setup/ to create the Authentik
+#      admin, then create an OAuth2/OIDC Provider + Application (slug: agri-market),
+#      redirect URI http://localhost:5173/auth/callback (and your prod URL).
+#      Enable a Google social source + an email/OTP stage as desired.
+#   4. Put the provider's Client ID into OIDC_CLIENT_ID / VITE_OIDC_CLIENT_ID and
+#      re-up the app.
+
+x-authentik-env: &authentik-env
+  AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?set AUTHENTIK_SECRET_KEY}
+  AUTHENTIK_REDIS__HOST: authentik-redis
+  AUTHENTIK_POSTGRESQL__HOST: authentik-db
+  AUTHENTIK_POSTGRESQL__NAME: authentik
+  AUTHENTIK_POSTGRESQL__USER: authentik
+  AUTHENTIK_POSTGRESQL__PASSWORD: ${AUTHENTIK_PG_PASS:?set AUTHENTIK_PG_PASS}
+
+services:
+  app:
+    build: .
+    image: deidinedocker/l7rith:latest
+    depends_on:
+      app-db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://app:${APP_PG_PASS:?set APP_PG_PASS}@app-db:5432/pg4amfin
+      SESSION_SECRET: ${SESSION_SECRET:?set SESSION_SECRET}
+      ADMIN_INITIAL_PASSWORD: ${ADMIN_INITIAL_PASSWORD:?set ADMIN_INITIAL_PASSWORD}
+      ADMIN_ALLOWED_EMAILS: ${ADMIN_ALLOWED_EMAILS:-azibmdy@gmail.com}
+      OBJECT_STORAGE_DIR: /data/objects
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+      OIDC_ISSUER: ${OIDC_ISSUER:-http://authentik-server:9000/application/o/agri-market/}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-}
+    volumes:
+      - app-objects:/data/objects
+    ports:
+      - "3000:3000"
+
+  app-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${APP_PG_PASS:?set APP_PG_PASS}
+      POSTGRES_DB: pg4amfin
+    volumes:
+      - app-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d pg4amfin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  authentik-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: authentik
+      POSTGRES_PASSWORD: ${AUTHENTIK_PG_PASS:?set AUTHENTIK_PG_PASS}
+      POSTGRES_DB: authentik
+    volumes:
+      - authentik-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authentik"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  authentik-redis:
+    image: redis:7-alpine
+    command: --save 60 1 --loglevel warning
+    volumes:
+      - authentik-redis-data:/data
+
+  authentik-server:
+    image: ghcr.io/goauthentik/server:2024.10
+    command: server
+    environment: *authentik-env
+    depends_on:
+      authentik-db:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_started
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+
+  authentik-worker:
+    image: ghcr.io/goauthentik/server:2024.10
+    command: worker
+    environment: *authentik-env
+    depends_on:
+      authentik-db:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_started
+
+volumes:
+  app-objects:
+  app-db-data:
+  authentik-db-data:
+  authentik-redis-data:

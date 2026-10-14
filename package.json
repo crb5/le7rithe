@@ -15,7 +15,6 @@
     "test:e2e": "playwright test --config=e2e/playwright.config.ts",
     "test:e2e:private-payment-review": "node scripts/run-private-payment-review.mjs",
     "test:private-payment-review-runner": "node --test scripts/run-private-payment-review.test.mjs",
-    "test:private-object-storage-cleanup": "yarn workspace @workspace/api-server run test:live-object-storage-cleanup",
     "typecheck:e2e": "tsc -p e2e/tsconfig.json --noEmit",
     "typecheck:libs": "tsc --build",
     "typecheck": "yarn run typecheck:libs && yarn workspaces foreach -Ap --include @workspace/agri-market --include @workspace/api-server --include @workspace/mockup-sandbox --include @workspace/scripts run typecheck && yarn run typecheck:e2e"

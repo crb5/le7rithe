@@ -1,5 +1,5 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
-import { clerkClient, getAuth } from "@clerk/express";
+import { getAuth, identityFromClaims } from "../lib/auth";
 import { and, asc, count, desc, eq, gt, ilike, inArray, isNotNull, isNull, lt, ne, or, sql } from "drizzle-orm";
 import {
   auditLogsTable,
@@ -151,16 +151,16 @@ const withoutListingExpiration = <T extends { expiresAt?: unknown }>(listing: T)
 };
 
 async function actorForRequest(req: Request): Promise<AdminActor> {
-  const { userId } = getAuth(req);
+  const auth = getAuth(req);
+  const userId = auth.userId;
   if (!userId) return null;
-  let identity: ReturnType<typeof verifiedAdminIdentity>;
-  try {
-    const user = await clerkClient.users.getUser(userId);
-    identity = verifiedAdminIdentity(user, userId, process.env.ADMIN_ALLOWED_EMAILS);
-  } catch {
-    // Clerk must confirm the identity; stored roles are never a fallback.
-    return null;
-  }
+  // Identity comes from the verified OIDC token claims; stored roles are never
+  // a fallback. Only a provider-verified, allowlisted email grants access.
+  const identity = verifiedAdminIdentity(
+    identityFromClaims(userId, auth.claims),
+    userId,
+    process.env.ADMIN_ALLOWED_EMAILS,
+  );
   if (!identity) return null;
   const [existingActor] = await db.select().from(usersTable).where(eq(usersTable.clerkUserId, userId)).limit(1);
   if (existingActor) {

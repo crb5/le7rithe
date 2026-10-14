@@ -1,158 +1,100 @@
 import assert from "node:assert/strict";
+import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { afterEach, beforeEach, describe, it } from "node:test";
 import {
   isProductionObjectStorageConfigured,
-  objectStorageClient,
   ObjectStorageService,
 } from "./objectStorage";
 import { isFeaturedListingVisible } from "./featured-listing-policy";
 
-type MockFile = {
-  name: string;
-  metadata: { timeCreated?: string };
-  delete: () => Promise<void>;
-};
-
-type BucketMock = {
-  getFiles: (options: { prefix: string }) => Promise<[MockFile[]]>;
-};
-
-const privateObjectDir = "/payment-proof-bucket/private";
-const uploadsPrefix = "private/uploads/";
 const olderThan = new Date("2026-09-08T00:00:00.000Z");
-
 const objectPath = (id: string) => `/objects/uploads/${id}`;
-const fileName = (id: string) => `${uploadsPrefix}${id}`;
-
-const makeFile = (
-  id: string,
-  deleteFile: () => Promise<void> = async () => {},
-): MockFile => ({
-  name: fileName(id),
-  metadata: { timeCreated: "2026-09-07T00:00:00.000Z" },
-  delete: deleteFile,
-});
-
-const storage = objectStorageClient as unknown as {
-  bucket: (name: string) => BucketMock;
-};
-const originalBucket = storage.bucket;
 
 describe("ObjectStorageService.cleanupUnreferencedPaymentProofs", () => {
   let service: ObjectStorageService;
+  let root: string;
 
-  beforeEach(() => {
-    process.env.PRIVATE_OBJECT_DIR = privateObjectDir;
+  const writeUpload = async (id: string, timeCreated = "2026-09-07T00:00:00.000Z") => {
+    const dir = path.join(root, "uploads");
+    await mkdir(dir, { recursive: true });
+    await writeFile(path.join(dir, id), Buffer.from("proof-bytes"));
+    await writeFile(
+      path.join(dir, `${id}.meta.json`),
+      JSON.stringify({ contentType: "image/webp", timeCreated }),
+      "utf8",
+    );
+  };
+
+  beforeEach(async () => {
+    root = await mkdtemp(path.join(tmpdir(), "object-storage-test-"));
+    process.env.OBJECT_STORAGE_DIR = root;
     service = new ObjectStorageService();
   });
 
-  afterEach(() => {
-    storage.bucket = originalBucket;
-    delete process.env.PRIVATE_OBJECT_DIR;
+  afterEach(async () => {
+    delete process.env.OBJECT_STORAGE_DIR;
+    await rm(root, { recursive: true, force: true });
   });
 
   it("deletes an old upload that is not referenced by a payment", async () => {
-    const abandonedFile = makeFile("11111111-1111-4111-8111-111111111111");
-    const deletedFiles: string[] = [];
-    abandonedFile.delete = async () => {
-      deletedFiles.push(abandonedFile.name);
-    };
-    storage.bucket = () => ({
-      getFiles: async ({ prefix }) => {
-        assert.equal(prefix, uploadsPrefix);
-        return [[abandonedFile]];
-      },
-    });
+    const id = "11111111-1111-4111-8111-111111111111";
+    await writeUpload(id);
 
     const result = await service.cleanupUnreferencedPaymentProofs({
       referencedObjectPaths: new Set(),
       olderThan,
     });
 
-    assert.deepEqual(result, {
-      scanned: 1,
-      deleted: 1,
-      failedObjectPaths: [],
-    });
-    assert.deepEqual(deletedFiles, [abandonedFile.name]);
+    assert.deepEqual(result, { scanned: 1, deleted: 1, failedObjectPaths: [] });
+    const [exists] = await service
+      .getObjectEntityFile(objectPath(id))
+      .then(() => [true])
+      .catch(() => [false]);
+    assert.equal(exists, false);
   });
 
   it("preserves a referenced proof from a rejected payment", async () => {
-    const rejectedPaymentProofId = "22222222-2222-4222-8222-222222222222";
-    const rejectedPayment = {
-      status: "rejected",
-      proofImageUrl: objectPath(rejectedPaymentProofId),
-    };
-    const referencedFile = makeFile(rejectedPaymentProofId);
-    const deletedFiles: string[] = [];
-    referencedFile.delete = async () => {
-      deletedFiles.push(referencedFile.name);
-    };
-    storage.bucket = () => ({
-      getFiles: async () => [[referencedFile]],
-    });
+    const id = "22222222-2222-4222-8222-222222222222";
+    await writeUpload(id);
 
     const result = await service.cleanupUnreferencedPaymentProofs({
-      referencedObjectPaths: new Set([rejectedPayment.proofImageUrl]),
+      referencedObjectPaths: new Set([objectPath(id)]),
       olderThan,
     });
 
-    assert.deepEqual(result, {
-      scanned: 0,
-      deleted: 0,
-      failedObjectPaths: [],
-    });
-    assert.deepEqual(deletedFiles, []);
+    assert.deepEqual(result, { scanned: 0, deleted: 0, failedObjectPaths: [] });
   });
 
-  it("continues deleting after one file fails and reports the failed path", async () => {
-    const failedId = "33333333-3333-4333-8333-333333333333";
-    const deletedId = "44444444-4444-4444-8444-444444444444";
-    const attemptedDeletes: string[] = [];
-    const failedFile = makeFile(failedId, async () => {
-      attemptedDeletes.push(failedId);
-      throw new Error("storage delete failed");
-    });
-    const deletedFile = makeFile(deletedId, async () => {
-      attemptedDeletes.push(deletedId);
-    });
-    storage.bucket = () => ({
-      getFiles: async () => [[failedFile, deletedFile]],
-    });
+  it("preserves a recently uploaded proof even when unreferenced", async () => {
+    const id = "55555555-5555-4555-8555-555555555555";
+    await writeUpload(id, "2026-09-09T00:00:00.000Z");
 
     const result = await service.cleanupUnreferencedPaymentProofs({
       referencedObjectPaths: new Set(),
       olderThan,
     });
 
-    assert.deepEqual(result, {
-      scanned: 2,
-      deleted: 1,
-      failedObjectPaths: [objectPath(failedId)],
-    });
-    assert.deepEqual(attemptedDeletes, [failedId, deletedId]);
+    assert.deepEqual(result, { scanned: 0, deleted: 0, failedObjectPaths: [] });
   });
 });
 
 describe("production object storage readiness", () => {
-  it("is not ready when required App Storage settings are absent", () => {
+  it("is not ready when the storage directory is not configured", () => {
     const originalNodeEnv = process.env.NODE_ENV;
-    const originalPrivateObjectDir = process.env.PRIVATE_OBJECT_DIR;
-    const originalBucketId = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
+    const originalDir = process.env.OBJECT_STORAGE_DIR;
 
     try {
       process.env.NODE_ENV = "production";
-      delete process.env.PRIVATE_OBJECT_DIR;
-      delete process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
+      delete process.env.OBJECT_STORAGE_DIR;
 
       assert.equal(isProductionObjectStorageConfigured(), false);
     } finally {
       if (originalNodeEnv === undefined) delete process.env.NODE_ENV;
       else process.env.NODE_ENV = originalNodeEnv;
-      if (originalPrivateObjectDir === undefined) delete process.env.PRIVATE_OBJECT_DIR;
-      else process.env.PRIVATE_OBJECT_DIR = originalPrivateObjectDir;
-      if (originalBucketId === undefined) delete process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
-      else process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID = originalBucketId;
+      if (originalDir === undefined) delete process.env.OBJECT_STORAGE_DIR;
+      else process.env.OBJECT_STORAGE_DIR = originalDir;
     }
   });
 });

@@ -1,17 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { allowedAdminEmails, verifiedAdminIdentity } from "./admin-identity";
+import { allowedAdminEmails, verifiedAdminIdentity, type VerifiableIdentity } from "./admin-identity";
 
-const identity = (id = "user_old_app") => ({
-  id,
-  primaryEmailAddressId: "email_primary",
-  emailAddresses: [{
-    id: "email_primary",
-    emailAddress: "Owner@example.test",
-    verification: { status: "verified" },
-  }],
-  firstName: "Site",
-  lastName: "Owner",
+const identity = (id = "user_old_app"): VerifiableIdentity => ({
+  sub: id,
+  email: "Owner@example.test",
+  emailVerified: true,
+  name: "Site Owner",
 });
 const configuration = " owner@example.test ";
 
@@ -20,7 +15,7 @@ test("server allowlist normalizes casing and whitespace", () => {
     ["owner@example.test", "another@example.test"]);
 });
 
-test("verified allowed email authorizes both old and replacement Clerk IDs", () => {
+test("verified allowed email authorizes both old and replacement subject IDs", () => {
   for (const id of ["user_old_app", "user_new_app"]) {
     assert.deepEqual(verifiedAdminIdentity(identity(id), id, configuration),
       { email: "owner@example.test", name: "Site Owner" });
@@ -31,26 +26,20 @@ test("missing configuration fails closed", () => {
   assert.equal(verifiedAdminIdentity(identity(), "user_old_app", undefined), null);
 });
 
-test("unverified or other primary email cannot grant administration", () => {
-  const unverified = identity();
-  unverified.emailAddresses[0].verification.status = "unverified";
-  assert.equal(verifiedAdminIdentity(unverified, unverified.id, configuration), null);
-  const other = identity();
-  other.emailAddresses[0].emailAddress = "other@example.test";
-  assert.equal(verifiedAdminIdentity(other, other.id, configuration), null);
+test("unverified or other email cannot grant administration", () => {
+  const unverified = { ...identity(), emailVerified: false };
+  assert.equal(verifiedAdminIdentity(unverified, unverified.sub, configuration), null);
+  const other = { ...identity(), email: "other@example.test" };
+  assert.equal(verifiedAdminIdentity(other, other.sub, configuration), null);
 });
 
-test("an allowed secondary email does not authorize a different primary email", () => {
+test("a missing email claim cannot grant administration", () => {
+  const user = { ...identity(), email: null };
+  assert.equal(verifiedAdminIdentity(user, user.sub, configuration), null);
+});
+
+test("a mismatched subject or a non-allowlisted email cannot grant access", () => {
   const user = identity();
-  user.primaryEmailAddressId = "email_other";
-  user.emailAddresses.push({
-    id: "email_other", emailAddress: "other@example.test", verification: { status: "verified" },
-  });
-  assert.equal(verifiedAdminIdentity(user, user.id, configuration), null);
-});
-
-test("metadata, an old Clerk ID, or a mismatched fetched identity cannot grant access", () => {
-  const user = { ...identity(), publicMetadata: { role: "admin" } };
-  assert.equal(verifiedAdminIdentity(user, user.id, "other@example.test"), null);
+  assert.equal(verifiedAdminIdentity(user, user.sub, "other@example.test"), null);
   assert.equal(verifiedAdminIdentity(user, "user_someone_else", configuration), null);
 });

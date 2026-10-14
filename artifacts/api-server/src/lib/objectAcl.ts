@@ -1,5 +1,3 @@
-import { File } from "@google-cloud/storage";
-
 const ACL_POLICY_METADATA_KEY = "custom:aclPolicy";
 
 export interface ObjectAclPolicy {
@@ -7,8 +5,18 @@ export interface ObjectAclPolicy {
   visibility: "public" | "private";
 }
 
+/**
+ * Minimal structural handle to a stored object. Implemented by `StoredFile`
+ * in `objectStorage.ts`; kept structural here to avoid a circular import.
+ */
+export interface AclTarget {
+  name: string;
+  exists(): Promise<[boolean]>;
+  setMetadata(update: { metadata?: Record<string, string> }): Promise<void>;
+}
+
 export async function setObjectAclPolicy(
-  objectFile: File,
+  objectFile: AclTarget,
   aclPolicy: ObjectAclPolicy,
 ): Promise<void> {
   const [exists] = await objectFile.exists();

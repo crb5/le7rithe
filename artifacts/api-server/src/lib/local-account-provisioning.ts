@@ -1,4 +1,4 @@
-import { allowedAdminEmails, verifiedAdminIdentity, type ClerkIdentity } from "./admin-identity";
+import { allowedAdminEmails, verifiedAdminIdentity, type VerifiableIdentity } from "./admin-identity";
 
 export type LocalAccountDraft = {
   clerkUserId: string;
@@ -18,19 +18,19 @@ export async function provisionLocalAccount<T extends { role: string; status: st
     allowedEmails: string | undefined;
   },
   store: {
-    loadClerkUser: () => Promise<ClerkIdentity>;
+    loadIdentity: () => VerifiableIdentity;
     reconnectAdministrator: (verifiedEmail: string) => Promise<T | null>;
     create: (account: LocalAccountDraft) => Promise<T>;
     promote: (account: T, email: string) => Promise<T>;
   },
 ): Promise<T> {
   // Suspension is never lifted by an allowlist. Existing administrator roles
-  // need no provisioning; administrative access still revalidates with Clerk.
+  // need no provisioning; administrative access still revalidates its token.
   if (input.existing && (input.existing.status !== "active" || input.existing.role === "admin")) {
     return input.existing;
   }
   const administrator = allowedAdminEmails(input.allowedEmails).size > 0
-    ? verifiedAdminIdentity(await store.loadClerkUser(), input.clerkUserId, input.allowedEmails)
+    ? verifiedAdminIdentity(store.loadIdentity(), input.clerkUserId, input.allowedEmails)
     : null;
   if (input.existing) {
     return administrator ? store.promote(input.existing, administrator.email) : input.existing;

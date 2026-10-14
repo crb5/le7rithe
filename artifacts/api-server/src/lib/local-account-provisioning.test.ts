@@ -1,26 +1,23 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { provisionLocalAccount, type LocalAccountDraft } from "./local-account-provisioning";
+import type { VerifiableIdentity } from "./admin-identity";
 
-const user = () => ({
-  id: "user_new_clerk_application",
-  primaryEmailAddressId: "email_primary",
-  emailAddresses: [{
-    id: "email_primary",
-    emailAddress: "Owner@example.test",
-    verification: { status: "verified" },
-  }],
-  firstName: "Site",
-  lastName: "Owner",
+const SUBJECT = "user_new_identity_provider";
+const identity = (): VerifiableIdentity => ({
+  sub: SUBJECT,
+  email: "Owner@example.test",
+  emailVerified: true,
+  name: "Site Owner",
 });
 type Account = Omit<LocalAccountDraft, "role" | "status"> & { id: number; role: string; status: string };
 
 function fixture(existing: Account | null = null) {
-  const clerkUser = user();
+  const subject = identity();
   const inserts: LocalAccountDraft[] = [];
   const promotions: Account[] = [];
   const input = {
-    clerkUserId: clerkUser.id,
+    clerkUserId: subject.sub,
     existing,
     fallbackName: "Ordinary User",
     // Client/session email alone must never grant a role.
@@ -28,7 +25,7 @@ function fixture(existing: Account | null = null) {
     allowedEmails: "owner@example.test" as string | undefined,
   };
   const store = {
-    loadClerkUser: async () => clerkUser,
+    loadIdentity: () => subject,
     reconnectAdministrator: async (_email: string): Promise<Account | null> => null,
     create: async (draft: LocalAccountDraft) => {
       inserts.push(draft);
@@ -40,15 +37,15 @@ function fixture(existing: Account | null = null) {
       return updated;
     },
   };
-  return { clerkUser, input, store, inserts, promotions };
+  return { subject, input, store, inserts, promotions };
 }
 
-test("new Clerk ID + verified allowed primary email + no local account inserts an active admin", async () => {
+test("new subject + verified allowed email + no local account inserts an active admin", async () => {
   const f = fixture();
   const account = await provisionLocalAccount(f.input, f.store);
   assert.equal(f.input.existing, null);
   assert.equal(f.inserts.length, 1);
-  assert.equal(f.inserts[0].clerkUserId, "user_new_clerk_application");
+  assert.equal(f.inserts[0].clerkUserId, SUBJECT);
   assert.equal(account.role, "admin");
   assert.equal(account.status, "active");
   assert.equal(account.email, "owner@example.test");
@@ -56,7 +53,7 @@ test("new Clerk ID + verified allowed primary email + no local account inserts a
 
 test("first authenticated use promotes an existing active ordinary account without replacing its ID", async () => {
   const existing: Account = {
-    id: 42, clerkUserId: user().id, name: "Owner", email: null, initials: "O", role: "user", status: "active",
+    id: 42, clerkUserId: SUBJECT, name: "Owner", email: null, initials: "O", role: "user", status: "active",
   };
   const f = fixture(existing);
   const account = await provisionLocalAccount(f.input, f.store);
@@ -68,13 +65,13 @@ test("first authenticated use promotes an existing active ordinary account witho
 
 test("unverified allowed email creates an ordinary account, not an admin", async () => {
   const f = fixture();
-  f.clerkUser.emailAddresses[0].verification.status = "unverified";
+  f.subject.emailVerified = false;
   assert.equal((await provisionLocalAccount(f.input, f.store)).role, "user");
 });
 
-test("a forged fallback email cannot authorize an unrelated Clerk primary email", async () => {
+test("a forged fallback email cannot authorize an unrelated token email", async () => {
   const f = fixture();
-  f.clerkUser.emailAddresses[0].emailAddress = "someone@example.test";
+  f.subject.email = "someone@example.test";
   assert.equal((await provisionLocalAccount(f.input, f.store)).role, "user");
 });
 
@@ -86,7 +83,7 @@ test("missing allowlist never grants administration", async () => {
 
 test("inactive local account is not promoted or reactivated", async () => {
   const f = fixture();
-  const existing = { id: 42, clerkUserId: user().id, name: "Owner", email: null, initials: "O", role: "user", status: "suspended" };
+  const existing = { id: 42, clerkUserId: SUBJECT, name: "Owner", email: null, initials: "O", role: "user", status: "suspended" };
   const account = await provisionLocalAccount({ ...f.input, existing }, f.store);
   assert.equal(account.status, "suspended");
   assert.equal(account.role, "user");
@@ -94,10 +91,10 @@ test("inactive local account is not promoted or reactivated", async () => {
   assert.equal(f.promotions.length, 0);
 });
 
-test("Clerk lookup failure does not silently create or promote an administrator", async () => {
+test("an identity read failure does not silently create or promote an administrator", async () => {
   const f = fixture();
-  f.store.loadClerkUser = async () => { throw new Error("Clerk unavailable"); };
-  await assert.rejects(provisionLocalAccount(f.input, f.store), /Clerk unavailable/);
+  f.store.loadIdentity = () => { throw new Error("identity unavailable"); };
+  await assert.rejects(provisionLocalAccount(f.input, f.store), /identity unavailable/);
   assert.equal(f.inserts.length, 0);
   assert.equal(f.promotions.length, 0);
 });
@@ -117,8 +114,8 @@ test("first marketplace use reconnects the retained owner instead of inserting a
 test("unverified and unrelated identities cannot attempt owner reconnection", async () => {
   for (const scenario of ["unverified", "unrelated"]) {
     const f = fixture();
-    if (scenario === "unverified") f.clerkUser.emailAddresses[0].verification.status = "unverified";
-    else f.clerkUser.emailAddresses[0].emailAddress = "someone@example.test";
+    if (scenario === "unverified") f.subject.emailVerified = false;
+    else f.subject.email = "someone@example.test";
     f.store.reconnectAdministrator = async () => {
       assert.fail("Unauthorized identity attempted owner reconnection");
     };

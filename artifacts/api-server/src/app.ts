@@ -1,8 +1,9 @@
+import path from "node:path";
 import express, { type Express } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import pinoHttp from "pino-http";
-import { clerkMiddleware, getAuth } from "@clerk/express";
+import { authMiddleware, getAuth } from "./lib/auth";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import { createRequestRateLimiter } from "./lib/request-rate-limit";
@@ -52,12 +53,7 @@ app.use((_req, res, next) => {
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 app.use(cookieParser());
-app.use(
-  clerkMiddleware({
-    publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
-    secretKey: process.env.CLERK_SECRET_KEY,
-  }),
-);
+app.use(authMiddleware);
 
 const requestRateLimitKey = (req: express.Request) => {
   const userId = getAuth(req).userId;
@@ -111,6 +107,21 @@ app.use((req, res, next) => {
 });
 
 app.use("/api", router);
+
+// Optionally serve the built single-page app from the same origin (used by the
+// single-container Docker image). The SPA calls the API at `/api`, so serving
+// both here avoids any cross-origin or proxy configuration in production.
+const staticDir = process.env.STATIC_DIR;
+if (staticDir) {
+  app.use(express.static(staticDir, { index: false }));
+  app.use((req, res, next) => {
+    if (req.method !== "GET" || req.path.startsWith("/api")) {
+      next();
+      return;
+    }
+    res.sendFile(path.join(staticDir, "index.html"));
+  });
+}
 
 app.use((error: unknown, req: express.Request, res: express.Response, _next: express.NextFunction) => {
   req.log.error({ err: error }, "Unhandled API error");

@@ -1,32 +1,34 @@
-export type ClerkIdentity = {
-  id: string;
-  primaryEmailAddressId: string | null;
-  emailAddresses: ReadonlyArray<{
-    id: string;
-    emailAddress: string;
-    verification: { status: string } | null;
-  }>;
-  firstName: string | null;
-  lastName: string | null;
+/**
+ * Normalized, provider-verified identity used to decide administrator access.
+ * Populated from the OIDC access-token claims (see `identityFromClaims` in
+ * `auth.ts`). The token signature is verified before these claims are trusted.
+ */
+export type VerifiableIdentity = {
+  sub: string;
+  email: string | null;
+  emailVerified: boolean;
+  name: string | null;
 };
 
 export function allowedAdminEmails(configuration: string | undefined): Set<string> {
   return new Set((configuration ?? "").split(",").map(email => email.trim().toLowerCase()).filter(Boolean));
 }
 
-/** Only server-fetched Clerk data is accepted; neither claims nor local roles grant access. */
+/**
+ * Only a provider-verified, allowlisted email grants administrator identity;
+ * neither local roles nor unverified claims are accepted.
+ */
 export function verifiedAdminIdentity(
-  user: ClerkIdentity,
+  identity: VerifiableIdentity,
   expectedUserId: string,
   configuration: string | undefined,
 ): { email: string; name: string } | null {
-  if (user.id !== expectedUserId) return null;
-  const primary = user.emailAddresses.find(email => email.id === user.primaryEmailAddressId);
-  if (!primary || primary.verification?.status !== "verified") return null;
-  const email = primary.emailAddress.trim().toLowerCase();
+  if (identity.sub !== expectedUserId) return null;
+  if (!identity.email || !identity.emailVerified) return null;
+  const email = identity.email.trim().toLowerCase();
   if (!allowedAdminEmails(configuration).has(email)) return null;
   return {
     email,
-    name: [user.firstName, user.lastName].filter(Boolean).join(" ").trim() || "مشرف الإدارة",
+    name: identity.name?.trim() || "مشرف الإدارة",
   };
 }

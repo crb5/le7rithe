@@ -8,21 +8,17 @@
     "build": "node ./build.mjs",
     "start": "node --enable-source-maps ./dist/index.mjs",
     "test:legal-consent": "yarn workspace @workspace/scripts exec tsx --test ../artifacts/api-server/src/lib/legal-consent.test.ts",
-    "test": "rm -rf .test-dist && for name in objectStorage listing-image-access listing-image-processing paymentProof privacy-deletion admin-auth admin-identity admin-route-access admin-route-audit proxy-trust local-account-provisioning listing-sale mauritania-phone moorsyl-verify phone-auth-user marketplace-seed-policy request-rate-limit features; do esbuild \"src/lib/${name}.test.ts\" --bundle --platform=node --format=esm --packages=external --outfile=\".test-dist/${name}.test.mjs\" || exit $?; done && node --test .test-dist/*.test.mjs && yarn workspace @workspace/scripts exec tsx --test ../artifacts/api-server/src/lib/listing-data.test.ts ../artifacts/api-server/src/lib/legal-consent.test.ts",
-    "test:live-object-storage-cleanup": "rm -rf .test-dist/live-object-storage-cleanup.test.mjs && esbuild src/lib/objectStorage.live.test.ts --bundle --platform=node --format=esm --packages=external --outfile=.test-dist/live-object-storage-cleanup.test.mjs && node --test .test-dist/live-object-storage-cleanup.test.mjs",
+    "test": "rm -rf .test-dist && for name in objectStorage listing-image-access listing-image-processing paymentProof privacy-deletion admin-auth admin-identity admin-route-access admin-route-audit proxy-trust local-account-provisioning listing-sale mauritania-phone marketplace-seed-policy request-rate-limit features; do esbuild \"src/lib/${name}.test.ts\" --bundle --platform=node --format=esm --packages=external --outfile=\".test-dist/${name}.test.mjs\" || exit $?; done && node --test .test-dist/*.test.mjs && yarn workspace @workspace/scripts exec tsx --test ../artifacts/api-server/src/lib/listing-data.test.ts ../artifacts/api-server/src/lib/legal-consent.test.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@clerk/express": "^2.1.66",
-    "@clerk/shared": "^4.31.0",
-    "@google-cloud/storage": "^8.0.1",
     "@workspace/api-zod": "workspace:*",
     "@workspace/db": "workspace:*",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "drizzle-orm": "^0.45.2",
     "express": "^5.2.1",
-    "google-auth-library": "^11.0.2",
+    "jose": "^5.9.6",
     "pino": "^9.14.0",
     "pino-http": "^10.5.0",
     "sharp": "^0.35.5"

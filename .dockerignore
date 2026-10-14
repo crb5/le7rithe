@@ -1,0 +1,15 @@
+.git
+**/node_modules
+**/dist
+**/.test-dist
+data
+.yarn/cache
+.yarn/install-state.gz
+test-results
+reports
+e2e
+exports
+*.log
+.DS_Store
+# Keep .env.production.local (written by CI) and the committed VITE defaults.
+.env

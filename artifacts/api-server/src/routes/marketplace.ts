@@ -7,7 +7,7 @@ import {
   readListingImageInput, withListingImageProcessing,
   canonicalListingImageReference,
 } from "../lib/listing-image-processing";
-import { clerkClient, getAuth } from "@clerk/express";
+import { getAuth, identityFromClaims } from "../lib/auth";
 import { and, asc, count, desc, eq, gt, gte, ilike, isNotNull, isNull, lte, ne, notIlike, or, sql, type SQL } from "drizzle-orm";
 import type { Logger } from "pino";
 import { ENABLE_PAID_LISTINGS } from "../lib/features";
@@ -81,7 +81,7 @@ import {
   UpdateSubcategoryParams,
   UpdateSubcategoryResponse,
 } from "@workspace/api-zod";
-import { ObjectNotFoundError, ObjectStorageService } from "../lib/objectStorage";
+import { MAX_UPLOAD_BYTES, ObjectNotFoundError, ObjectStorageService } from "../lib/objectStorage";
 import { deleteMarketplaceAccount } from "../lib/privacy-deletion";
 import { createMarketplaceAccountDeletionStore } from "../lib/privacy-deletion-store";
 import { canRevertSale, saleRevertUntil } from "../lib/listing-sale";
@@ -141,7 +141,7 @@ const authenticatedMarketplaceUser = async (req: Request, res: Response) => {
     fallbackEmail: email,
     allowedEmails: process.env.ADMIN_ALLOWED_EMAILS,
   }, {
-    loadClerkUser: () => clerkClient.users.getUser(auth.userId!),
+    loadIdentity: () => identityFromClaims(auth.userId!, auth.claims),
     reconnectAdministrator: verifiedEmail => db.transaction(async tx => {
       // Share the admin bootstrap lock: first marketplace use must preserve
       // the same local owner/password as first use of the admin routes.
@@ -1106,6 +1106,46 @@ const findSubcategory = async (slug: string | null | undefined, categoryId: numb
   const [subcategory] = await db.select().from(subcategoriesTable).where(and(eq(subcategoriesTable.slug, slug), eq(subcategoriesTable.categoryId, categoryId)));
   return subcategory ?? null;
 };
+
+// Receives a direct binary upload authorized by a signed token minted by
+// `getObjectEntityUploadURL`. Replaces the former GCS presigned-URL PUT.
+router.put("/objects/upload/:token", async (req, res): Promise<void> => {
+  const chunks: Buffer[] = [];
+  let total = 0;
+  let aborted = false;
+  req.on("data", (chunk: Buffer) => {
+    if (aborted) return;
+    total += chunk.length;
+    if (total > MAX_UPLOAD_BYTES) {
+      aborted = true;
+      res.status(413).json({ error: "Uploaded file is too large" });
+      req.destroy();
+      return;
+    }
+    chunks.push(chunk);
+  });
+  req.on("end", async () => {
+    if (aborted) return;
+    try {
+      const stored = await objectStorageService.completeUpload(
+        req.params.token,
+        Buffer.concat(chunks),
+        req.get("content-type") ?? undefined,
+      );
+      if (!stored) {
+        res.status(403).json({ error: "Upload authorization is invalid or expired" });
+        return;
+      }
+      res.sendStatus(200);
+    } catch (error) {
+      req.log.error({ err: error }, "Object upload failed");
+      res.status(503).json({ error: "Object storage is unavailable" });
+    }
+  });
+  req.on("error", () => {
+    if (!res.headersSent) res.status(400).json({ error: "Upload failed" });
+  });
+});
 
 router.post("/listing-image/uploads/request-url", async (req, res): Promise<void> => {
   const actor = await authenticatedMarketplaceUser(req, res);
@@ -2322,17 +2362,10 @@ router.delete("/account/me", async (req, res): Promise<void> => {
     const deleted = await deleteMarketplaceAccount(userId, {
       store: accountDeletionStore,
       deleteObject: (objectPath) => objectStorageService.deleteObjectIfExists(objectPath),
-      deleteClerkUser: async (clerkUserId) => {
-        try {
-          await clerkClient.users.deleteUser(clerkUserId);
-        } catch (error) {
-          const status = error && typeof error === "object"
-            ? (error as { status?: unknown; statusCode?: unknown }).status
-              ?? (error as { statusCode?: unknown }).statusCode
-            : undefined;
-          if (status !== 404) throw error;
-        }
-      },
+      // The local account and all of its data are removed here. Removing the
+      // corresponding identity-provider (Authentik) user would require the
+      // provider's admin API and is intentionally left to a separate process.
+      deleteClerkUser: async () => {},
     });
     if (!deleted) {
       res.status(404).json({ error: "Account not found" });
@@ -2347,24 +2380,20 @@ router.delete("/account/me", async (req, res): Promise<void> => {
 
 router.post("/account/me/email/sync", async (req, res): Promise<void> => {
   const profile = await authenticatedMarketplaceUser(req, res);
-  const { userId } = getAuth(req);
-  if (!profile || !userId) return;
+  const auth = getAuth(req);
+  if (!profile || !auth.userId) return;
 
   try {
-    const clerkUser = await clerkClient.users.getUser(userId);
-    const primaryEmail = clerkUser.emailAddresses.find(
-      (emailAddress) => emailAddress.id === clerkUser.primaryEmailAddressId,
-    );
-    const email = primaryEmail?.verification?.status === "verified"
-      ? primaryEmail.emailAddress
-      : null;
+    // The verified email is carried directly in the OIDC token claims.
+    const identity = identityFromClaims(auth.userId, auth.claims);
+    const email = identity.emailVerified ? identity.email : null;
 
     await db.update(usersTable)
       .set({ email })
       .where(eq(usersTable.id, profile.id));
     res.json({ email });
   } catch (error) {
-    req.log.error({ err: error, clerkUserId: userId }, "Could not sync the account email");
+    req.log.error({ err: error, userId: auth.userId }, "Could not sync the account email");
     res.status(503).json({ error: "Email status could not be synchronized" });
   }
 });
