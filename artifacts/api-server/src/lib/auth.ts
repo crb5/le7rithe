@@ -12,14 +12,19 @@ import { createRemoteJWKSet, jwtVerify, type JWTPayload } from "jose";
  * `sessionClaims`), so call sites did not have to change.
  */
 
-const issuer = process.env.OIDC_ISSUER?.replace(/\/$/, "");
-const audience = process.env.OIDC_AUDIENCE || process.env.OIDC_CLIENT_ID;
+const issuerBase = process.env.OIDC_ISSUER?.replace(/\/$/, "");
+// Accept the issuer both with and without a trailing slash — Authentik's `iss`
+// ends with "/" while operators often configure it without one.
+const issuerCandidates = issuerBase ? [`${issuerBase}/`, issuerBase] : [];
+// Audience is enforced only when explicitly configured; issuer + signature are
+// always verified. (Authentik's access-token `aud` differs across versions.)
+const audience = process.env.OIDC_AUDIENCE;
 
 let remoteJwks: ReturnType<typeof createRemoteJWKSet> | null = null;
 
 function jwks(): ReturnType<typeof createRemoteJWKSet> {
   if (!remoteJwks) {
-    const uri = process.env.OIDC_JWKS_URI || (issuer ? `${issuer}/jwks/` : "");
+    const uri = process.env.OIDC_JWKS_URI || (issuerBase ? `${issuerBase}/jwks/` : "");
     if (!uri) {
       throw new Error(
         "OIDC_JWKS_URI or OIDC_ISSUER must be set to verify access tokens.",
@@ -67,7 +72,7 @@ export async function authMiddleware(
   }
   try {
     const { payload } = await jwtVerify(token, jwks(), {
-      ...(issuer ? { issuer } : {}),
+      ...(issuerCandidates.length ? { issuer: issuerCandidates } : {}),
       ...(audience ? { audience } : {}),
     });
     req.auth = {
