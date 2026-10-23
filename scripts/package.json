@@ -9,11 +9,14 @@
     "measure:image-lcp": "node ./src/measure-image-lcp.mjs",
     "benchmark:serve": "node ./src/image-benchmark-server.mjs",
     "cleanup:legacy-listing-image-originals": "tsx ./src/cleanup-legacy-listing-image-originals.ts",
+    "migrate:pg-to-mongo": "node ./src/pg-to-mongo.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@types/node": "^25.3.3",
     "lighthouse": "^13.5.0",
+    "mongodb": "^6.9.0",
+    "pg": "^8.13.1",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3"
   }

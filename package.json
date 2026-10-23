@@ -6,7 +6,8 @@
   "workspaces": [
     "artifacts/*",
     "lib/*",
-    "lib/integrations/*"
+    "lib/integrations/*",
+    "scripts"
   ],
   "scripts": {
     "build": "yarn run typecheck && yarn workspaces foreach -Ap --exclude workspace run build",
