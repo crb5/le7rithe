@@ -10,6 +10,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { LanguageProvider } from '@/lib/language';
 import { signupReturnPath } from '@/lib/signup-contact-flow';
 import { LegalConsentGate } from '@/components/legal-consent-gate';
+import { PwaInstallPrompt } from '@/components/pwa-install-prompt';
 import {
   clearSavedStateFromPublicListingData,
   isIdentityProtectedPath,
@@ -253,6 +254,7 @@ function ProviderWithRoutes() {
             <Router />
           </Suspense>
           <Toaster />
+          <PwaInstallPrompt />
         </TooltipProvider>
       </ApiAuthBridge>
     </QueryClientProvider>
