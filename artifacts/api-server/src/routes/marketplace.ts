@@ -27,6 +27,7 @@ import {
   paymentsTable,
   reportsTable,
   rentalSeasonSettingsTable,
+  reviewsTable,
   savedListingsTable,
   subcategoriesTable,
   supportSettingsTable,
@@ -1094,6 +1095,73 @@ router.get("/listings/:id", async (req, res): Promise<void> => {
     includeContactPhone: true,
     isSaved: savedIds.has(row.listing.id),
   })));
+});
+
+router.get("/sellers/:id/reviews", async (req, res): Promise<void> => {
+  const sellerId = Number(req.params.id);
+  if (!Number.isInteger(sellerId) || sellerId <= 0) {
+    res.status(400).json({ error: "Invalid seller" });
+    return;
+  }
+  const rows = await db.select({
+    id: reviewsTable.id,
+    rating: reviewsTable.rating,
+    comment: reviewsTable.comment,
+    createdAt: reviewsTable.createdAt,
+    reviewerName: usersTable.name,
+    reviewerInitials: usersTable.initials,
+  }).from(reviewsTable)
+    .innerJoin(usersTable, eq(reviewsTable.reviewerId, usersTable.id))
+    .where(eq(reviewsTable.sellerId, sellerId))
+    .orderBy(desc(reviewsTable.createdAt))
+    .limit(50);
+  const [agg] = await db.select({
+    average: sql<string>`coalesce(avg(${reviewsTable.rating}), 0)`,
+    total: count(),
+  }).from(reviewsTable).where(eq(reviewsTable.sellerId, sellerId));
+  res.json({
+    average: Math.round(Number(agg?.average ?? 0) * 10) / 10,
+    total: Number(agg?.total ?? 0),
+    items: rows.map((r) => ({
+      id: r.id,
+      rating: r.rating,
+      comment: r.comment,
+      createdAt: r.createdAt,
+      reviewer: { name: r.reviewerName, initials: r.reviewerInitials },
+    })),
+  });
+});
+
+router.post("/sellers/:id/reviews", async (req, res): Promise<void> => {
+  const actor = await authenticatedMarketplaceUser(req, res);
+  if (!actor) return;
+  const sellerId = Number(req.params.id);
+  const rating = Number(req.body?.rating);
+  const comment = typeof req.body?.comment === "string" ? req.body.comment.trim().slice(0, 1000) : "";
+  if (!Number.isInteger(sellerId) || sellerId <= 0) {
+    res.status(400).json({ error: "Invalid seller" });
+    return;
+  }
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+    res.status(400).json({ error: "Rating must be between 1 and 5" });
+    return;
+  }
+  if (sellerId === actor.id) {
+    res.status(400).json({ error: "You cannot review yourself" });
+    return;
+  }
+  const [seller] = await db.select({ id: usersTable.id }).from(usersTable).where(eq(usersTable.id, sellerId)).limit(1);
+  if (!seller) {
+    res.status(404).json({ error: "Seller not found" });
+    return;
+  }
+  await db.insert(reviewsTable)
+    .values({ sellerId, reviewerId: actor.id, rating, comment })
+    .onConflictDoUpdate({
+      target: [reviewsTable.reviewerId, reviewsTable.sellerId],
+      set: { rating, comment, updatedAt: new Date() },
+    });
+  res.status(201).json({ ok: true });
 });
 
 const findCategory = async (slug: string) => {

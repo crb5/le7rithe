@@ -1,4 +1,5 @@
 import { useAdminMe, useAdminOverview, useUpdateListingStatus } from '@/hooks/use-admin';
+import { AdminAnalyticsCharts } from '@/components/admin-analytics-charts';
 import { AdminHeader, AdminBadge, AdminActionDialog, AdminTable, AdminTh, AdminTd } from '@/components/admin-ui';
 import { ListingImage, RelativePublishedTime, StatCard, formatPrice } from '@/components/marketplace-ui';
 import { Users, FileText, CheckCircle2, Clock, AlertTriangle, CreditCard, DollarSign, History } from 'lucide-react';
@@ -44,6 +45,8 @@ export function AdminOverview() {
           <StatCard label={t('adminTotalRevenue')} value={formatMoney(Number(stats.revenue || 0), 'MRU')} icon={DollarSign} href="/admin/payments" />
           <StatCard label={t('adminListingsTotal')} value={formatNumber(stats.listings || 0)} icon={FileText} href="/admin/listings" />
         </div>
+
+        <AdminAnalyticsCharts />
 
         {adminMe?.role === 'admin' && (
           <section aria-labelledby="admin-recent-operations-title">

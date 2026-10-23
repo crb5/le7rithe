@@ -1,0 +1,8 @@
+3. Maps (components/maps) — fits your location data
+Listings have wilaya/location → a map view and a location picker on add-listing. Needs a map lib (Leaflet/MapLibre) + coords.
+
+🟡 4. Promo/coupon codes (coupons)
+Discount codes for featured-listing payments (your paid-listing flow). Schema + admin UI + checkout field.
+
+🟡 5. Richer admin analytics (recharts, dashboard/reports)
+Charts on the admin overview (listings/payments over time, top categories).

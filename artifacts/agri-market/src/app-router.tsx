@@ -11,6 +11,7 @@ import { LanguageProvider } from '@/lib/language';
 import { signupReturnPath } from '@/lib/signup-contact-flow';
 import { LegalConsentGate } from '@/components/legal-consent-gate';
 import { PwaInstallPrompt } from '@/components/pwa-install-prompt';
+import { OfflineIndicator } from '@/components/offline-indicator';
 import {
   clearSavedStateFromPublicListingData,
   isIdentityProtectedPath,
@@ -254,6 +255,7 @@ function ProviderWithRoutes() {
             <Router />
           </Suspense>
           <Toaster />
+          <OfflineIndicator />
           <PwaInstallPrompt />
         </TooltipProvider>
       </ApiAuthBridge>

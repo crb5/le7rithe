@@ -111,6 +111,21 @@ export function useAdminOverview() {
   });
 }
 
+export type AdminAnalytics = {
+  listingsPerDay: { day: string; count: number }[];
+  paymentsPerDay: { day: string; count: number; revenue: number }[];
+  topCategories: { name: string; count: number }[];
+  statusBreakdown: { status: string; count: number }[];
+};
+
+export function useAdminAnalytics() {
+  const fetcher = useAdminFetch();
+  return useQuery<AdminAnalytics>({
+    queryKey: ['admin-analytics'],
+    queryFn: () => fetcher('/admin/analytics'),
+  });
+}
+
 export type AdminNotification = {
   id: number;
   listingId: number | null;

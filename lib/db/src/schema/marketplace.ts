@@ -293,6 +293,21 @@ export const notificationsTable = pgTable("marketplace_notifications", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const reviewsTable = pgTable("marketplace_reviews", {
+  id: serial("id").primaryKey(),
+  sellerId: integer("seller_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  reviewerId: integer("reviewer_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  rating: smallint("rating").notNull(),
+  comment: text("comment").notNull().default(""),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
+}, (table) => ({
+  oneReviewPerReviewerSeller: uniqueIndex("marketplace_reviews_reviewer_seller_unique").on(table.reviewerId, table.sellerId),
+  ratingRange: check("marketplace_reviews_rating_range", sql`${table.rating} between 1 and 5`),
+}));
+
+export type Review = typeof reviewsTable.$inferSelect;
+
 export const insertUserSchema = createInsertSchema(usersTable).omit({ id: true, createdAt: true });
 export const insertCategorySchema = createInsertSchema(categoriesTable).omit({ id: true });
 export const insertSubcategorySchema = createInsertSchema(subcategoriesTable).omit({ id: true });

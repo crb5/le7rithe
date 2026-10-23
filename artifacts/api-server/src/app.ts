@@ -1,10 +1,12 @@
 import path from "node:path";
+import { promises as fs } from "node:fs";
 import express, { type Express } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import pinoHttp from "pino-http";
 import { authMiddleware, getAuth } from "./lib/auth";
 import router from "./routes";
+import { seoRouter, listingHeadTags, baseUrlFrom } from "./routes/seo";
 import { logger } from "./lib/logger";
 import { createRequestRateLimiter } from "./lib/request-rate-limit";
 import { trustProxyHops } from "./lib/proxy-trust";
@@ -108,18 +110,49 @@ app.use((req, res, next) => {
 
 app.use("/api", router);
 
+// SEO: dynamic robots.txt + sitemap.xml (served before the static SPA).
+app.use(seoRouter);
+
 // Optionally serve the built single-page app from the same origin (used by the
 // single-container Docker image). The SPA calls the API at `/api`, so serving
 // both here avoids any cross-origin or proxy configuration in production.
 const staticDir = process.env.STATIC_DIR;
 if (staticDir) {
+  const indexPath = path.join(staticDir, "index.html");
+
+  // Listing pages get per-listing title/OpenGraph/JSON-LD injected into the
+  // shell so shared links and crawlers see real previews (the SPA still boots
+  // normally for human visitors).
+  app.get("/listings/:id", async (req, res, next) => {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id) || id <= 0) {
+      next();
+      return;
+    }
+    try {
+      const [html, tags] = await Promise.all([
+        fs.readFile(indexPath, "utf8"),
+        listingHeadTags(id, baseUrlFrom(req)),
+      ]);
+      if (!tags) {
+        res.sendFile(indexPath);
+        return;
+      }
+      const injected = html.replace(/<title>.*?<\/title>/i, "").replace("</head>", `    ${tags}\n  </head>`);
+      res.type("html").send(injected);
+    } catch (error) {
+      req.log.error({ err: error }, "Failed to render listing meta");
+      res.sendFile(indexPath);
+    }
+  });
+
   app.use(express.static(staticDir, { index: false }));
   app.use((req, res, next) => {
     if (req.method !== "GET" || req.path.startsWith("/api")) {
       next();
       return;
     }
-    res.sendFile(path.join(staticDir, "index.html"));
+    res.sendFile(indexPath);
   });
 }
 

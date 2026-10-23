@@ -19,6 +19,7 @@ import {
 import { AppShell, ErrorState, getListingImageSources, ListingImage, formatPrice, relativeDate } from '@/components/marketplace-ui';
 import { ListingDetailFields, ListingSellerCard } from '@/components/listing-detail-fields';
 import { ListingDescription } from '@/components/listing-description';
+import { SellerReviews } from '@/components/seller-reviews';
 import { ListingDetailLoading, detailBreadcrumbClass, detailGalleryClass, detailGridClass } from '@/components/listing-detail-loading';
 import { WhatsAppIcon } from '@/components/whatsapp-icon';
 import { useLanguage } from '@/lib/language';
@@ -331,6 +332,7 @@ export function ListingDetail() {
             <ListingDescription description={listing.description} />
           </div>
           <ListingDetailFields listing={listing} />
+          {listing.seller?.id ? <SellerReviews sellerId={listing.seller.id} /> : null}
         </div>
         <aside className="space-y-4">
           <div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5">

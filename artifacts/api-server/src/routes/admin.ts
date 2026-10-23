@@ -1,6 +1,6 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
 import { getAuth, identityFromClaims } from "../lib/auth";
-import { and, asc, count, desc, eq, gt, ilike, inArray, isNotNull, isNull, lt, ne, or, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, gt, gte, ilike, inArray, isNotNull, isNull, lt, ne, or, sql } from "drizzle-orm";
 import {
   auditLogsTable,
   adminCredentialsTable,
@@ -747,6 +747,39 @@ router.get("/admin/overview", async (req, res): Promise<void> => {
       seller: { id: seller.id, name: seller.name, phone: seller.phone, verified: seller.verified },
     })),
     recentOperations,
+  });
+});
+
+router.get("/admin/analytics", async (_req, res): Promise<void> => {
+  const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const listingDay = sql`date_trunc('day', ${listingsTable.createdAt})`;
+  const paymentDay = sql`date_trunc('day', ${paymentsTable.createdAt})`;
+  const [listingsPerDay, paymentsPerDay, topCategories, statusBreakdown] = await Promise.all([
+    db.select({
+      day: sql<string>`to_char(${listingDay}, 'YYYY-MM-DD')`,
+      count: count(),
+    }).from(listingsTable).where(gte(listingsTable.createdAt, since)).groupBy(listingDay).orderBy(listingDay),
+    db.select({
+      day: sql<string>`to_char(${paymentDay}, 'YYYY-MM-DD')`,
+      count: count(),
+      revenue: sql<string>`coalesce(sum(case when ${paymentsTable.status} = 'confirmed' then ${paymentsTable.amount} else 0 end), 0)`,
+    }).from(paymentsTable).where(gte(paymentsTable.createdAt, since)).groupBy(paymentDay).orderBy(paymentDay),
+    db.select({
+      name: categoriesTable.name,
+      count: count(listingsTable.id),
+    }).from(categoriesTable)
+      .leftJoin(listingsTable, and(eq(listingsTable.categoryId, categoriesTable.id), eq(listingsTable.status, "active")))
+      .where(eq(categoriesTable.active, true))
+      .groupBy(categoriesTable.id)
+      .orderBy(desc(count(listingsTable.id)))
+      .limit(8),
+    db.select({ status: listingsTable.status, count: count() }).from(listingsTable).groupBy(listingsTable.status),
+  ]);
+  res.json({
+    listingsPerDay: listingsPerDay.map((r) => ({ day: r.day, count: numeric(r.count) })),
+    paymentsPerDay: paymentsPerDay.map((r) => ({ day: r.day, count: numeric(r.count), revenue: numeric(r.revenue) })),
+    topCategories: topCategories.map((r) => ({ name: r.name, count: numeric(r.count) })),
+    statusBreakdown: statusBreakdown.map((r) => ({ status: r.status, count: numeric(r.count) })),
   });
 });
 
