@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery, useMutation, useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useLanguage } from '@/lib/language';
+import { useAuth } from '@/lib/auth';
 import {
   getGetMyAccountProfileQueryKey,
   getListBannersQueryKey,
@@ -11,12 +12,17 @@ import {
 
 export function useAdminFetch() {
   const { t } = useLanguage();
+  const { getToken } = useAuth();
   return useCallback(async (path: string, options?: RequestInit) => {
+    // Admin routes authenticate with the OIDC bearer token, like every other
+    // API call. (The admin session cookie alone is not enough.)
+    const token = await getToken();
     const res = await fetch(`/api${path}`, {
       ...options,
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options?.headers,
       },
     });
@@ -32,7 +38,7 @@ export function useAdminFetch() {
     }
     if (res.status === 204) return null;
     return res.json();
-  }, [t]);
+  }, [t, getToken]);
 }
 
 export function useAdminMe() {

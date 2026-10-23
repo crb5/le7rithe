@@ -1,1 +1,14 @@
 git tag docker-v0.1.3 && git push origin docker-v0.1.3          
+
+to upold file and donwlodn on server 
+curl -F "file=@$HOME/Downloads/le7rithe-development-20261016T113325Z.dump" https://tmpfiles.org/api/v1/upload
+then Downloads it to server 
+curl -L -o /tmp/data.dump "https://tmpfiles.org/dl/12345678/le7rithe-development-20261016T113325Z.dump"
+
+
+curl -F "reqtype=fileupload" -F "fileToUpload=@$HOME/Downloads/le7rithe-development-20261016T113325Z.dump" https://catbox.moe/user/api.php
+curl -L -o /tmp/data.dump "https://files.catbox.moe/ab12cd.dump"
+
+
+
+docker compose exec app printenv ADMIN_ALLOWED_EMAILS
