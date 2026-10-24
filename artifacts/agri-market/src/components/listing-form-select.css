@@ -46,12 +46,12 @@
   0%,
   100% {
     border-color: hsl(var(--input));
-    box-shadow: 0 0 0 0 hsl(167 35% 60% / 0);
+    box-shadow: 0 0 0 0 hsl(153 35% 65% / 0);
   }
 
   50% {
-    border-color: hsl(167 40% 40%);
-    box-shadow: 0 0 0 4px hsl(167 35% 60% / 0.22);
+    border-color: hsl(153 35% 45%);
+    box-shadow: 0 0 0 4px hsl(153 35% 65% / 0.22);
   }
 }
 

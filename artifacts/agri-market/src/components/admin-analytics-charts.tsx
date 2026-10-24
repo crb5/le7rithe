@@ -15,7 +15,7 @@ import {
 } from 'recharts';
 import { useAdminAnalytics } from '@/hooks/use-admin';
 
-const COLORS = ['#1B5E4F', '#9C3F55', '#4A8577', '#B4496A', '#2D4A42', '#6B4552', '#7FA89C', '#C97D93'];
+const COLORS = ['#274e3e', '#3a7a56', '#f2c14e', '#8aa891', '#c98a3a', '#5b8f6e', '#d4b483', '#b0543a'];
 
 const STATUS_LABELS: Record<string, string> = {
   active: 'نشط',
@@ -28,8 +28,8 @@ const STATUS_LABELS: Record<string, string> = {
 
 function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="rounded-2xl border border-[hsl(167_16%_78%)] bg-[hsl(var(--card))] p-4">
-      <h3 className="mb-3 text-sm font-bold text-[hsl(167_55%_24%)]">{title}</h3>
+    <div className="rounded-2xl border border-[hsl(154_20%_82%)] bg-[hsl(var(--card))] p-4">
+      <h3 className="mb-3 text-sm font-bold text-[hsl(155_33%_23%)]">{title}</h3>
       <div className="h-56 w-full" dir="ltr">{children}</div>
     </div>
   );
@@ -53,7 +53,7 @@ export function AdminAnalyticsCharts() {
             <XAxis dataKey="day" tick={{ fontSize: 10 }} tickFormatter={(d: string) => d.slice(5)} />
             <YAxis allowDecimals={false} tick={{ fontSize: 10 }} />
             <Tooltip />
-            <Line type="monotone" dataKey="count" stroke="#1B5E4F" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="count" stroke="#274e3e" strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </Card>
@@ -65,7 +65,7 @@ export function AdminAnalyticsCharts() {
             <XAxis dataKey="day" tick={{ fontSize: 10 }} tickFormatter={(d: string) => d.slice(5)} />
             <YAxis tick={{ fontSize: 10 }} />
             <Tooltip />
-            <Bar dataKey="revenue" fill="#1B5E4F" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="revenue" fill="#274e3e" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Card>
@@ -77,7 +77,7 @@ export function AdminAnalyticsCharts() {
             <XAxis type="number" allowDecimals={false} tick={{ fontSize: 10 }} />
             <YAxis type="category" dataKey="name" width={90} tick={{ fontSize: 10 }} />
             <Tooltip />
-            <Bar dataKey="count" fill="#4A8577" radius={[0, 4, 4, 0]} />
+            <Bar dataKey="count" fill="#3a7a56" radius={[0, 4, 4, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Card>

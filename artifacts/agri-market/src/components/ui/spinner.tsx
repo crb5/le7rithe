@@ -7,7 +7,7 @@ function Spinner({ className, ...props }: React.ComponentProps<'span'>) {
       role="status"
       aria-label="جارٍ التحميل"
       className={cn(
-        'inline-block size-10 shrink-0 animate-[spin_0.8s_linear_infinite] rounded-full border-2 border-[#E8CCD4] border-t-[#1B5E4F]',
+        'inline-block size-10 shrink-0 animate-[spin_0.8s_linear_infinite] rounded-full border-2 border-[#F4BF3A] border-t-[#173D32]',
         className,
       )}
     />

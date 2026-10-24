@@ -39,7 +39,7 @@ function LegalConsentCard({
       className="flex min-h-[100dvh] items-center justify-center bg-[hsl(var(--background))] px-4 py-10 text-[hsl(var(--foreground))]"
       data-testid="legal-consent-gate"
     >
-      <section className="w-full max-w-xl rounded-[1.5rem] border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 shadow-[0_16px_44px_hsl(167_30%_12%/.09)] sm:p-8">
+      <section className="w-full max-w-xl rounded-[1.5rem] border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 shadow-[0_16px_44px_hsl(155_20%_18%/.09)] sm:p-8">
         <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[hsl(var(--secondary))] text-[hsl(var(--primary))]" aria-hidden="true">
           <ShieldCheck size={22} />
         </div>
@@ -203,7 +203,7 @@ export function LegalConsentGate({ children, enabled }: { children: ReactNode; e
   );
   const consentErrorView = (
       <main dir={meta[language].dir} className="flex min-h-[100dvh] items-center justify-center bg-[hsl(var(--background))] px-4 py-10" data-testid="legal-consent-status-error">
-        <section className="w-full max-w-xl rounded-[1.5rem] border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 text-center shadow-[0_16px_44px_hsl(167_30%_12%/.09)] sm:p-8">
+        <section className="w-full max-w-xl rounded-[1.5rem] border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 text-center shadow-[0_16px_44px_hsl(155_20%_18%/.09)] sm:p-8">
           <p dir={meta[language].dir} role="alert" className="text-sm leading-7 text-[hsl(var(--muted-foreground))]">{t('legalConsentStatusError')}</p>
           <button
             type="button"

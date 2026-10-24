@@ -120,9 +120,9 @@ export function HeaderBrand({
               x2="100%"
               y2="0"
             >
-              <stop offset="0" stopColor="#C2516B" />
-              <stop offset=".45" stopColor="#C2516B" />
-              <stop offset="1" stopColor="#C2516B" stopOpacity=".12" />
+              <stop offset="0" stopColor="#E9B949" />
+              <stop offset=".45" stopColor="#E9B949" />
+              <stop offset="1" stopColor="#E9B949" stopOpacity=".12" />
             </linearGradient>
           </defs>
           <svg
@@ -131,12 +131,12 @@ export function HeaderBrand({
             width="1.0303em"
             height="1.7em"
             viewBox="9 0 40 66"
-            fill="#C2516B"
+            fill="#E9B949"
             overflow="visible"
           >
             <path
               d="M26 18V54Q26 64 36 64H49"
-              stroke="#C2516B"
+              stroke="#E9B949"
               strokeWidth="2.4"
               strokeLinecap="round"
               strokeLinejoin="round"

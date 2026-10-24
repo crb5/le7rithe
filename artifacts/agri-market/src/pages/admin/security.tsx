@@ -43,7 +43,7 @@ export function AdminSecurity() {
   const maximumLength = me?.passwordPolicy.maximumLength ?? 128;
 
   return (
-    <div className="flex-1 bg-[hsl(38_44%_96%)]" dir={meta[language].dir}>
+    <div className="flex-1 bg-[hsl(42_37%_96%)]" dir={meta[language].dir}>
       <AdminHeader
         title={t('adminSecurityTitle')}
         description={t('adminSecurityDescription')}
@@ -51,24 +51,24 @@ export function AdminSecurity() {
       <div className="min-w-0 p-4 sm:p-6 lg:p-8">
         <form
           onSubmit={submit}
-          className="max-w-2xl rounded-2xl border border-[hsl(38_15%_87%)] bg-white p-6 shadow-sm"
+          className="max-w-2xl rounded-2xl border border-[hsl(38_22%_86%)] bg-white p-6 shadow-sm"
         >
-          <div className="mb-6 flex items-start gap-3 border-b border-[hsl(38_15%_87%)] pb-5">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[hsl(346_42%_43%)/.18] text-[hsl(167_55%_24%)]">
+          <div className="mb-6 flex items-start gap-3 border-b border-[hsl(38_22%_86%)] pb-5">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[hsl(42_87%_61%)/.18] text-[hsl(155_33%_23%)]">
               <KeyRound size={20} />
             </span>
             <div>
-              <h2 className="font-bold text-[hsl(167_55%_24%)]">{t('adminPasswordChangeTitle')}</h2>
-              <p className="mt-1 text-xs leading-6 text-[hsl(161_15%_42%)]">
+              <h2 className="font-bold text-[hsl(155_33%_23%)]">{t('adminPasswordChangeTitle')}</h2>
+              <p className="mt-1 text-xs leading-6 text-[hsl(153_12%_43%)]">
                 {t('adminPasswordChangeDescription')}
               </p>
             </div>
           </div>
 
-          <div className="mb-6 rounded-xl border border-[hsl(167_55%_24%)/.16] bg-[hsl(167_55%_24%)/.05] p-4">
+          <div className="mb-6 rounded-xl border border-[hsl(155_33%_23%)/.16] bg-[hsl(155_33%_23%)/.05] p-4">
             <div className="flex items-start gap-2">
-              <ShieldCheck size={17} className="mt-0.5 shrink-0 text-[hsl(167_55%_24%)]" />
-              <p className="text-xs leading-6 text-[hsl(167_55%_24%)]">
+              <ShieldCheck size={17} className="mt-0.5 shrink-0 text-[hsl(155_33%_23%)]" />
+              <p className="text-xs leading-6 text-[hsl(155_33%_23%)]">
                 {t('adminPasswordRequirements', { min: minimumLength, max: maximumLength })}
               </p>
             </div>
@@ -76,7 +76,7 @@ export function AdminSecurity() {
 
           <div className="space-y-5">
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-[hsl(167_55%_24%)]">
+              <span className="mb-1.5 block text-xs font-bold text-[hsl(154_26%_15%)]">
                 {t('currentAdminPassword')}
               </span>
               <input
@@ -85,12 +85,12 @@ export function AdminSecurity() {
                 onChange={(event) => setCurrentPassword(event.target.value)}
                 autoComplete="current-password"
                 required
-                className="w-full rounded-xl border border-[hsl(38_15%_87%)] bg-[hsl(38_33%_97%)] p-3 text-base outline-none focus:border-[hsl(167_55%_24%)] focus:ring-2 focus:ring-[hsl(167_55%_24%)/.12]"
+                className="w-full rounded-xl border border-[hsl(38_22%_86%)] bg-[hsl(42_37%_97%)] p-3 text-base outline-none focus:border-[hsl(155_33%_23%)] focus:ring-2 focus:ring-[hsl(155_33%_23%)/.12]"
                 data-testid="input-current-admin-password"
               />
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-[hsl(167_55%_24%)]">
+              <span className="mb-1.5 block text-xs font-bold text-[hsl(154_26%_15%)]">
                 {t('newAdminPassword')}
               </span>
               <input
@@ -101,12 +101,12 @@ export function AdminSecurity() {
                 minLength={minimumLength}
                 maxLength={maximumLength}
                 required
-                className="w-full rounded-xl border border-[hsl(38_15%_87%)] bg-[hsl(38_33%_97%)] p-3 text-base outline-none focus:border-[hsl(167_55%_24%)] focus:ring-2 focus:ring-[hsl(167_55%_24%)/.12]"
+                className="w-full rounded-xl border border-[hsl(38_22%_86%)] bg-[hsl(42_37%_97%)] p-3 text-base outline-none focus:border-[hsl(155_33%_23%)] focus:ring-2 focus:ring-[hsl(155_33%_23%)/.12]"
                 data-testid="input-new-admin-password"
               />
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-[hsl(167_55%_24%)]">
+              <span className="mb-1.5 block text-xs font-bold text-[hsl(154_26%_15%)]">
                 {t('confirmAdminPassword')}
               </span>
               <input
@@ -117,17 +117,17 @@ export function AdminSecurity() {
                 minLength={minimumLength}
                 maxLength={maximumLength}
                 required
-                className="w-full rounded-xl border border-[hsl(38_15%_87%)] bg-[hsl(38_33%_97%)] p-3 text-base outline-none focus:border-[hsl(167_55%_24%)] focus:ring-2 focus:ring-[hsl(167_55%_24%)/.12]"
+                className="w-full rounded-xl border border-[hsl(38_22%_86%)] bg-[hsl(42_37%_97%)] p-3 text-base outline-none focus:border-[hsl(155_33%_23%)] focus:ring-2 focus:ring-[hsl(155_33%_23%)/.12]"
                 data-testid="input-confirm-admin-password"
               />
             </label>
           </div>
 
-          <div className="mt-6 flex justify-end border-t border-[hsl(38_15%_87%)] pt-5">
+          <div className="mt-6 flex justify-end border-t border-[hsl(38_22%_86%)] pt-5">
             <button
               type="submit"
               disabled={changePassword.isPending || !currentPassword || !newPassword || !confirmPassword}
-              className="inline-flex items-center gap-2 rounded-xl bg-[hsl(167_55%_24%)] px-5 py-3 text-xs font-bold text-white transition hover:-translate-y-0.5 disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-xl bg-[hsl(155_33%_23%)] px-5 py-3 text-xs font-bold text-white transition hover:-translate-y-0.5 disabled:opacity-50"
               data-testid="button-change-admin-password"
             >
               {changePassword.isPending && <Loader2 size={15} className="animate-spin" />}

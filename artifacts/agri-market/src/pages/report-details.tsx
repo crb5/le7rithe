@@ -55,7 +55,7 @@ export function ReportDetails() {
             <section className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5">
               <div className="flex items-center justify-between gap-3">
                 <h2 className="font-bold text-[hsl(var(--primary))]">{t('yourReport')}</h2>
-                <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${report.status === 'resolved' ? 'bg-[hsl(167_55%_24%/.1)] text-[hsl(var(--primary))]' : 'bg-[hsl(var(--accent)/.2)] text-[hsl(35_90%_35%)]'}`}>
+                <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${report.status === 'resolved' ? 'bg-[hsl(155_33%_23%/.1)] text-[hsl(var(--primary))]' : 'bg-[hsl(var(--accent)/.2)] text-[hsl(35_90%_35%)]'}`}>
                   {report.status === 'resolved' ? t('reportStatusResolved') : t('reportStatusOpen')}
                 </span>
               </div>

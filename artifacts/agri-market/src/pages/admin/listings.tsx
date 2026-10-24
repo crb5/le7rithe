@@ -46,7 +46,7 @@ export function AdminListings() {
   );
 
   return (
-    <div className="flex-1 flex flex-col bg-[hsl(38_44%_96%)] h-full">
+    <div className="flex-1 flex flex-col bg-[hsl(42_37%_96%)] h-full">
       <AdminHeader 
         title={t('adminListingsTitle')}
         description={t('adminListingsDescription')}
@@ -91,11 +91,11 @@ export function AdminListings() {
               </thead>
               <tbody>
                 {items.map((listing: any) => (
-                  <tr key={listing.id} className={`hover:bg-[hsl(38_33%_97%)] transition-colors ${listing.featured ? 'bg-[hsl(346_42%_43%)/0.03]' : ''}`}>
-                    <AdminTd className="font-numeric text-[11px] text-[hsl(161_15%_42%)]">#{formatNumber(Number(listing.id))}</AdminTd>
+                  <tr key={listing.id} className={`hover:bg-[hsl(42_37%_97%)] transition-colors ${listing.featured ? 'bg-[hsl(42_87%_61%)/0.03]' : ''}`}>
+                    <AdminTd className="font-numeric text-[11px] text-[hsl(153_12%_43%)]">#{formatNumber(Number(listing.id))}</AdminTd>
                     <AdminTd>
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-lg bg-[hsl(38_15%_87%)] overflow-hidden shrink-0 shadow-sm">
+                        <div className="w-12 h-12 rounded-lg bg-[hsl(38_22%_86%)] overflow-hidden shrink-0 shadow-sm">
                           <ListingImage
                             images={listing.images}
                             imageUrl={listing.imageUrl}
@@ -104,11 +104,11 @@ export function AdminListings() {
                           />
                         </div>
                         <div>
-                          <Link href={`/listings/${listing.id}`} target="_blank" className="font-bold text-[hsl(167_55%_24%)] hover:underline block max-w-[250px] truncate text-sm">
+                          <Link href={`/listings/${listing.id}`} target="_blank" className="font-bold text-[hsl(155_33%_23%)] hover:underline block max-w-[250px] truncate text-sm">
                             {listing.title}
                           </Link>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="text-[11px] text-[hsl(161_15%_42%)]">{categoryName(listing.categorySlug, listing.category)}</span>
+                            <span className="text-[11px] text-[hsl(153_12%_43%)]">{categoryName(listing.categorySlug, listing.category)}</span>
                             {listing.featured && <span className="inline-flex items-center text-[10px] font-bold text-[hsl(35_90%_45%)] bg-[hsl(35_90%_50%)/0.15] px-1.5 rounded"><Star size={10} className="mr-0.5 fill-current" /> {t('featured')}</span>}
                             {listing.pinned && <span className="inline-flex items-center text-[10px] font-bold text-[hsl(202_89%_45%)] bg-[hsl(202_89%_53%)/0.15] px-1.5 rounded"><Pin size={10} className="mr-0.5 fill-current" /> {t('pinned')}</span>}
                           </div>
@@ -120,11 +120,11 @@ export function AdminListings() {
                         <span>{listing.seller?.name || t('unknownSeller')}</span>
                         {listing.seller?.verified && <VerifiedBadge testId={`badge-verified-admin-listing-${listing.id}`} />}
                       </div>
-                      <div className="text-[11px] text-[hsl(161_15%_42%)] font-numeric" dir="ltr">{listing.seller?.phone || '-'}</div>
-                      <div className="text-[11px] text-[hsl(161_15%_42%)]"><span className="inline-flex items-center gap-1"><WhatsAppIcon size={13} className="text-[#25D366]" />{t('whatsappNumber')}:</span> <span className="font-numeric" dir="ltr">{listing.whatsappPhone || '-'}</span></div>
+                      <div className="text-[11px] text-[hsl(153_12%_43%)] font-numeric" dir="ltr">{listing.seller?.phone || '-'}</div>
+                      <div className="text-[11px] text-[hsl(153_12%_43%)]"><span className="inline-flex items-center gap-1"><WhatsAppIcon size={13} className="text-[#25D366]" />{t('whatsappNumber')}:</span> <span className="font-numeric" dir="ltr">{listing.whatsappPhone || '-'}</span></div>
                     </AdminTd>
                     <AdminTd>
-                      <span className="font-numeric font-extrabold text-[hsl(167_55%_24%)]" dir="ltr">
+                      <span className="font-numeric font-extrabold text-[hsl(155_33%_23%)]" dir="ltr">
                         {formatPrice(listing.price, listing.currency, language)}
                       </span>
                     </AdminTd>
@@ -147,7 +147,7 @@ export function AdminListings() {
                           className="rounded-lg border border-[hsl(var(--border))] px-2 py-1 text-[10px] font-bold disabled:opacity-50"
                         >{listing.rentalAdminHiddenAt ? t('rentalAdminShow') : t('rentalAdminHide')}</button>}
                         {listing.status === 'pending_review' && ENABLE_PAID_LISTINGS && (
-                          <span className="max-w-[150px] text-[10px] leading-4 text-[hsl(161_15%_42%)]" title={t('adminActivationRequiresPayment')}>
+                          <span className="max-w-[150px] text-[10px] leading-4 text-[hsl(153_12%_43%)]" title={t('adminActivationRequiresPayment')}>
                             {t('adminActivationRequiresPayment')}
                           </span>
                         )}
@@ -170,7 +170,7 @@ export function AdminListings() {
                             trigger={
                               <button
                                 data-testid={`button-publish-listing-${listing.id}`}
-                                className="px-3 py-1.5 bg-[hsl(167_55%_24%)] text-white text-[11px] font-bold rounded-lg hover:bg-[hsl(167_45%_15%)] transition-colors"
+                                className="px-3 py-1.5 bg-[hsl(155_33%_23%)] text-white text-[11px] font-bold rounded-lg hover:bg-[hsl(155_33%_18%)] transition-colors"
                               >
                                 {t('adminApprove')}
                               </button>
@@ -191,13 +191,13 @@ export function AdminListings() {
                           />
                         )}
 
-                        <div className="w-px h-6 bg-[hsl(38_15%_87%)] mx-1" />
+                        <div className="w-px h-6 bg-[hsl(38_22%_86%)] mx-1" />
 
                         <AdminActionDialog
                           title={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')}
                           description={t(listing.featured ? 'adminUnfeatureListingDescription' : 'adminFeatureListingDescription', { title: listing.title })}
                           trigger={
-                            <button data-testid={`button-featured-listing-${listing.id}`} className={`p-2 rounded-full transition-colors ${listing.featured ? 'text-[hsl(35_90%_45%)] bg-[hsl(35_90%_50%)/0.15] hover:bg-[hsl(35_90%_50%)/0.25]' : 'text-[hsl(161_15%_42%)] hover:bg-[hsl(38_33%_92%)]'}`} title={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')} aria-label={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')}>
+                            <button data-testid={`button-featured-listing-${listing.id}`} className={`p-2 rounded-full transition-colors ${listing.featured ? 'text-[hsl(35_90%_45%)] bg-[hsl(35_90%_50%)/0.15] hover:bg-[hsl(35_90%_50%)/0.25]' : 'text-[hsl(153_12%_43%)] hover:bg-[hsl(42_37%_92%)]'}`} title={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')} aria-label={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')}>
                               <Star size={16} className={listing.featured ? "fill-current" : ""} />
                             </button>
                           }
@@ -210,7 +210,7 @@ export function AdminListings() {
                           confirmText={t('deleteListing')}
                           confirmVariant="danger"
                           trigger={
-                            <button className="p-2 text-[hsl(161_15%_42%)] hover:text-[hsl(4_62%_48%)] hover:bg-[hsl(4_62%_48%)/0.1] rounded-full transition-colors" title={t('deleteListing')} aria-label={t('deleteListing')}>
+                            <button className="p-2 text-[hsl(153_12%_43%)] hover:text-[hsl(4_62%_48%)] hover:bg-[hsl(4_62%_48%)/0.1] rounded-full transition-colors" title={t('deleteListing')} aria-label={t('deleteListing')}>
                               <Trash2 size={16} />
                             </button>
                           }
@@ -222,7 +222,7 @@ export function AdminListings() {
                 ))}
                 {items.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-[hsl(161_15%_42%)]">
+                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-[hsl(153_12%_43%)]">
                       {t('adminNoMatchingListings')}
                     </td>
                   </tr>

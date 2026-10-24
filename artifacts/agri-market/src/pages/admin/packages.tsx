@@ -64,31 +64,31 @@ function PackageForm({ packageData, onSave, onCancel }: { packageData?: any, onS
   return (
     <form onSubmit={handleSubmit} className="space-y-4" dir={meta[language].dir}>
       <div>
-        <label className="block text-xs font-bold text-[hsl(167_55%_24%)] mb-1.5">{t('packageName')}</label>
-        <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-2.5 bg-[hsl(38_33%_97%)] border border-[hsl(38_15%_87%)] rounded-xl text-sm outline-none focus:border-[hsl(167_55%_24%)]" />
+        <label className="block text-xs font-bold text-[hsl(154_26%_15%)] mb-1.5">{t('packageName')}</label>
+        <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-2.5 bg-[hsl(42_37%_97%)] border border-[hsl(38_22%_86%)] rounded-xl text-sm outline-none focus:border-[hsl(155_33%_23%)]" />
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold text-[hsl(167_55%_24%)] mb-1.5">{t('packagePrice', { currency: t('currencyMRU') })}</label>
-          <input type="number" required min="0" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="w-full p-2.5 bg-[hsl(38_33%_97%)] border border-[hsl(38_15%_87%)] rounded-xl text-sm outline-none focus:border-[hsl(167_55%_24%)]" dir="ltr" />
+          <label className="block text-xs font-bold text-[hsl(154_26%_15%)] mb-1.5">{t('packagePrice', { currency: t('currencyMRU') })}</label>
+          <input type="number" required min="0" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="w-full p-2.5 bg-[hsl(42_37%_97%)] border border-[hsl(38_22%_86%)] rounded-xl text-sm outline-none focus:border-[hsl(155_33%_23%)]" dir="ltr" />
         </div>
         <div>
-          <label className="block text-xs font-bold text-[hsl(167_55%_24%)] mb-1.5">{t('packageDurationDays')}</label>
-          <input type="number" required min="1" value={formData.durationDays} onChange={e => setFormData({...formData, durationDays: e.target.value})} className="w-full p-2.5 bg-[hsl(38_33%_97%)] border border-[hsl(38_15%_87%)] rounded-xl text-sm outline-none focus:border-[hsl(167_55%_24%)]" dir="ltr" />
+          <label className="block text-xs font-bold text-[hsl(154_26%_15%)] mb-1.5">{t('packageDurationDays')}</label>
+          <input type="number" required min="1" value={formData.durationDays} onChange={e => setFormData({...formData, durationDays: e.target.value})} className="w-full p-2.5 bg-[hsl(42_37%_97%)] border border-[hsl(38_22%_86%)] rounded-xl text-sm outline-none focus:border-[hsl(155_33%_23%)]" dir="ltr" />
         </div>
       </div>
       <div>
-        <label className="block text-xs font-bold text-[hsl(167_55%_24%)] mb-1.5">{t('packageFeaturesJson')}</label>
-        <textarea required value={formData.features} onChange={e => setFormData({...formData, features: e.target.value})} className="w-full p-2.5 bg-[hsl(38_33%_97%)] border border-[hsl(38_15%_87%)] rounded-xl text-sm outline-none focus:border-[hsl(167_55%_24%)] min-h-[100px] font-mono" dir="ltr" placeholder={t('packageFeaturesPlaceholder')} />
-        <p className="text-[10px] text-[hsl(161_15%_42%)] mt-1">{t('packageFeaturesHelp')}</p>
+        <label className="block text-xs font-bold text-[hsl(154_26%_15%)] mb-1.5">{t('packageFeaturesJson')}</label>
+        <textarea required value={formData.features} onChange={e => setFormData({...formData, features: e.target.value})} className="w-full p-2.5 bg-[hsl(42_37%_97%)] border border-[hsl(38_22%_86%)] rounded-xl text-sm outline-none focus:border-[hsl(155_33%_23%)] min-h-[100px] font-mono" dir="ltr" placeholder={t('packageFeaturesPlaceholder')} />
+        <p className="text-[10px] text-[hsl(153_12%_43%)] mt-1">{t('packageFeaturesHelp')}</p>
       </div>
       <label className="flex items-center gap-2">
-        <input type="checkbox" checked={formData.active} onChange={e => setFormData({...formData, active: e.target.checked})} className="rounded border-[hsl(38_15%_87%)] text-[hsl(167_55%_24%)] focus:ring-[hsl(167_55%_24%)]" />
-        <span className="text-sm font-bold text-[hsl(167_55%_24%)]">{t('packageActive')}</span>
+        <input type="checkbox" checked={formData.active} onChange={e => setFormData({...formData, active: e.target.checked})} className="rounded border-[hsl(38_22%_86%)] text-[hsl(155_33%_23%)] focus:ring-[hsl(155_33%_23%)]" />
+        <span className="text-sm font-bold text-[hsl(154_26%_15%)]">{t('packageActive')}</span>
       </label>
-      <div className="flex gap-3 justify-end pt-4 border-t border-[hsl(38_15%_87%)]">
-        <button type="button" onClick={onCancel} className="px-5 py-2.5 rounded-full border border-[hsl(38_15%_87%)] text-sm font-bold text-[hsl(161_15%_42%)] hover:bg-[hsl(38_33%_97%)]">{t('cancel')}</button>
-        <button type="submit" disabled={loading} className="px-5 py-2.5 bg-[hsl(167_55%_24%)] text-white text-sm font-bold rounded-full hover:bg-[hsl(167_45%_15%)] disabled:opacity-50">{t('save')}</button>
+      <div className="flex gap-3 justify-end pt-4 border-t border-[hsl(38_22%_86%)]">
+        <button type="button" onClick={onCancel} className="px-5 py-2.5 rounded-full border border-[hsl(38_22%_86%)] text-sm font-bold text-[hsl(153_12%_43%)] hover:bg-[hsl(42_37%_97%)]">{t('cancel')}</button>
+        <button type="submit" disabled={loading} className="px-5 py-2.5 bg-[hsl(155_33%_23%)] text-white text-sm font-bold rounded-full hover:bg-[hsl(155_33%_18%)] disabled:opacity-50">{t('save')}</button>
       </div>
     </form>
   );
@@ -107,14 +107,14 @@ export function AdminPackages() {
   const items = data?.items || [];
 
   return (
-    <div className="flex-1 flex flex-col bg-[hsl(38_44%_96%)] h-full">
+    <div className="flex-1 flex flex-col bg-[hsl(42_37%_96%)] h-full">
       <AdminHeader 
         title={t('adminPackagesTitle')}
         description={t('adminPackagesDescription')}
         action={
           <button 
             onClick={() => setIsNew(true)}
-            className="flex items-center gap-2 bg-[hsl(346_42%_43%)] text-[hsl(167_55%_24%)] px-4 py-2.5 rounded-xl text-sm font-bold hover:-translate-y-0.5 transition-transform shadow-sm"
+            className="flex items-center gap-2 bg-[hsl(42_87%_61%)] text-[hsl(155_33%_23%)] px-4 py-2.5 rounded-xl text-sm font-bold hover:-translate-y-0.5 transition-transform shadow-sm"
           >
             <Plus size={18} /> {t('adminNewPackage')}
           </button>
@@ -126,7 +126,7 @@ export function AdminPackages() {
           <DialogPrimitive.Portal>
             <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity" />
             <DialogPrimitive.Content className="admin-text-flow fixed left-[50%] top-[50%] z-50 max-h-[min(90dvh,720px)] w-[calc(100%-2rem)] max-w-lg translate-x-[-50%] translate-y-[-50%] overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl sm:p-6" dir={meta[language].dir}>
-              <DialogPrimitive.Title className="text-xl font-bold text-[hsl(167_55%_24%)] mb-6">
+              <DialogPrimitive.Title className="text-xl font-bold text-[hsl(155_33%_23%)] mb-6">
                 {isNew ? t('adminAddPackage') : t('adminEditPackage')}
               </DialogPrimitive.Title>
               <PackageForm 
@@ -149,34 +149,34 @@ export function AdminPackages() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((pkg: any) => (
-              <div key={pkg.id} className={`bg-white border ${pkg.active ? 'border-[hsl(38_15%_87%)]' : 'border-dashed border-[hsl(38_15%_87%)] opacity-70'} rounded-2xl p-6 shadow-sm flex flex-col`}>
+              <div key={pkg.id} className={`bg-white border ${pkg.active ? 'border-[hsl(38_22%_86%)]' : 'border-dashed border-[hsl(38_22%_86%)] opacity-70'} rounded-2xl p-6 shadow-sm flex flex-col`}>
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-lg font-bold text-[hsl(167_55%_24%)]">{pkg.name}</h3>
-                    <p className="text-xs text-[hsl(161_15%_42%)] mt-1">{t('packageDuration', { count: formatNumber(Number(pkg.durationDays)) })}</p>
+                    <h3 className="text-lg font-bold text-[hsl(155_33%_23%)]">{pkg.name}</h3>
+                    <p className="text-xs text-[hsl(153_12%_43%)] mt-1">{t('packageDuration', { count: formatNumber(Number(pkg.durationDays)) })}</p>
                   </div>
                   {!pkg.active && <AdminBadge variant="neutral">{t('disabled')}</AdminBadge>}
                 </div>
                 
                 <div className="my-6">
-                  <span className="font-numeric text-3xl font-extrabold text-[hsl(167_55%_24%)]" dir="ltr">
+                  <span className="font-numeric text-3xl font-extrabold text-[hsl(154_26%_15%)]" dir="ltr">
                      {formatMoney(Number(pkg.price), 'MRU')}
                   </span>
                 </div>
                 
                 <ul className="space-y-3 flex-1 mb-8">
                   {(pkg.features || []).map((feature: string, i: number) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-[hsl(161_15%_42%)]">
-                      <Check size={16} className="text-[hsl(346_42%_43%)] shrink-0 mt-0.5" strokeWidth={3} />
+                    <li key={i} className="flex items-start gap-2 text-sm text-[hsl(153_12%_43%)]">
+                      <Check size={16} className="text-[hsl(42_87%_61%)] shrink-0 mt-0.5" strokeWidth={3} />
                       {feature}
                     </li>
                   ))}
                 </ul>
                 
-                <div className="flex gap-2 mt-auto pt-4 border-t border-[hsl(38_15%_87%)]">
+                <div className="flex gap-2 mt-auto pt-4 border-t border-[hsl(38_22%_86%)]">
                   <button 
                     onClick={() => setEditing(pkg)}
-                    className="flex-1 flex items-center justify-center gap-2 py-2 bg-[hsl(38_33%_97%)] border border-[hsl(38_15%_87%)] text-[hsl(167_55%_24%)] text-sm font-bold rounded-xl hover:bg-[hsl(38_15%_92%)] transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 py-2 bg-[hsl(42_37%_97%)] border border-[hsl(38_22%_86%)] text-[hsl(155_33%_23%)] text-sm font-bold rounded-xl hover:bg-[hsl(38_22%_92%)] transition-colors"
                   >
                      <Edit size={16} /> {t('editPackage')}
                   </button>
@@ -196,7 +196,7 @@ export function AdminPackages() {
               </div>
             ))}
             {items.length === 0 && (
-              <div className="col-span-full py-12 text-center text-sm text-[hsl(161_15%_42%)]">
+              <div className="col-span-full py-12 text-center text-sm text-[hsl(153_12%_43%)]">
                 {t('noPackages')}
               </div>
             )}

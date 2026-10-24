@@ -37,14 +37,14 @@ export function HomeLoadDebugPanel() {
   return (
     <aside
       dir="rtl"
-      className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] end-3 z-[100] flex max-w-[calc(100vw-1.5rem)] items-center gap-2 rounded-xl border border-white/15 bg-[#0f2420]/95 p-2 text-xs text-white shadow-xl"
+      className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] end-3 z-[100] flex max-w-[calc(100vw-1.5rem)] items-center gap-2 rounded-xl border border-white/15 bg-[#15251d]/95 p-2 text-xs text-white shadow-xl"
       data-testid="home-load-debug-panel"
     >
       <span className="px-1">تشخيص الفتح: {entryCount}</span>
       <button
         type="button"
         onClick={() => void copyLog()}
-        className="rounded-lg bg-[#c2516b] px-3 py-2 font-bold text-white"
+        className="rounded-lg bg-[#e9b949] px-3 py-2 font-bold text-[#173d32]"
         data-testid="button-copy-home-load-debug"
       >
         نسخ السجل

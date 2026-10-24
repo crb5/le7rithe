@@ -39,31 +39,31 @@ export function AdminLogin() {
   if (me.passwordSetupStatus === 'missing-secret' || me.passwordSetupStatus === 'invalid-secret') {
     const invalidSetup = me.passwordSetupStatus === 'invalid-secret';
     return (
-      <div className="admin-text-flow min-h-[100dvh] bg-[hsl(38_44%_96%)] flex items-center justify-center p-4" dir={meta[language].dir}>
+      <div className="admin-text-flow min-h-[100dvh] bg-[hsl(42_37%_96%)] flex items-center justify-center p-4" dir={meta[language].dir}>
         <div className="max-w-md w-full bg-white border border-[hsl(4_62%_48%)/0.3] p-8 rounded-2xl shadow-xl text-center">
-          <div className="w-16 h-16 bg-[hsl(346_42%_43%)/0.18] text-[hsl(167_55%_24%)] rounded-full flex items-center justify-center mx-auto mb-5"><LockKeyhole size={32} /></div>
-          <h1 className="text-xl font-bold text-[hsl(167_55%_24%)] mb-2">{invalidSetup ? t('adminPasswordSetupInvalid') : t('adminPasswordSetupRequired')}</h1>
-          <p className="text-sm text-[hsl(161_15%_42%)] leading-relaxed">{invalidSetup ? t('adminPasswordSetupInvalidDescription') : t('adminPasswordSetupRequiredDescription')}</p>
+          <div className="w-16 h-16 bg-[hsl(42_87%_61%)/0.18] text-[hsl(155_33%_23%)] rounded-full flex items-center justify-center mx-auto mb-5"><LockKeyhole size={32} /></div>
+          <h1 className="text-xl font-bold text-[hsl(154_26%_15%)] mb-2">{invalidSetup ? t('adminPasswordSetupInvalid') : t('adminPasswordSetupRequired')}</h1>
+          <p className="text-sm text-[hsl(153_12%_43%)] leading-relaxed">{invalidSetup ? t('adminPasswordSetupInvalidDescription') : t('adminPasswordSetupRequiredDescription')}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="admin-text-flow min-h-[100dvh] bg-[hsl(38_44%_96%)] flex flex-col items-center justify-center p-4 relative overflow-hidden" dir={meta[language].dir}>
-      <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[600px] h-[600px] rounded-full bg-[hsl(167_55%_24%)/0.03] blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[400px] h-[400px] rounded-full bg-[hsl(346_42%_43%)/0.05] blur-3xl pointer-events-none" />
+    <div className="admin-text-flow min-h-[100dvh] bg-[hsl(42_37%_96%)] flex flex-col items-center justify-center p-4 relative overflow-hidden" dir={meta[language].dir}>
+      <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[600px] h-[600px] rounded-full bg-[hsl(155_33%_23%)/0.03] blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[400px] h-[400px] rounded-full bg-[hsl(42_87%_61%)/0.05] blur-3xl pointer-events-none" />
       <div className="mb-8 scale-110 sm:mb-10 sm:scale-125"><Logo /></div>
-      <div className="relative z-10 w-full max-w-[440px] overflow-hidden rounded-3xl border border-[hsl(38_15%_87%)] bg-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)]">
-        <div className="bg-[hsl(167_45%_13%)] p-6 text-center text-white border-b border-[hsl(167_45%_13%)]">
+      <div className="relative z-10 w-full max-w-[440px] overflow-hidden rounded-3xl border border-[hsl(38_22%_86%)] bg-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)]">
+        <div className="bg-[hsl(155_33%_16%)] p-6 text-center text-white border-b border-[hsl(155_33%_16%)]">
           <h1 className="text-xl font-bold">{t('adminPortal')}</h1>
-          <p className="text-xs text-[hsl(38_30%_94%)/0.7] mt-1 font-medium tracking-wide">{t('restrictedAccess')}</p>
+          <p className="text-xs text-[hsl(42_34%_94%)/0.7] mt-1 font-medium tracking-wide">{t('restrictedAccess')}</p>
         </div>
         <div className="p-5 pb-7 sm:p-8 sm:pb-10">
           <div className="mb-6 text-center">
-            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[hsl(346_42%_43%)/0.18] text-[hsl(167_55%_24%)]"><LockKeyhole size={24} /></div>
-            <h2 className="text-lg font-bold text-[hsl(167_55%_24%)]">{t('adminPasswordTitle')}</h2>
-            <p className="mt-2 text-xs leading-6 text-[hsl(161_15%_42%)]">{t('adminPasswordDescription')}</p>
+            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[hsl(42_87%_61%)/0.18] text-[hsl(155_33%_23%)]"><LockKeyhole size={24} /></div>
+            <h2 className="text-lg font-bold text-[hsl(155_33%_23%)]">{t('adminPasswordTitle')}</h2>
+            <p className="mt-2 text-xs leading-6 text-[hsl(153_12%_43%)]">{t('adminPasswordDescription')}</p>
           </div>
           {passwordLogin.isError && <div role="alert" data-testid="admin-password-error" className="mb-4 rounded-xl border border-[hsl(4_62%_48%)/0.25] bg-[hsl(4_62%_48%)/0.08] px-3 py-2 text-xs font-semibold text-[hsl(4_62%_48%)]">
             {(passwordLogin.error as AdminPasswordLoginError)?.code === 'ADMIN_PASSWORD_SETUP_MISSING'
@@ -73,16 +73,16 @@ export function AdminLogin() {
                 : t('adminPasswordInvalid')}
           </div>}
           <form onSubmit={(event) => { event.preventDefault(); passwordLogin.mutate(password); }} className="space-y-4">
-            <label className="block text-xs font-bold text-[hsl(167_55%_24%)]" htmlFor="admin-password">{t('adminPasswordLabel')}
-              <input id="admin-password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required className="mt-2 w-full rounded-xl border border-[hsl(38_15%_87%)] bg-white px-3.5 py-3 text-base outline-none focus:border-[hsl(167_55%_24%)] focus:ring-2 focus:ring-[hsl(167_55%_24%)/0.15]" />
+            <label className="block text-xs font-bold text-[hsl(155_33%_23%)]" htmlFor="admin-password">{t('adminPasswordLabel')}
+              <input id="admin-password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required className="mt-2 w-full rounded-xl border border-[hsl(38_22%_86%)] bg-white px-3.5 py-3 text-base outline-none focus:border-[hsl(155_33%_23%)] focus:ring-2 focus:ring-[hsl(155_33%_23%)/0.15]" />
             </label>
-             <button type="submit" disabled={passwordLogin.isPending || !password} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[hsl(167_55%_24%)] px-4 py-3 text-sm font-bold text-white transition hover:bg-[hsl(167_45%_15%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(346_42%_43%)] focus-visible:ring-offset-2 disabled:opacity-60">
+             <button type="submit" disabled={passwordLogin.isPending || !password} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[hsl(155_33%_23%)] px-4 py-3 text-sm font-bold text-white transition hover:bg-[hsl(155_33%_18%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)] focus-visible:ring-offset-2 disabled:opacity-60">
               {passwordLogin.isPending ? <Loader2 size={18} className="animate-spin" /> : t('adminPasswordContinue')}
             </button>
           </form>
         </div>
       </div>
-      <p className="mt-12 text-xs text-[hsl(161_15%_42%)] font-medium z-10">&copy; {new Date().getFullYear()} <bdi dir="ltr">{SITE_NAME}</bdi>. {t('footerRights')}</p>
+      <p className="mt-12 text-xs text-[hsl(153_12%_43%)] font-medium z-10">&copy; {new Date().getFullYear()} <bdi dir="ltr">{SITE_NAME}</bdi>. {t('footerRights')}</p>
     </div>
   );
 }

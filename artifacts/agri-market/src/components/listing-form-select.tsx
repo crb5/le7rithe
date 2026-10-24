@@ -98,7 +98,7 @@ export function ListingFormSelect({
               event.stopPropagation();
               onValueChange('');
             }}
-            className="absolute end-9 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-[hsl(var(--muted-foreground))] transition-colors hover:bg-[hsl(156_18%_90%)] hover:text-[hsl(var(--foreground))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]"
+            className="absolute end-9 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-[hsl(var(--muted-foreground))] transition-colors hover:bg-[hsl(153_35%_92%)] hover:text-[hsl(var(--foreground))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]"
           >
             <X size={16} aria-hidden="true" />
           </button>
@@ -123,7 +123,7 @@ export function ListingFormSelect({
               <SelectPrimitive.Item
                 key={option.value}
                 value={option.value}
-                className="relative flex min-h-11 w-full cursor-pointer select-none items-center rounded-lg py-2 text-base text-[hsl(var(--foreground))] outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:bg-[hsl(156_18%_90%)] data-[highlighted]:text-[hsl(167_55%_24%)] data-[state=checked]:bg-[hsl(156_18%_90%)] data-[state=checked]:font-semibold"
+                className="relative flex min-h-11 w-full cursor-pointer select-none items-center rounded-lg py-2 text-base text-[hsl(var(--foreground))] outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:bg-[hsl(153_35%_92%)] data-[highlighted]:text-[hsl(154_26%_15%)] data-[state=checked]:bg-[hsl(153_35%_92%)] data-[state=checked]:font-semibold"
               >
                 <SelectPrimitive.ItemText className="w-full px-3 pe-10 text-start">
                   {option.label}
