@@ -153,7 +153,7 @@ export function AdminOverview() {
                     <div className="flex gap-2">
                       {(listing.status === 'pending_payment' ||
                         (listing.status === 'pending_review' && ENABLE_PAID_LISTINGS)) && (
-                        <Link href="/admin/payments" className="px-3 py-1.5 bg-[hsl(35_90%_50%)/0.15] text-[hsl(35_90%_45%)] text-[11px] font-bold rounded-full hover:bg-[hsl(35_90%_50%)/0.25]">
+                        <Link href="/admin/payments" className="px-3 py-1.5 bg-[hsl(35_90%_50%)/0.15] text-[hsl(35_90%_45%)] text-[11px] font-bold rounded-lg hover:bg-[hsl(35_90%_50%)/0.25]">
                           {t('adminReviewPaymentToActivate')}
                         </Link>
                       )}
@@ -180,7 +180,7 @@ export function AdminOverview() {
                             confirmText={t('adminReject')}
                             confirmVariant="danger"
                             requireReason
-                            trigger={<button className="px-3 py-1.5 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] text-[11px] font-bold rounded-full hover:bg-[hsl(4_62%_48%)/0.2]">{t('adminReject')}</button>}
+                            trigger={<button className="px-3 py-1.5 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] text-[11px] font-bold rounded-lg hover:bg-[hsl(4_62%_48%)/0.2]">{t('adminReject')}</button>}
                             onConfirm={(reason) => updateStatus.mutateAsync({ id: listing.id, status: 'rejected', reason })}
                           />
                       )}

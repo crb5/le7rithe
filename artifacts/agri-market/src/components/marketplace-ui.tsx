@@ -360,7 +360,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <aside ref={drawerRef} id="marketplace-navigation-drawer" dir={meta[language].dir} className={`marketplace-navigation-drawer ${isArabicLayout ? 'marketplace-navigation-drawer--rtl' : 'marketplace-navigation-drawer--ltr'} fixed bottom-0 z-40 flex w-[280px] max-w-[85vw] flex-col overflow-y-auto bg-[#22362C] px-5 py-6 text-[#F4E9CF] shadow-2xl transition-transform duration-[250ms] motion-reduce:transition-none ${open ? 'translate-x-0' : isArabicLayout ? 'translate-x-full' : '-translate-x-full'}`} aria-label={t('mainNavigation')} aria-hidden={!open} inert={!open}>
         <div className="mb-10 flex items-center justify-between">
           <HeaderBrand variant="sidebar" direction={meta[language].dir} />
-          <button type="button" onClick={closeNavigation} className="rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E9B949]" aria-label={t('closeMenu')} data-testid="button-close-menu"><X size={19} /></button>
+          <button type="button" onClick={closeNavigation} className="rounded-xl p-2 text-white/60 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E9B949]" aria-label={t('closeMenu')} data-testid="button-close-menu"><X size={19} /></button>
         </div>
         <nav className="space-y-1">
           <span className="mb-3 block px-3 text-[10px] font-bold tracking-[.16em] text-white/40">{t('mainArea')}</span>
@@ -388,10 +388,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               {language === 'ar' ? <ChevronLeft size={16} className="shrink-0 text-white/35" /> : <ChevronRight size={16} className="shrink-0 text-white/35" />}
             </Link>
             <div className="mt-4 border-t border-white/10 pt-4">
-              <button type="button" onClick={() => setShowSignOutConfirm(true)} disabled={isSigningOut} className="flex min-h-11 w-full items-center gap-2 rounded-full px-3 py-2 text-sm font-bold text-red-200 transition hover:bg-red-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300" data-testid="button-sidebar-sign-out">{isSigningOut ? <Loader2 size={16} className="animate-spin" /> : <LogOut size={16} />}{isSigningOut ? t('signingOut') : t('signOut')}</button>
+              <button type="button" onClick={() => setShowSignOutConfirm(true)} disabled={isSigningOut} className="flex min-h-11 w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-bold text-red-200 transition hover:bg-red-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300" data-testid="button-sidebar-sign-out">{isSigningOut ? <Loader2 size={16} className="animate-spin" /> : <LogOut size={16} />}{isSigningOut ? t('signingOut') : t('signOut')}</button>
             </div>
           </div></Show>
-          <Show when="signed-out"><Link href="/sign-in" className="flex items-center justify-center rounded-full border border-white/15 px-3 py-2.5 text-xs font-bold text-white" data-testid="link-sidebar-sign-in">{t('signIn')}</Link></Show>
+          <Show when="signed-out"><Link href="/sign-in" className="flex items-center justify-center rounded-xl border border-white/15 px-3 py-2.5 text-xs font-bold text-white" data-testid="link-sidebar-sign-in">{t('signIn')}</Link></Show>
         </div>
       </aside>
       {open && <button type="button" onClick={closeNavigation} aria-label={t('closeMenu')} className="fixed inset-0 z-30 touch-none bg-black/50" data-testid="button-overlay-menu" />}
@@ -444,8 +444,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
       </footer>
-      <Show when="signed-in"><Link href="/support" className={`fixed bottom-[4.5rem] start-3 z-20 inline-flex h-11 items-center justify-center transition-[transform,translate,opacity] duration-300 ease-out motion-reduce:transition-none xl:bottom-5 xl:start-5 ${floatingActionsVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`} aria-label={t('support')} aria-hidden={!floatingActionsVisible} inert={!floatingActionsVisible} onFocus={() => setFloatingActionsHaveFocus(true)} onBlur={() => setFloatingActionsHaveFocus(false)} data-floating-visibility={floatingActionsVisible ? 'visible' : 'hidden'} data-testid="link-floating-support"><span className="inline-flex h-9 items-center gap-1 rounded-full border border-[hsl(var(--primary)/.18)] bg-[hsl(var(--card)/.96)] px-2 text-[10px] font-bold text-[hsl(var(--primary))] shadow-lg backdrop-blur-sm transition-colors hover:bg-[hsl(var(--secondary))]"><MessageCircle size={14} />{t('support')}</span></Link></Show>
-      <Link href="/add-listing" className={`fixed bottom-5 start-3 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[hsl(var(--accent))] text-[hsl(var(--primary))] shadow-glow-accent transition-[transform,translate,opacity] duration-300 ease-out motion-reduce:transition-none xl:hidden ${floatingActionsVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`} aria-label={t('addListing')} aria-hidden={!floatingActionsVisible} inert={!floatingActionsVisible} onFocus={() => setFloatingActionsHaveFocus(true)} onBlur={() => setFloatingActionsHaveFocus(false)} data-floating-visibility={floatingActionsVisible ? 'visible' : 'hidden'} data-testid="link-mobile-add"><Plus size={20} /></Link>
+      <Show when="signed-in"><Link href="/support" className={`fixed bottom-[4.5rem] start-3 z-20 inline-flex h-11 items-center justify-center transition-[transform,translate,opacity] duration-300 ease-out motion-reduce:transition-none xl:bottom-5 xl:start-5 ${floatingActionsVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`} aria-label={t('support')} aria-hidden={!floatingActionsVisible} inert={!floatingActionsVisible} onFocus={() => setFloatingActionsHaveFocus(true)} onBlur={() => setFloatingActionsHaveFocus(false)} data-floating-visibility={floatingActionsVisible ? 'visible' : 'hidden'} data-testid="link-floating-support"><span className="inline-flex h-9 items-center gap-1 rounded-full border border-[hsl(var(--primary)/.18)] bg-[hsl(var(--card)/.96)] px-2 text-[10px] font-bold text-[hsl(var(--primary))] shadow-[0_7px_20px_hsl(155_20%_18%/.14)] backdrop-blur-sm transition-colors hover:bg-[hsl(var(--secondary))]"><MessageCircle size={14} />{t('support')}</span></Link></Show>
+      <Link href="/add-listing" className={`fixed bottom-5 start-3 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[hsl(var(--accent))] text-[hsl(var(--primary))] shadow-[0_8px_22px_hsl(42_87%_45%/.28)] transition-[transform,translate,opacity] duration-300 ease-out motion-reduce:transition-none xl:hidden ${floatingActionsVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`} aria-label={t('addListing')} aria-hidden={!floatingActionsVisible} inert={!floatingActionsVisible} onFocus={() => setFloatingActionsHaveFocus(true)} onBlur={() => setFloatingActionsHaveFocus(false)} data-floating-visibility={floatingActionsVisible ? 'visible' : 'hidden'} data-testid="link-mobile-add"><Plus size={20} /></Link>
       <FavoriteSignInDialog />
       <SignOutDialog open={showSignOutConfirm} isLoading={isSigningOut} onCancel={() => setShowSignOutConfirm(false)} onConfirm={() => void handleSignOut()} />
     </div>
@@ -566,7 +566,7 @@ export function ListingCard({ listing, onSave, featured = false, iconSize = 32, 
               const isRental = listing.attributes?.saleType === 'rent';
               const isUnavailable = isRental ? listing.rentalStatus === 'leased' : listing.saleStatus === 'sold';
               return <span
-                className={`pointer-events-none absolute start-2 top-2 z-10 max-w-[calc(100%-1rem)] truncate whitespace-nowrap rounded-full px-2 py-1 text-[9px] font-bold leading-4 shadow-sm ${
+                className={`pointer-events-none absolute start-2 top-2 z-10 max-w-[calc(100%-1rem)] truncate whitespace-nowrap rounded-md px-2 py-1 text-[9px] font-bold leading-4 shadow-sm ${
                   isUnavailable ? 'bg-[hsl(var(--destructive))] text-white'
                     : 'bg-[hsl(var(--accent))] text-[hsl(var(--primary))]'
                 }`}
@@ -576,7 +576,7 @@ export function ListingCard({ listing, onSave, featured = false, iconSize = 32, 
           </Link>
           <Link href={listingHref} tabIndex={isMarqueeDuplicate ? -1 : undefined} className="listing-card-content" data-testid={`link-listing-${listing.id}`}>
             <div className="listing-card-labels">
-              {isFeatured ? <span className="rounded-full bg-[hsl(var(--accent))] px-1.5 py-0.5 text-[9px] font-bold leading-4 text-[hsl(var(--primary))]">{t('featuredChoice')}</span> : null}
+              {isFeatured ? <span className="rounded-md bg-[hsl(var(--accent))] px-1.5 py-0.5 text-[9px] font-bold leading-4 text-[hsl(var(--primary))]">{t('featuredChoice')}</span> : null}
               <span className="min-w-0 text-[10px] font-medium text-[hsl(var(--muted-foreground))]">{localizedCategory}</span>
             </div>
             <time dateTime={listing.createdAt} className="mb-1 block text-[10px] text-[hsl(var(--muted-foreground))]" data-testid={`time-listing-published-${listing.id}`}>{publishedAt}</time>
@@ -608,7 +608,7 @@ export function ListingSkeleton({ count = 4, variant = 'compact' }: { count?: nu
     <div className={gridClass} aria-hidden="true" data-testid="listing-skeleton-grid">
       {Array.from({ length: count }).map((_, i) => (
         variant === 'listing-card' ? (
-          <div key={i} className={`min-h-[175px] min-w-0 animate-pulse rounded-2xl border border-[hsl(var(--card-border))] bg-[hsl(var(--card))] p-3 shadow-sm ${i > 1 ? 'hidden sm:block' : ''}`}>
+          <div key={i} className={`min-h-[175px] min-w-0 animate-pulse rounded-2xl border border-[hsl(var(--card-border))] bg-[hsl(var(--card))] p-3 shadow-[0_5px_18px_hsl(155_20%_18%/.045)] ${i > 1 ? 'hidden sm:block' : ''}`}>
             <div className="flex h-full min-w-0 flex-col gap-3">
               <div className="flex min-w-0 items-start gap-3">
                 <div className="h-24 w-24 shrink-0 rounded-xl bg-[hsl(var(--muted))]" />
@@ -645,7 +645,7 @@ export function EmptyState({ icon: Icon = Package, title, description, action }:
 
 export function ErrorState({ onRetry, message }: { onRetry?: () => void; message?: string }) {
   const { t } = useLanguage();
-  return <div className="flex min-h-[240px] flex-col items-center justify-center rounded-2xl border border-[hsl(var(--destructive)/.2)] bg-[hsl(var(--destructive)/.04)] p-8 text-center"><span className="mb-3 text-sm font-bold text-[hsl(var(--destructive))]">{t('temporaryIssue')}</span><p className="text-sm text-[hsl(var(--muted-foreground))]">{message ?? t('dataLoadError')}</p>{onRetry && <button type="button" onClick={onRetry} className="mt-4 rounded-full bg-[hsl(var(--primary))] px-4 py-2 text-xs font-bold text-[hsl(var(--primary-foreground))]" data-testid="button-retry">{t('retry')}</button>}</div>;
+  return <div className="flex min-h-[240px] flex-col items-center justify-center rounded-2xl border border-[hsl(var(--destructive)/.2)] bg-[hsl(var(--destructive)/.04)] p-8 text-center"><span className="mb-3 text-sm font-bold text-[hsl(var(--destructive))]">{t('temporaryIssue')}</span><p className="text-sm text-[hsl(var(--muted-foreground))]">{message ?? t('dataLoadError')}</p>{onRetry && <button type="button" onClick={onRetry} className="mt-4 rounded-xl bg-[hsl(var(--primary))] px-4 py-2 text-xs font-bold text-[hsl(var(--primary-foreground))]" data-testid="button-retry">{t('retry')}</button>}</div>;
 }
 
 export function StatCard({ label, value, icon: Icon, accent = false, href }: { label: string; value: string | number; icon: typeof Users; accent?: boolean; href?: string }) {
@@ -660,16 +660,16 @@ export function StatCard({ label, value, icon: Icon, accent = false, href }: { l
 
   if (!href) return content;
 
-  return <Link href={href} className="block cursor-pointer rounded-2xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))] focus-visible:ring-offset-2">{content}</Link>;
+  return <Link href={href} className="block cursor-pointer rounded-2xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_hsl(155_20%_18%/.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))] focus-visible:ring-offset-2">{content}</Link>;
 }
 
 export function SearchBar({ value, onChange, onSubmit, onFilterClick, placeholder }: { value: string; onChange: (value: string) => void; onSubmit?: () => void; onFilterClick?: () => void; placeholder?: string }) {
   const { t } = useLanguage();
-  return <form onSubmit={(event) => { event.preventDefault(); onSubmit?.(); }} className="flex min-w-0 items-center gap-2 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-2 shadow-sm transition-shadow focus-within:border-[hsl(var(--primary)/.45)] focus-within:shadow-md">
+  return <form onSubmit={(event) => { event.preventDefault(); onSubmit?.(); }} className="flex min-w-0 items-center gap-2 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-2 shadow-[0_7px_24px_hsl(155_20%_18%/.05)] transition-shadow focus-within:border-[hsl(var(--primary)/.45)] focus-within:shadow-[0_8px_26px_hsl(155_20%_18%/.1)]">
     <Search size={19} className="mx-1 shrink-0 text-[hsl(var(--muted-foreground))]" />
     <input value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder ?? t('searchPlaceholder')} className="min-w-0 flex-1 bg-transparent px-1 py-2 text-sm text-[#000000] outline-none focus:text-[#000000] placeholder:text-[#6b7280]" data-testid="input-search" />
-    {onFilterClick && <button type="button" onClick={onFilterClick} aria-label={t('filters')} className="flex shrink-0 items-center gap-1 rounded-full border border-[hsl(var(--border))] px-2.5 py-2.5 text-xs font-bold text-[hsl(var(--primary))] transition-colors hover:bg-[hsl(var(--secondary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))]" data-testid="button-home-filters"><SlidersHorizontal size={15} aria-hidden="true" /><span>{t('filters')}</span></button>}
-    <button type="submit" className="shrink-0 rounded-full bg-[hsl(var(--primary))] px-3 py-2.5 text-xs font-bold text-[hsl(var(--primary-foreground))] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))] sm:px-4" data-testid="button-submit-search">{t('search')}</button>
+    {onFilterClick && <button type="button" onClick={onFilterClick} aria-label={t('filters')} className="flex shrink-0 items-center gap-1 rounded-xl border border-[hsl(var(--border))] px-2.5 py-2.5 text-xs font-bold text-[hsl(var(--primary))] transition-colors hover:bg-[hsl(var(--secondary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))]" data-testid="button-home-filters"><SlidersHorizontal size={15} aria-hidden="true" /><span>{t('filters')}</span></button>}
+    <button type="submit" className="shrink-0 rounded-xl bg-[hsl(var(--primary))] px-3 py-2.5 text-xs font-bold text-[hsl(var(--primary-foreground))] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))] sm:px-4" data-testid="button-submit-search">{t('search')}</button>
   </form>;
 }
 

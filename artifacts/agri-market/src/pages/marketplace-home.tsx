@@ -826,7 +826,7 @@ export function Home() {
 
   return <AppShell>
     {debugLoad ? <HomeLoadDebugPanel /> : null}
-    <FadeIn enabled={false}><section className="relative isolate overflow-hidden rounded-[2rem] bg-[hsl(var(--primary))] px-6 py-8 text-[hsl(var(--primary-foreground))] sm:px-10 sm:py-11 lg:px-14 lg:py-14" data-testid="section-home-hero">
+    <FadeIn enabled={false}><section className="relative isolate overflow-hidden rounded-[26px] bg-[hsl(var(--primary))] px-6 py-8 text-[hsl(var(--primary-foreground))] sm:px-10 sm:py-11 lg:px-14 lg:py-14" data-testid="section-home-hero">
       <div className="relative z-10 max-w-2xl lg:max-w-[62%]">
         <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[.07] px-3 py-1.5 text-[11px] font-semibold text-white/75">{t('seasonalMarket')}</div>
         <h1 className="max-w-xl text-[clamp(2rem,5vw,4.2rem)] font-bold leading-[1.13] tracking-tight">{t('everythingForYourLand')}</h1>
@@ -881,7 +881,7 @@ export function Home() {
         </div>
         {latestOffersLoading ? <ListingSkeleton count={4} variant="listing-card" /> : latestOffersQuery.isError ? <ErrorState onRetry={() => latestOffersQuery.refetch()} /> : visibleLatestOffers.length ? <>
           <Stagger enabled={false} className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">{visibleLatestOffers.map((listing) => <StaggerItem key={listing.id}><ListingCard listing={listing} iconSize={24} onSave={(item) => toggleFavorite.mutateAsync({ id: item.id, data: { saved: !item.isSaved } })} /></StaggerItem>)}</Stagger>
-          {hasMoreLatestOffers ? <div className="mt-8 flex justify-center"><button type="button" onClick={loadMoreLatestOffers} disabled={isLoadingMoreLatestOffers || latestOffersQuery.isFetching} aria-busy={isLoadingMoreLatestOffers || latestOffersQuery.isFetching} className="inline-flex min-w-40 items-center justify-center gap-2 rounded-full bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] shadow-sm transition-shadow hover:shadow-md disabled:cursor-wait disabled:opacity-60" data-testid="button-latest-offers-show-more">{isLoadingMoreLatestOffers || latestOffersQuery.isFetching ? <LoaderCircle size={15} className="animate-spin" aria-hidden="true" data-testid="spinner-latest-offers" /> : null}{isLoadingMoreLatestOffers || latestOffersQuery.isFetching ? t('loading') : t('loadMoreListings')}</button></div> : null}
+          {hasMoreLatestOffers ? <div className="mt-8 flex justify-center"><button type="button" onClick={loadMoreLatestOffers} disabled={isLoadingMoreLatestOffers || latestOffersQuery.isFetching} aria-busy={isLoadingMoreLatestOffers || latestOffersQuery.isFetching} className="inline-flex min-w-40 items-center justify-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] transition-opacity hover:opacity-90 disabled:cursor-wait disabled:opacity-60" data-testid="button-latest-offers-show-more">{isLoadingMoreLatestOffers || latestOffersQuery.isFetching ? <LoaderCircle size={15} className="animate-spin" aria-hidden="true" data-testid="spinner-latest-offers" /> : null}{isLoadingMoreLatestOffers || latestOffersQuery.isFetching ? t('loading') : t('loadMoreListings')}</button></div> : null}
         </> : <EmptyState title={t('noLatestOffers')} description={t('noResultsDescription')} />}
       </section></FadeIn>
 
@@ -894,7 +894,7 @@ export function Home() {
           <h2 className="text-xl font-bold text-[hsl(var(--primary))]">{t('addNewListing')}</h2>
           <p className="mt-2 max-w-xl text-xs leading-6 text-[hsl(var(--muted-foreground))]">{t('addListingDescription')}</p>
         </div>
-        <Link href="/add-listing" className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] shadow-glow-primary transition hover:-translate-y-0.5" data-testid="link-home-cta-add"><Plus size={16} />{t('addListing')}</Link>
+        <Link href="/add-listing" className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] shadow-[0_5px_0_hsl(155_33%_16%/.14)] transition hover:-translate-y-0.5" data-testid="link-home-cta-add"><Plus size={16} />{t('addListing')}</Link>
       </section></FadeIn>
   </AppShell>;
 }

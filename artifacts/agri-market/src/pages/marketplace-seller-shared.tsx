@@ -292,7 +292,7 @@ export function EditListingDialog({ listing, onClose, onSaved, mutation }: { lis
   };
   return <div ref={dialogRef} dir={language === 'ar' ? 'rtl' : 'ltr'} className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[hsl(var(--primary)/.45)] p-4 backdrop-blur-sm">
     <div className="mobile-modal-panel my-4 w-full max-w-3xl rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 shadow-2xl sm:p-7">
-      <div className="mb-5 flex items-center justify-between"><div><h2 className="font-bold text-[hsl(var(--primary))]">{t('editListing')}</h2><p className="mt-1 text-[11px] text-[hsl(var(--muted-foreground))]">{t('editListingDescription', { minutes: EDIT_WINDOW_MINUTES })}</p></div><button type="button" onClick={onClose} className="rounded-full p-2 hover:bg-[hsl(var(--secondary))]" aria-label={t('close')} data-testid="button-close-edit"><X size={18} /></button></div>
+      <div className="mb-5 flex items-center justify-between"><div><h2 className="font-bold text-[hsl(var(--primary))]">{t('editListing')}</h2><p className="mt-1 text-[11px] text-[hsl(var(--muted-foreground))]">{t('editListingDescription', { minutes: EDIT_WINDOW_MINUTES })}</p></div><button type="button" onClick={onClose} className="rounded-lg p-2 hover:bg-[hsl(var(--secondary))]" aria-label={t('close')} data-testid="button-close-edit"><X size={18} /></button></div>
       <div className="mb-5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--secondary)/.2)] p-3" data-testid="listing-edit-locked-details">
         <div className="flex min-w-0 items-center gap-3">
           <div className="h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-[hsl(var(--secondary))]">
@@ -449,7 +449,7 @@ export function EditListingDialog({ listing, onClose, onSaved, mutation }: { lis
         <label className="field-label">{t('description')}<textarea minLength={10} maxLength={10000} value={form.description} onChange={(event) => update('description', event.target.value)} className="field-input min-h-[120px] resize-y" data-testid="textarea-edit-description-window" /></label>
         <ListingEditPhotos initialImages={originalImages} onChange={setEditedImages} onBlocked={setContentUploadBlocked} />
       </ListingContentEditSection>
-      <button type="button" onClick={submit} disabled={mutation.isPending || (contentWindowOpen && contentUploadBlocked) || !form.price.trim() || !Number.isFinite(Number(form.price)) || Number(form.price) < 0} className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[hsl(var(--primary))] py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] disabled:opacity-60" data-testid="button-save-edit">{mutation.isPending && <LoaderCircle size={15} className="animate-spin" />}{mutation.isPending ? t('saving') : t('saveChanges')}</button>
+      <button type="button" onClick={submit} disabled={mutation.isPending || (contentWindowOpen && contentUploadBlocked) || !form.price.trim() || !Number.isFinite(Number(form.price)) || Number(form.price) < 0} className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[hsl(var(--primary))] py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] disabled:opacity-60" data-testid="button-save-edit">{mutation.isPending && <LoaderCircle size={15} className="animate-spin" />}{mutation.isPending ? t('saving') : t('saveChanges')}</button>
     </div>
   </div>;
 }

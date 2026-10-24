@@ -114,7 +114,7 @@ export function AdminPayments() {
                             title={t('adminConfirmPayment')}
                              description={t('adminConfirmPaymentDescription', { amount: formatMoney(Number(payment.amount), payment.currency), method: paymentMethodLabel(payment) })}
                             confirmText={t('adminConfirmReceipt')}
-                            trigger={<button data-testid={`button-confirm-payment-${payment.id}`} className="flex items-center gap-1 px-3 py-1.5 bg-[hsl(155_33%_23%)] text-white text-[11px] font-bold rounded-full hover:bg-[hsl(155_33%_18%)] transition-colors"><Check size={14} /> {t('confirm')}</button>}
+                            trigger={<button data-testid={`button-confirm-payment-${payment.id}`} className="flex items-center gap-1 px-3 py-1.5 bg-[hsl(155_33%_23%)] text-white text-[11px] font-bold rounded-lg hover:bg-[hsl(155_33%_18%)] transition-colors"><Check size={14} /> {t('confirm')}</button>}
                             onConfirm={() => updateStatus.mutateAsync({ id: payment.id, status: 'confirmed' })}
                           />
                           <AdminActionDialog
@@ -123,7 +123,7 @@ export function AdminPayments() {
                             confirmText={t('adminReject')}
                             confirmVariant="danger"
                             requireReason
-                            trigger={<button data-testid={`button-reject-payment-${payment.id}`} className="flex items-center gap-1 px-3 py-1.5 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] text-[11px] font-bold rounded-full hover:bg-[hsl(4_62%_48%)/0.2] transition-colors"><X size={14} /> {t('adminReject')}</button>}
+                            trigger={<button data-testid={`button-reject-payment-${payment.id}`} className="flex items-center gap-1 px-3 py-1.5 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] text-[11px] font-bold rounded-lg hover:bg-[hsl(4_62%_48%)/0.2] transition-colors"><X size={14} /> {t('adminReject')}</button>}
                             onConfirm={(reason) => updateStatus.mutateAsync({ id: payment.id, status: 'rejected', reason })}
                           />
                         </div>
@@ -133,7 +133,7 @@ export function AdminPayments() {
                           title={t('adminPublishListing')}
                           description={t('adminPublishListingDescription', { title: payment.listing?.title || '' })}
                           confirmText={t('adminPublishListing')}
-                          trigger={<button data-testid={`button-publish-listing-${payment.listingId}`} className="flex items-center gap-1 px-3 py-1.5 bg-[hsl(155_33%_23%)] text-white text-[11px] font-bold rounded-full hover:bg-[hsl(155_33%_18%)] transition-colors"><Check size={14} /> {t('adminPublishListing')}</button>}
+                          trigger={<button data-testid={`button-publish-listing-${payment.listingId}`} className="flex items-center gap-1 px-3 py-1.5 bg-[hsl(155_33%_23%)] text-white text-[11px] font-bold rounded-lg hover:bg-[hsl(155_33%_18%)] transition-colors"><Check size={14} /> {t('adminPublishListing')}</button>}
                           onConfirm={() => updateListingStatus.mutateAsync({ id: payment.listingId, status: 'active' })}
                         />
                       )}

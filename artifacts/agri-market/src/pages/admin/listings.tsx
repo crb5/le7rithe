@@ -186,7 +186,7 @@ export function AdminListings() {
                             confirmText={listing.status === 'active' ? t('adminSuspend') : t('adminReject')}
                             confirmVariant="danger"
                             requireReason
-                            trigger={<button className="px-3 py-1.5 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] text-[11px] font-bold rounded-full hover:bg-[hsl(4_62%_48%)/0.2] transition-colors">{listing.status === 'active' ? t('adminSuspend') : t('adminReject')}</button>}
+                            trigger={<button className="px-3 py-1.5 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] text-[11px] font-bold rounded-lg hover:bg-[hsl(4_62%_48%)/0.2] transition-colors">{listing.status === 'active' ? t('adminSuspend') : t('adminReject')}</button>}
                             onConfirm={(reason) => updateStatus.mutateAsync({ id: listing.id, status: listing.status === 'active' ? 'suspended' : 'rejected', reason })}
                           />
                         )}
@@ -197,7 +197,7 @@ export function AdminListings() {
                           title={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')}
                           description={t(listing.featured ? 'adminUnfeatureListingDescription' : 'adminFeatureListingDescription', { title: listing.title })}
                           trigger={
-                            <button data-testid={`button-featured-listing-${listing.id}`} className={`p-2 rounded-full transition-colors ${listing.featured ? 'text-[hsl(35_90%_45%)] bg-[hsl(35_90%_50%)/0.15] hover:bg-[hsl(35_90%_50%)/0.25]' : 'text-[hsl(153_12%_43%)] hover:bg-[hsl(42_37%_92%)]'}`} title={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')} aria-label={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')}>
+                            <button data-testid={`button-featured-listing-${listing.id}`} className={`p-2 rounded-lg transition-colors ${listing.featured ? 'text-[hsl(35_90%_45%)] bg-[hsl(35_90%_50%)/0.15] hover:bg-[hsl(35_90%_50%)/0.25]' : 'text-[hsl(153_12%_43%)] hover:bg-[hsl(42_37%_92%)]'}`} title={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')} aria-label={listing.featured ? t('adminUnfeatureListing') : t('adminFeatureListing')}>
                               <Star size={16} className={listing.featured ? "fill-current" : ""} />
                             </button>
                           }
@@ -210,7 +210,7 @@ export function AdminListings() {
                           confirmText={t('deleteListing')}
                           confirmVariant="danger"
                           trigger={
-                            <button className="p-2 text-[hsl(153_12%_43%)] hover:text-[hsl(4_62%_48%)] hover:bg-[hsl(4_62%_48%)/0.1] rounded-full transition-colors" title={t('deleteListing')} aria-label={t('deleteListing')}>
+                            <button className="p-2 text-[hsl(153_12%_43%)] hover:text-[hsl(4_62%_48%)] hover:bg-[hsl(4_62%_48%)/0.1] rounded-lg transition-colors" title={t('deleteListing')} aria-label={t('deleteListing')}>
                               <Trash2 size={16} />
                             </button>
                           }

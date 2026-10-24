@@ -62,8 +62,8 @@ function MethodForm({ methodData, onSave, onCancel }: { methodData?: any, onSave
         <span className="text-sm font-bold text-[hsl(154_26%_15%)]">{t('paymentMethodActive')}</span>
       </label>
       <div className="flex gap-3 justify-end pt-4 border-t border-[hsl(38_22%_86%)]">
-        <button type="button" onClick={onCancel} className="px-5 py-2.5 rounded-full border border-[hsl(38_22%_86%)] text-sm font-bold text-[hsl(153_12%_43%)] hover:bg-[hsl(42_37%_97%)]">{t('cancel')}</button>
-        <button type="submit" disabled={loading} className="px-5 py-2.5 bg-[hsl(155_33%_23%)] text-white text-sm font-bold rounded-full hover:bg-[hsl(155_33%_18%)] disabled:opacity-50">{t('save')}</button>
+        <button type="button" onClick={onCancel} className="px-5 py-2.5 rounded-xl border border-[hsl(38_22%_86%)] text-sm font-bold text-[hsl(153_12%_43%)] hover:bg-[hsl(42_37%_97%)]">{t('cancel')}</button>
+        <button type="submit" disabled={loading} className="px-5 py-2.5 bg-[hsl(155_33%_23%)] text-white text-sm font-bold rounded-xl hover:bg-[hsl(155_33%_18%)] disabled:opacity-50">{t('save')}</button>
       </div>
     </form>
   );
@@ -140,7 +140,7 @@ export function AdminPaymentMethods() {
                       confirmText={t('delete')}
                       confirmVariant="danger"
                       trigger={
-                        <button aria-label={t('deletePaymentMethod')} className="p-2 text-[hsl(4_62%_48%)] hover:bg-[hsl(4_62%_48%)/0.1] rounded-full transition-colors"><Trash2 size={16} /></button>
+                        <button aria-label={t('deletePaymentMethod')} className="p-2 text-[hsl(4_62%_48%)] hover:bg-[hsl(4_62%_48%)/0.1] rounded-lg transition-colors"><Trash2 size={16} /></button>
                       }
                       onConfirm={() => deleteMethod.mutateAsync(method.id)}
                     />

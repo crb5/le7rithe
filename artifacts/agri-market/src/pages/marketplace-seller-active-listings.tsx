@@ -69,7 +69,7 @@ export function SellerActiveListings() {
       eyebrow={t('sellerSpace')}
       title={t('sellerActiveListingsTitle')}
       description={t('sellerActiveListingsDescription')}
-      action={<Link href="/add-listing" className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary-foreground))]" data-testid="link-active-listings-add"><Plus size={16} />{t('newListing')}</Link>}
+      action={<Link href="/add-listing" className="inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary-foreground))]" data-testid="link-active-listings-add"><Plus size={16} />{t('newListing')}</Link>}
     />
     <div className="mb-5">
       <SectionLink href="/dashboard">{t('dashboardTitle')}</SectionLink>
@@ -116,7 +116,7 @@ export function SellerActiveListings() {
             icon={Store}
             title={t('noActiveListings')}
             description={t('noActiveListingsDescription')}
-            action={<Link href="/add-listing" className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary-foreground))]" data-testid="link-empty-active-listings-add"><Plus size={15} />{t('newListing')}</Link>}
+            action={<Link href="/add-listing" className="inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary-foreground))]" data-testid="link-empty-active-listings-add"><Plus size={15} />{t('newListing')}</Link>}
           />}
     {editing && <EditListingDialog
       listing={editing}

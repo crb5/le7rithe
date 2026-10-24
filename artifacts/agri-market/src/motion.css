@@ -2,10 +2,11 @@
    layout properties, libraries, permanent will-change, or page-entry animation. */
 @layer components {
   .listing-card {
-    @apply relative h-full min-w-0 rounded-2xl border border-[hsl(var(--card-border))] bg-[hsl(var(--card))] shadow-sm;
+    @apply relative h-full min-w-0 rounded-2xl border border-[hsl(var(--card-border))] bg-[hsl(var(--card))];
+    box-shadow: 0 5px 18px hsl(155 20% 18% / .045);
   }
   .listing-card--featured {
-    box-shadow: 0 0 0 2px hsl(var(--accent) / .55), var(--shadow-glow-accent);
+    box-shadow: 0 0 0 2px hsl(var(--accent) / .55), 0 8px 24px hsl(42 87% 45% / .14);
   }
   .listing-card-body { @apply flex h-full min-w-0 flex-col gap-3 p-3; }
   .listing-card-row { @apply flex min-w-0 items-start gap-3; }
@@ -27,13 +28,13 @@
   }
   .listing-save[aria-pressed="false"]:hover { background: hsl(var(--primary)); }
   .listing-share {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-[hsl(var(--border))] px-3 py-2.5 text-xs font-bold text-[hsl(var(--primary))] hover:bg-[hsl(var(--secondary))] disabled:cursor-wait disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-[hsl(var(--border))] px-3 py-2.5 text-xs font-bold text-[hsl(var(--primary))] hover:bg-[hsl(var(--secondary))] disabled:cursor-wait disabled:opacity-60;
   }
   .listing-share--compact {
-    @apply shrink-0 gap-1 rounded-full px-2 py-1.5 text-[10px];
+    @apply shrink-0 gap-1 rounded-lg px-2 py-1.5 text-[10px];
   }
   .category-card {
-    @apply flex h-[148px] min-w-0 flex-col rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4 text-start text-[hsl(var(--primary))] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))] focus-visible:ring-offset-2;
+    @apply flex h-[148px] min-w-0 flex-col rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4 text-start text-[hsl(var(--primary))] shadow-[0_4px_14px_hsl(155_20%_18%/.05)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))] focus-visible:ring-offset-2;
   }
   .category-card-icon {
     @apply mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[hsl(var(--primary))] text-[hsl(var(--accent))];
@@ -64,17 +65,14 @@
   animation: none !important;
   transition: none !important;
 }
-/* Buttons tagged [data-motion-scale] (the shared <Button> component) own their hover/press
-   feedback via Framer Motion + real Tailwind hover: classes instead — skip this overlay/scale
-   system for them so the two mechanisms don't compound. */
 @media (hover: hover) {
-  .grain button:not([data-motion-scale]):not(:disabled):not([aria-disabled="true"]):not(:active):hover { scale: 1.01; }
+  .grain button:not(:disabled):not([aria-disabled="true"]):not(:active):hover { scale: 1.01; }
 }
-.grain button:not([data-motion-scale]):not(:disabled):not([aria-disabled="true"]):active { transform: scale(.985); }
-.grain button:not([data-motion-scale]):not(.sh-menu-trigger):not(.absolute):not(.fixed):not(.sticky) {
+.grain button:not(:disabled):not([aria-disabled="true"]):active { transform: scale(.985); }
+.grain button:not(.sh-menu-trigger):not(.absolute):not(.fixed):not(.sticky) {
   position: relative;
 }
-.grain button:not([data-motion-scale]):not(.sh-menu-trigger)::after {
+.grain button:not(.sh-menu-trigger)::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -83,14 +81,14 @@
   background: currentColor;
   opacity: 0;
 }
-.grain button:not([data-motion-scale]):not(:disabled):is(:hover, :active)::after { opacity: .07; }
+.grain button:not(:disabled):is(:hover, :active)::after { opacity: .07; }
 .listing-card::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 13px 28px hsl(155 20% 18% / .11);
   opacity: 0;
 }
 @media (hover: hover) {

@@ -76,7 +76,7 @@ export function AdminLogin() {
             <label className="block text-xs font-bold text-[hsl(155_33%_23%)]" htmlFor="admin-password">{t('adminPasswordLabel')}
               <input id="admin-password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required className="mt-2 w-full rounded-xl border border-[hsl(38_22%_86%)] bg-white px-3.5 py-3 text-base outline-none focus:border-[hsl(155_33%_23%)] focus:ring-2 focus:ring-[hsl(155_33%_23%)/0.15]" />
             </label>
-             <button type="submit" disabled={passwordLogin.isPending || !password} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[hsl(155_33%_23%)] px-4 py-3 text-sm font-bold text-white transition hover:bg-[hsl(155_33%_18%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)] focus-visible:ring-offset-2 disabled:opacity-60">
+             <button type="submit" disabled={passwordLogin.isPending || !password} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[hsl(155_33%_23%)] px-4 py-3 text-sm font-bold text-white transition hover:bg-[hsl(155_33%_18%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)] focus-visible:ring-offset-2 disabled:opacity-60">
               {passwordLogin.isPending ? <Loader2 size={18} className="animate-spin" /> : t('adminPasswordContinue')}
             </button>
           </form>

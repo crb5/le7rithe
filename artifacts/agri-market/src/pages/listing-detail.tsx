@@ -384,7 +384,7 @@ export function ListingDetail() {
               <option value="other">{t('reportReasonOther')}</option>
             </select>
             <textarea value={reportDetails} onChange={(event) => setReportDetails(event.target.value)} minLength={10} maxLength={5000} rows={5} className="mt-3 w-full rounded-xl border border-[hsl(var(--border))] bg-transparent p-3 text-sm leading-6" placeholder={t('reportDetailsDescription')} />
-            <button type="button" onClick={submitReport} disabled={reportPending || reportDetails.trim().length < 10} className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[hsl(var(--primary))] py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] disabled:opacity-50">
+            <button type="button" onClick={submitReport} disabled={reportPending || reportDetails.trim().length < 10} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[hsl(var(--primary))] py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] disabled:opacity-50">
               {reportPending ? <LoaderCircle size={15} className="animate-spin" /> : <Flag size={15} />}
               {t('reportDetailsTitle')}
             </button>

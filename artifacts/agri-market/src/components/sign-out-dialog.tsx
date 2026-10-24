@@ -77,16 +77,16 @@ export function SignOutDialog({
             </span>
             <h2 id="sign-out-dialog-title" className="text-base font-bold text-[hsl(var(--primary))]">{t('confirmSignOutTitle')}</h2>
           </div>
-          <button type="button" onClick={onCancel} disabled={isLoading} className="rounded-full p-1.5 text-[hsl(var(--muted-foreground))] transition hover:bg-[hsl(var(--secondary))] disabled:opacity-50" aria-label={t('cancel')} data-testid="button-cancel-sign-out">
+          <button type="button" onClick={onCancel} disabled={isLoading} className="rounded-lg p-1.5 text-[hsl(var(--muted-foreground))] transition hover:bg-[hsl(var(--secondary))] disabled:opacity-50" aria-label={t('cancel')} data-testid="button-cancel-sign-out">
             <X size={18} />
           </button>
         </div>
         <p id="sign-out-dialog-description" className="mt-4 text-sm leading-7 text-[hsl(var(--muted-foreground))]">{t('confirmSignOutDescription')}</p>
         <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-          <button ref={cancelButtonRef} type="button" onClick={onCancel} disabled={isLoading} className="rounded-full border border-[hsl(var(--border))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary))] transition hover:bg-[hsl(var(--secondary))] disabled:opacity-50" data-testid="button-cancel-sign-out-secondary">
+          <button ref={cancelButtonRef} type="button" onClick={onCancel} disabled={isLoading} className="rounded-xl border border-[hsl(var(--border))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary))] transition hover:bg-[hsl(var(--secondary))] disabled:opacity-50" data-testid="button-cancel-sign-out-secondary">
             {t('cancel')}
           </button>
-          <button type="button" onClick={onConfirm} disabled={isLoading} className="inline-flex items-center justify-center gap-2 rounded-full bg-[hsl(var(--destructive))] px-4 py-2.5 text-xs font-bold text-white transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60" data-testid="button-confirm-sign-out">
+          <button type="button" onClick={onConfirm} disabled={isLoading} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[hsl(var(--destructive))] px-4 py-2.5 text-xs font-bold text-white transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60" data-testid="button-confirm-sign-out">
             {isLoading && <Loader2 size={15} className="animate-spin" />}
             {t('confirmSignOut')}
           </button>

@@ -78,7 +78,7 @@ export function Support() {
           <span><strong className="block text-[hsl(var(--primary))]">{t('supportRequestContact')}</strong><span className="mt-1 block text-xs leading-5 text-[hsl(var(--muted-foreground))]">{t('supportRequestContactDescription')}</span></span>
         </label>
         <div className="mt-6 flex justify-end border-t border-[hsl(var(--border))] pt-5">
-          <button type="submit" disabled={!message.trim() || sendSupport.isPending} className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50" data-testid="button-send-support">
+          <button type="submit" disabled={!message.trim() || sendSupport.isPending} className="inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50" data-testid="button-send-support">
             {sendSupport.isPending ? <LoaderCircle size={15} className="animate-spin" /> : <Send size={15} />}
             {sendSupport.isPending ? t('sending') : t('sendSupportMessage')}
           </button>
