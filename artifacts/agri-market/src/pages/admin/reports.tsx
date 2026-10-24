@@ -29,7 +29,7 @@ export function AdminReports() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[hsl(42_37%_96%)] h-full">
+    <div className="flex-1 flex flex-col bg-[hsl(38_44%_96%)] h-full">
       <AdminHeader 
         title={t('adminReportsTitle')}
         description={t('adminReportsDescription')}
@@ -57,12 +57,12 @@ export function AdminReports() {
                   <tr
                     key={report.id}
                     id={`admin-report-${report.id}`}
-                    className={`hover:bg-[hsl(42_37%_97%)] transition-colors ${targetReportId === Number(report.id) ? 'bg-[hsl(42_87%_61%)/.16] outline outline-2 outline-[hsl(42_87%_61%)]' : ''}`}
+                    className={`hover:bg-[hsl(38_33%_97%)] transition-colors ${targetReportId === Number(report.id) ? 'bg-[hsl(346_42%_43%)/.16] outline outline-2 outline-[hsl(346_42%_43%)]' : ''}`}
                   >
-                    <AdminTd className="font-numeric text-[11px] text-[hsl(153_12%_43%)]">#{formatNumber(Number(report.id))}</AdminTd>
+                    <AdminTd className="font-numeric text-[11px] text-[hsl(161_15%_42%)]">#{formatNumber(Number(report.id))}</AdminTd>
                     <AdminTd>
-                       <div className="font-bold text-[hsl(155_33%_23%)]">{report.reporter?.name || t('unknownUser')}</div>
-                       <div className="mt-1 text-[11px] text-[hsl(153_12%_43%)]" dir="ltr">{report.reporter?.phone || report.reporter?.email || t('notAvailable')}</div>
+                       <div className="font-bold text-[hsl(167_55%_24%)]">{report.reporter?.name || t('unknownUser')}</div>
+                       <div className="mt-1 text-[11px] text-[hsl(161_15%_42%)]" dir="ltr">{report.reporter?.phone || report.reporter?.email || t('notAvailable')}</div>
                     </AdminTd>
                     <AdminTd>
                       <div className="font-bold flex items-center gap-2">
@@ -70,16 +70,16 @@ export function AdminReports() {
                         {reportReasonLabels[report.reason] || report.reason}
                       </div>
                       {report.listing && (
-                        <Link href={`/listings/${report.listing.id}`} target="_blank" className="text-[11px] text-[hsl(153_12%_43%)] hover:underline mt-1 block">
+                        <Link href={`/listings/${report.listing.id}`} target="_blank" className="text-[11px] text-[hsl(161_15%_42%)] hover:underline mt-1 block">
                           {t('adminListing')}: {report.listing.title}
                         </Link>
                       )}
                     </AdminTd>
                     <AdminTd>
-                      <div className="max-w-[300px] whitespace-normal text-sm leading-relaxed text-[hsl(154_26%_15%)]">
+                      <div className="max-w-[300px] whitespace-normal text-sm leading-relaxed text-[hsl(167_55%_24%)]">
                          {report.details || t('notAvailable')}
                       </div>
-                       {report.contactRequested && <div className="mt-2 inline-flex rounded-md bg-[hsl(42_87%_61%)/.2] px-2 py-1 text-[10px] font-bold text-[hsl(35_90%_35%)]">{t('contactRequested')}</div>}
+                       {report.contactRequested && <div className="mt-2 inline-flex rounded-md bg-[hsl(346_42%_43%)/.2] px-2 py-1 text-[10px] font-bold text-[hsl(35_90%_35%)]">{t('contactRequested')}</div>}
                     </AdminTd>
                     <AdminTd>
                       <span className="text-[12px]">{formatDate(report.createdAt, { dateStyle: 'medium', timeStyle: 'short' })}</span>
@@ -90,8 +90,8 @@ export function AdminReports() {
                     <AdminTd>
                       <div className="space-y-2">
                         {report.action && (
-                          <div className="flex items-start gap-1.5 text-xs text-[hsl(153_12%_43%)] max-w-[220px]" title={report.action}>
-                            <CheckCircle2 size={14} className="mt-0.5 text-[hsl(155_33%_23%)] shrink-0" />
+                          <div className="flex items-start gap-1.5 text-xs text-[hsl(161_15%_42%)] max-w-[220px]" title={report.action}>
+                            <CheckCircle2 size={14} className="mt-0.5 text-[hsl(167_55%_24%)] shrink-0" />
                             <span className="whitespace-normal">{report.action}</span>
                           </div>
                         )}
@@ -100,7 +100,7 @@ export function AdminReports() {
                           description={t('replyToReportDescription')}
                           confirmText={t('sendReportReply')}
                           requireReason
-                          trigger={<button className="px-3 py-1.5 bg-[hsl(155_33%_23%)] text-white text-[11px] font-bold rounded-full hover:bg-[hsl(155_33%_18%)] transition-colors">{report.action ? t('replyAgain') : t('replyAndClose')}</button>}
+                          trigger={<button className="px-3 py-1.5 bg-[hsl(167_55%_24%)] text-white text-[11px] font-bold rounded-full hover:bg-[hsl(167_45%_15%)] transition-colors">{report.action ? t('replyAgain') : t('replyAndClose')}</button>}
                           onConfirm={(action) => resolveReport.mutateAsync({ id: report.id, status: 'resolved', action })}
                         />
                       </div>
@@ -109,7 +109,7 @@ export function AdminReports() {
                 ))}
                 {items.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-[hsl(153_12%_43%)]">
+                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-[hsl(161_15%_42%)]">
                       {t('noReports')}
                     </td>
                   </tr>

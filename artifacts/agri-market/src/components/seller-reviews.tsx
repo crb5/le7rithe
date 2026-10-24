@@ -26,7 +26,7 @@ function Stars({ value, size = 16 }: { value: number; size?: number }) {
   return (
     <span className="inline-flex" aria-label={`${value} / 5`}>
       {[1, 2, 3, 4, 5].map((n) => (
-        <Star key={n} size={size} className={n <= Math.round(value) ? 'fill-[#f2c14e] text-[#f2c14e]' : 'text-[hsl(154_12%_70%)]'} />
+        <Star key={n} size={size} className={n <= Math.round(value) ? 'fill-[#f2c14e] text-[#f2c14e]' : 'text-[hsl(161_14%_66%)]'} />
       ))}
     </span>
   );
@@ -68,31 +68,31 @@ export function SellerReviews({ sellerId, sellerSelf = false }: { sellerId: numb
   });
 
   return (
-    <section className="mt-6 rounded-2xl border border-[hsl(154_20%_82%)] bg-[hsl(var(--card))] p-5" aria-labelledby="seller-reviews-title">
+    <section className="mt-6 rounded-2xl border border-[hsl(167_16%_78%)] bg-[hsl(var(--card))] p-5" aria-labelledby="seller-reviews-title">
       <div className="mb-4 flex items-center justify-between gap-3">
-        <h2 id="seller-reviews-title" className="text-base font-bold text-[hsl(155_33%_23%)]">{copy.title}</h2>
+        <h2 id="seller-reviews-title" className="text-base font-bold text-[hsl(167_55%_24%)]">{copy.title}</h2>
         {data && data.total > 0 && (
           <div className="flex items-center gap-2 text-sm">
             <Stars value={data.average} />
-            <span className="font-bold text-[hsl(155_33%_23%)]">{data.average.toFixed(1)}</span>
-            <span className="text-[hsl(153_12%_43%)]">({copy.count(data.total)})</span>
+            <span className="font-bold text-[hsl(167_55%_24%)]">{data.average.toFixed(1)}</span>
+            <span className="text-[hsl(161_15%_42%)]">({copy.count(data.total)})</span>
           </div>
         )}
       </div>
 
       {data && data.items.length === 0 && (
-        <p className="text-sm text-[hsl(153_12%_43%)]">{copy.none}</p>
+        <p className="text-sm text-[hsl(161_15%_42%)]">{copy.none}</p>
       )}
 
       <ul className="space-y-3">
         {data?.items.map((r) => (
-          <li key={r.id} className="rounded-xl border border-[hsl(154_20%_88%)] p-3">
+          <li key={r.id} className="rounded-xl border border-[hsl(167_16%_84%)] p-3">
             <div className="mb-1 flex items-center gap-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[hsl(var(--secondary))] text-xs font-bold text-[hsl(155_33%_23%)]">{r.reviewer.initials}</span>
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[hsl(var(--secondary))] text-xs font-bold text-[hsl(167_55%_24%)]">{r.reviewer.initials}</span>
               <span className="text-sm font-bold text-[hsl(var(--foreground))]">{r.reviewer.name}</span>
               <Stars value={r.rating} size={13} />
             </div>
-            {r.comment && <p className="text-sm leading-6 text-[hsl(153_12%_43%)]">{r.comment}</p>}
+            {r.comment && <p className="text-sm leading-6 text-[hsl(161_15%_42%)]">{r.comment}</p>}
           </li>
         ))}
       </ul>
@@ -100,14 +100,14 @@ export function SellerReviews({ sellerId, sellerSelf = false }: { sellerId: numb
       {!sellerSelf && (
         isSignedIn ? (
           <form
-            className="mt-5 border-t border-[hsl(154_20%_88%)] pt-4"
+            className="mt-5 border-t border-[hsl(167_16%_84%)] pt-4"
             onSubmit={(e) => { e.preventDefault(); if (rating >= 1) submit.mutate(); }}
           >
-            <p className="mb-2 text-sm font-bold text-[hsl(155_33%_23%)]">{copy.add}</p>
+            <p className="mb-2 text-sm font-bold text-[hsl(167_55%_24%)]">{copy.add}</p>
             <div className="mb-3 flex gap-1">
               {[1, 2, 3, 4, 5].map((n) => (
                 <button key={n} type="button" onClick={() => setRating(n)} aria-label={`${n}`} className="p-0.5">
-                  <Star size={24} className={n <= rating ? 'fill-[#f2c14e] text-[#f2c14e]' : 'text-[hsl(154_12%_70%)]'} />
+                  <Star size={24} className={n <= rating ? 'fill-[#f2c14e] text-[#f2c14e]' : 'text-[hsl(161_14%_66%)]'} />
                 </button>
               ))}
             </div>
@@ -116,7 +116,7 @@ export function SellerReviews({ sellerId, sellerSelf = false }: { sellerId: numb
               onChange={(e) => setComment(e.target.value)}
               placeholder={copy.placeholder}
               rows={3}
-              className="w-full rounded-xl border border-[hsl(38_22%_86%)] bg-white px-3 py-2 text-sm outline-none focus:border-[hsl(155_33%_23%)]"
+              className="w-full rounded-xl border border-[hsl(38_15%_87%)] bg-white px-3 py-2 text-sm outline-none focus:border-[hsl(167_55%_24%)]"
             />
             <button
               type="submit"
@@ -127,7 +127,7 @@ export function SellerReviews({ sellerId, sellerSelf = false }: { sellerId: numb
             </button>
           </form>
         ) : (
-          <p className="mt-5 border-t border-[hsl(154_20%_88%)] pt-4 text-sm text-[hsl(153_12%_43%)]">{copy.signin}</p>
+          <p className="mt-5 border-t border-[hsl(167_16%_84%)] pt-4 text-sm text-[hsl(161_15%_42%)]">{copy.signin}</p>
         )
       )}
     </section>

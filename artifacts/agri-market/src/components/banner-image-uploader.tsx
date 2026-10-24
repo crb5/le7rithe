@@ -88,13 +88,13 @@ export function BannerImageUploader({ value, previewUrl, onChange, onBusyChange 
   return (
     <div className="space-y-3">
       {localPreview ? (
-        <div className="relative overflow-hidden rounded-2xl border border-[hsl(154_20%_82%)] bg-[hsl(155_20%_94%)]">
+        <div className="relative overflow-hidden rounded-2xl border border-[hsl(167_16%_78%)] bg-[hsl(167_12%_90%)]">
           <img src={localPreview} alt={t('bannerImagePreview')} className="block h-auto max-h-[70vh] w-full object-contain" />
           {busy && <div className="absolute inset-0 flex items-center justify-center bg-black/45 text-white"><LoaderCircle className="animate-spin" /></div>}
           <button type="button" onClick={() => { setLocalPreview(''); onChange('', ''); }} className="absolute right-3 top-3 rounded-full bg-black/55 p-2 text-white hover:bg-black/75" aria-label={t('removeBannerImage')}><X size={16} /></button>
         </div>
       ) : (
-        <label className="flex aspect-[2.6/1] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-[hsl(154_20%_72%)] bg-[hsl(155_20%_96%)] text-[hsl(153_12%_43%)] transition hover:border-[hsl(155_33%_35%)] hover:bg-[hsl(155_20%_92%)]">
+        <label className="flex aspect-[2.6/1] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-[hsl(167_16%_68%)] bg-[hsl(167_12%_92%)] text-[hsl(161_15%_42%)] transition hover:border-[hsl(167_45%_35%)] hover:bg-[hsl(167_14%_88%)]">
           <ImagePlus size={26} />
           <span className="text-sm font-bold">{t('uploadBannerImage')}</span>
           <span className="text-[11px]">{t('bannerImageRules')}</span>
@@ -109,7 +109,7 @@ export function BannerImageUploader({ value, previewUrl, onChange, onBusyChange 
         </label>
       )}
       {error && <p className="text-xs font-semibold text-[hsl(4_62%_48%)]">{error}</p>}
-      {value && !busy && <p className="text-[11px] text-[hsl(153_12%_43%)]">{t('bannerImageReady')}</p>}
+      {value && !busy && <p className="text-[11px] text-[hsl(161_15%_42%)]">{t('bannerImageReady')}</p>}
     </div>
   );
 }

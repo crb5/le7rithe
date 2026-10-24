@@ -498,7 +498,7 @@ function LegalPage({ kind, icon: Icon }: { kind: 'privacy' | 'terms'; icon: type
         <div dir={meta[language].dir} data-testid="privacy-policy-page">
           <PageHeading eyebrow={policy.eyebrow} title={policy.title} description={policy.description} />
           <div className="mx-auto w-full max-w-5xl px-4 pb-10 sm:px-6" data-testid="privacy-policy-content">
-            <header className="overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] shadow-[0_18px_40px_hsl(155_20%_18%/.12)]">
+            <header className="overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] shadow-[0_18px_40px_hsl(167_30%_12%/.12)]">
               <div className="relative p-5 sm:p-8">
                 <div aria-hidden="true" className="pointer-events-none absolute -end-10 -top-16 h-48 w-48 rounded-full border border-[hsl(var(--primary-foreground)/.12)]" />
                 <div aria-hidden="true" className="pointer-events-none absolute -end-2 -top-8 h-32 w-32 rounded-full border border-[hsl(var(--primary-foreground)/.12)]" />
@@ -574,7 +574,7 @@ function LegalPage({ kind, icon: Icon }: { kind: 'privacy' | 'terms'; icon: type
                 <section
                   id={`privacy-section-${index + 1}`}
                   key={section.title}
-                  className="scroll-mt-5 rounded-[1.25rem] border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 shadow-[0_6px_20px_hsl(155_20%_18%/.035)] sm:p-7"
+                  className="scroll-mt-5 rounded-[1.25rem] border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 shadow-[0_6px_20px_hsl(167_30%_12%/.035)] sm:p-7"
                   data-testid={`legal-section-privacy-${index}`}
                 >
                   <div className="flex items-start gap-3 sm:gap-4">
@@ -624,12 +624,12 @@ function LegalPage({ kind, icon: Icon }: { kind: 'privacy' | 'terms'; icon: type
       <div dir={meta[language].dir}>
         <PageHeading eyebrow="Terms" title={content.title} description={content.description} />
         <div className="mx-auto max-w-4xl space-y-4">
-          <div className="mb-7 rounded-[1.5rem] border border-[hsl(var(--border))] bg-[hsl(var(--primary))] p-5 text-[hsl(var(--primary-foreground))] shadow-[0_14px_34px_hsl(155_20%_18%/.1)] sm:p-7">
+          <div className="mb-7 rounded-[1.5rem] border border-[hsl(var(--border))] bg-[hsl(var(--primary))] p-5 text-[hsl(var(--primary-foreground))] shadow-[0_14px_34px_hsl(167_30%_12%/.1)] sm:p-7">
             <div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[hsl(var(--accent))] text-[hsl(var(--primary))]"><Icon size={19} /></span><p className="text-sm font-bold">{content.title}</p></div>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-[hsl(var(--primary-foreground)/.78)]">{content.description}</p>
           </div>
           {visibleSections.map((section, index) => (
-          <section key={section.title} className="group rounded-[1.35rem] border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 shadow-[0_6px_20px_hsl(155_20%_18%/.035)] transition hover:border-[hsl(var(--accent)/.7)] sm:p-7" data-testid={`legal-section-${kind}-${index}`}>
+          <section key={section.title} className="group rounded-[1.35rem] border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 shadow-[0_6px_20px_hsl(167_30%_12%/.035)] transition hover:border-[hsl(var(--accent)/.7)] sm:p-7" data-testid={`legal-section-${kind}-${index}`}>
             <div className="flex items-start gap-3">
               <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[hsl(var(--secondary))] text-xs font-bold text-[hsl(var(--primary))]">{String(index + 1).padStart(2, '0')}</span>
               <div><h2 className="font-bold text-[hsl(var(--primary))]">{section.title}</h2><p className="mt-2 text-sm leading-7 text-[hsl(var(--muted-foreground))]">{section.body}</p></div>

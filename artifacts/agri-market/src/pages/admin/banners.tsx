@@ -161,14 +161,14 @@ export function AdminBanners() {
   useBodyScrollLock(dialogOpen, bannerFormRef);
 
   return (
-    <div className="flex min-h-full flex-1 flex-col bg-[hsl(42_37%_96%)]">
+    <div className="flex min-h-full flex-1 flex-col bg-[hsl(38_44%_96%)]">
       <AdminHeader title={t('adminBannersTitle')} description={t('adminBannersDescription')} />
       <main className="min-w-0 flex-1 space-y-6 p-4 sm:p-6 lg:p-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-xs text-[hsl(153_12%_43%)]">{t('adminBannersIndependentNote')}</p>
+            <p className="text-xs text-[hsl(161_15%_42%)]">{t('adminBannersIndependentNote')}</p>
           </div>
-          <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-full bg-[hsl(155_33%_16%)] px-4 py-3 text-sm font-bold text-white transition hover:bg-[hsl(155_33%_24%)]" data-testid="button-create-banner">
+          <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-full bg-[hsl(167_45%_13%)] px-4 py-3 text-sm font-bold text-white transition hover:bg-[hsl(167_55%_25%)]" data-testid="button-create-banner">
             <Plus size={17} /> {t('createBanner')}
           </button>
         </div>
@@ -176,25 +176,25 @@ export function AdminBanners() {
         {isLoading ? (
           <div className="grid gap-5 md:grid-cols-2"><div className="h-64 animate-pulse rounded-2xl bg-white" /><div className="h-64 animate-pulse rounded-2xl bg-white" /></div>
         ) : banners.length === 0 ? (
-          <div className="flex min-h-64 flex-col items-center justify-center rounded-2xl border border-dashed border-[hsl(154_20%_78%)] bg-white p-8 text-center">
-            <Image size={30} className="mb-3 text-[hsl(153_12%_55%)]" />
-            <h2 className="font-bold text-[hsl(155_33%_16%)]">{t('noBanners')}</h2>
-            <p className="mt-1 max-w-md text-sm text-[hsl(153_12%_43%)]">{t('noBannersDescription')}</p>
+          <div className="flex min-h-64 flex-col items-center justify-center rounded-2xl border border-dashed border-[hsl(167_16%_74%)] bg-white p-8 text-center">
+            <Image size={30} className="mb-3 text-[hsl(161_15%_52%)]" />
+            <h2 className="font-bold text-[hsl(167_45%_13%)]">{t('noBanners')}</h2>
+            <p className="mt-1 max-w-md text-sm text-[hsl(161_15%_42%)]">{t('noBannersDescription')}</p>
           </div>
         ) : (
           <div className="grid gap-5 xl:grid-cols-2">
             {banners.map((banner) => (
-              <article key={banner.id} className={`overflow-hidden rounded-2xl border bg-white shadow-sm ${banner.active ? 'border-[hsl(42_87%_61%)]' : 'border-[hsl(154_20%_86%)]'}`}>
+              <article key={banner.id} className={`overflow-hidden rounded-2xl border bg-white shadow-sm ${banner.active ? 'border-[hsl(346_42%_43%)]' : 'border-[hsl(167_16%_82%)]'}`}>
                 <div className="relative">
-                  {banner.imageUrl ? <img src={banner.imageUrl} alt={banner.imageAlt || ''} className="block h-auto max-h-[70vh] w-full object-contain" /> : <div className="aspect-[2.6/1] bg-[hsl(155_20%_90%)]" />}
-                  <span className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-[10px] font-bold ${banner.active ? 'bg-[hsl(42_87%_61%)] text-[hsl(155_33%_16%)]' : 'bg-black/55 text-white'}`}>{banner.active ? t('bannerActive') : t('bannerInactive')}</span>
+                  {banner.imageUrl ? <img src={banner.imageUrl} alt={banner.imageAlt || ''} className="block h-auto max-h-[70vh] w-full object-contain" /> : <div className="aspect-[2.6/1] bg-[hsl(167_16%_86%)]" />}
+                  <span className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-[10px] font-bold ${banner.active ? 'bg-[hsl(346_42%_43%)] text-[hsl(167_45%_13%)]' : 'bg-black/55 text-white'}`}>{banner.active ? t('bannerActive') : t('bannerInactive')}</span>
                 </div>
                 <div className="space-y-4 p-5">
-                  <span className="inline-flex rounded-lg bg-[hsl(155_20%_94%)] px-2 py-1 text-xs font-bold text-[hsl(155_33%_16%)]">{t('bannerSortOrder')}: #{banner.sortOrder}</span>
-                  <div className="flex flex-wrap gap-2 border-t border-[hsl(154_20%_90%)] pt-4">
-                    <button type="button" onClick={() => toggle(banner)} className="inline-flex items-center gap-1.5 rounded-lg border border-[hsl(154_20%_82%)] px-3 py-2 text-xs font-bold text-[hsl(155_33%_16%)] hover:bg-[hsl(155_20%_95%)]" data-testid={`button-toggle-banner-${banner.id}`}><Power size={14} />{banner.active ? t('disableBanner') : t('enableBanner')}</button>
-                    <button type="button" onClick={() => openEdit(banner)} className="inline-flex items-center gap-1.5 rounded-lg border border-[hsl(154_20%_82%)] px-3 py-2 text-xs font-bold text-[hsl(155_33%_16%)] hover:bg-[hsl(155_20%_95%)]" data-testid={`button-edit-banner-${banner.id}`}><Edit3 size={14} />{t('editBanner')}</button>
-                    {banner.targetUrl && <a href={banner.targetUrl} target={banner.targetUrl.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-lg border border-[hsl(154_20%_82%)] px-3 py-2 text-xs font-bold text-[hsl(155_33%_16%)] hover:bg-[hsl(155_20%_95%)]"><Eye size={14} />{t('previewBanner')}</a>}
+                  <span className="inline-flex rounded-lg bg-[hsl(167_12%_90%)] px-2 py-1 text-xs font-bold text-[hsl(167_45%_13%)]">{t('bannerSortOrder')}: #{banner.sortOrder}</span>
+                  <div className="flex flex-wrap gap-2 border-t border-[hsl(167_16%_86%)] pt-4">
+                    <button type="button" onClick={() => toggle(banner)} className="inline-flex items-center gap-1.5 rounded-lg border border-[hsl(167_16%_78%)] px-3 py-2 text-xs font-bold text-[hsl(167_45%_13%)] hover:bg-[hsl(167_12%_91%)]" data-testid={`button-toggle-banner-${banner.id}`}><Power size={14} />{banner.active ? t('disableBanner') : t('enableBanner')}</button>
+                    <button type="button" onClick={() => openEdit(banner)} className="inline-flex items-center gap-1.5 rounded-lg border border-[hsl(167_16%_78%)] px-3 py-2 text-xs font-bold text-[hsl(167_45%_13%)] hover:bg-[hsl(167_12%_91%)]" data-testid={`button-edit-banner-${banner.id}`}><Edit3 size={14} />{t('editBanner')}</button>
+                    {banner.targetUrl && <a href={banner.targetUrl} target={banner.targetUrl.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-lg border border-[hsl(167_16%_78%)] px-3 py-2 text-xs font-bold text-[hsl(167_45%_13%)] hover:bg-[hsl(167_12%_91%)]"><Eye size={14} />{t('previewBanner')}</a>}
                     <button type="button" onClick={() => void remove(banner)} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-bold text-[hsl(4_62%_48%)] hover:bg-[hsl(4_62%_96%)]" data-testid={`button-delete-banner-${banner.id}`}><Trash2 size={14} />{t('deleteBanner')}</button>
                   </div>
                 </div>
@@ -206,10 +206,10 @@ export function AdminBanners() {
 
       {dialogOpen && (
         <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/55 p-4" role="dialog" aria-modal="true" aria-label={editing ? t('editBanner') : t('createBanner')}>
-          <form ref={bannerFormRef} onSubmit={submit} className="mobile-modal-panel max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-3xl bg-[hsl(42_37%_98%)] shadow-2xl">
-            <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-[hsl(154_20%_86%)] bg-[hsl(42_37%_98%)] px-4 py-4 sm:px-6 sm:py-5">
-              <div><h2 className="font-bold text-[hsl(155_33%_16%)]">{editing ? t('editBanner') : t('createBanner')}</h2><p className="mt-1 text-xs text-[hsl(153_12%_43%)]">{t('bannerFormDescription')}</p></div>
-              <button type="button" onClick={closeForm} className="rounded-full p-2 text-[hsl(153_12%_43%)] hover:bg-[hsl(155_20%_90%)]" aria-label={t('close')}><X size={18} /></button>
+          <form ref={bannerFormRef} onSubmit={submit} className="mobile-modal-panel max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-3xl bg-[hsl(38_33%_98%)] shadow-2xl">
+            <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-[hsl(167_16%_82%)] bg-[hsl(38_33%_98%)] px-4 py-4 sm:px-6 sm:py-5">
+              <div><h2 className="font-bold text-[hsl(167_45%_13%)]">{editing ? t('editBanner') : t('createBanner')}</h2><p className="mt-1 text-xs text-[hsl(161_15%_42%)]">{t('bannerFormDescription')}</p></div>
+              <button type="button" onClick={closeForm} className="rounded-full p-2 text-[hsl(161_15%_42%)] hover:bg-[hsl(167_16%_86%)]" aria-label={t('close')}><X size={18} /></button>
             </div>
             <div className="grid gap-5 p-4 sm:p-6 lg:grid-cols-[1.1fr_.9fr]">
               <div className="space-y-4">
@@ -218,19 +218,19 @@ export function AdminBanners() {
                   <label className="space-y-1.5"><span className="text-xs font-bold">{t('bannerSortOrder')}</span><input type="number" value={form.sortOrder} onChange={(e) => setField('sortOrder', e.target.value)} className="admin-input" /></label>
                   <label className="space-y-1.5 sm:col-span-2"><span className="text-xs font-bold">{t('bannerTargetUrl')}</span><input value={form.targetUrl} onChange={(e) => setField('targetUrl', e.target.value)} placeholder="/listings or https://example.com" className="admin-input" /></label>
                   <label className="space-y-1.5 sm:col-span-2"><span className="text-xs font-bold">{t('bannerImageAlt')}</span><input value={form.imageAlt} onChange={(e) => setField('imageAlt', e.target.value)} className="admin-input" /></label>
-                  <label className="flex items-center gap-3 rounded-xl border border-[hsl(154_20%_84%)] bg-white px-3 py-3 text-xs font-bold sm:col-span-2"><input type="checkbox" checked={form.active} onChange={(e) => setField('active', e.target.checked)} className="h-4 w-4 accent-[hsl(155_33%_16%)]" /> {t('showBanner')}</label>
+                  <label className="flex items-center gap-3 rounded-xl border border-[hsl(167_16%_80%)] bg-white px-3 py-3 text-xs font-bold sm:col-span-2"><input type="checkbox" checked={form.active} onChange={(e) => setField('active', e.target.checked)} className="h-4 w-4 accent-[hsl(167_45%_13%)]" /> {t('showBanner')}</label>
                 </div>
               </div>
-              <div className="rounded-2xl bg-[hsl(155_33%_16%)] p-5 text-white">
-                <div className="mb-4 flex items-center gap-2 text-xs font-bold text-[hsl(42_87%_61%)]"><Eye size={15} /> {t('bannerPreview')}</div>
-                <div className="overflow-hidden rounded-2xl bg-[hsl(155_20%_24%)]">
-                  {previewUrl ? <img src={previewUrl} alt="" className="block h-auto max-h-[70vh] w-full object-contain" /> : <div className="aspect-[2.6/1] bg-[hsl(155_20%_24%)]" />}
+              <div className="rounded-2xl bg-[hsl(167_45%_13%)] p-5 text-white">
+                <div className="mb-4 flex items-center gap-2 text-xs font-bold text-[hsl(346_42%_43%)]"><Eye size={15} /> {t('bannerPreview')}</div>
+                <div className="overflow-hidden rounded-2xl bg-[hsl(167_28%_18%)]">
+                  {previewUrl ? <img src={previewUrl} alt="" className="block h-auto max-h-[70vh] w-full object-contain" /> : <div className="aspect-[2.6/1] bg-[hsl(167_28%_18%)]" />}
                 </div>
               </div>
             </div>
-            <div className="flex justify-end gap-3 border-t border-[hsl(154_20%_86%)] px-6 py-5">
-              <button type="button" onClick={closeForm} className="rounded-full border border-[hsl(154_20%_82%)] px-5 py-3 text-sm font-bold" disabled={saving || uploading}>{t('cancel')}</button>
-              <button type="submit" disabled={saving || uploading} className="inline-flex items-center gap-2 rounded-full bg-[hsl(155_33%_16%)] px-5 py-3 text-sm font-bold text-white disabled:opacity-50">{saving && <LoaderCircle size={16} className="animate-spin" />}{t('saveBanner')}</button>
+            <div className="flex justify-end gap-3 border-t border-[hsl(167_16%_82%)] px-6 py-5">
+              <button type="button" onClick={closeForm} className="rounded-full border border-[hsl(167_16%_78%)] px-5 py-3 text-sm font-bold" disabled={saving || uploading}>{t('cancel')}</button>
+              <button type="submit" disabled={saving || uploading} className="inline-flex items-center gap-2 rounded-full bg-[hsl(167_45%_13%)] px-5 py-3 text-sm font-bold text-white disabled:opacity-50">{saving && <LoaderCircle size={16} className="animate-spin" />}{t('saveBanner')}</button>
             </div>
           </form>
         </div>

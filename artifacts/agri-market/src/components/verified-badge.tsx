@@ -55,12 +55,12 @@ export function VerifiedBadge({
     >
       <defs>
         <linearGradient id={gradientId} x1="5" y1="4" x2="27" y2="28" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#F5D77A" />
-          <stop offset=".52" stopColor="#E9B949" />
-          <stop offset="1" stopColor="#C9871D" />
+          <stop stopColor="#E8A0B3" />
+          <stop offset=".52" stopColor="#C2516B" />
+          <stop offset="1" stopColor="#8B2F45" />
         </linearGradient>
       </defs>
-      <path d={sealPath} fill={`url(#${gradientId})`} stroke="#B77B1A" strokeWidth=".55" />
+      <path d={sealPath} fill={`url(#${gradientId})`} stroke="#6B2436" strokeWidth=".55" />
       <path
         d="m10.7 16.1 3.45 3.45 7.1-7.15"
         fill="none"
@@ -83,7 +83,7 @@ export function VerifiedBadge({
             onPointerDown={(event) => {
               if (event.pointerType === 'touch') setOpen(true);
             }}
-            className={`inline-flex h-6 w-6 shrink-0 touch-manipulation items-center justify-center rounded-full align-middle outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--background))] ${className}`}
+            className={`inline-flex h-6 w-6 shrink-0 touch-manipulation items-center justify-center rounded-full align-middle outline-none focus-visible:ring-2 focus-visible:ring-[hsl(346_42%_43%)] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--background))] ${className}`}
           >
             {seal}
           </button>

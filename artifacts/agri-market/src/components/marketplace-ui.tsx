@@ -216,7 +216,7 @@ export function ListingImage({
   return createElement(
     'div',
     {
-      className: `flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,hsl(155_33%_23%),hsl(153_26%_34%))] text-[hsl(var(--accent))] ${className} ${placeholderClassName}`,
+      className: `flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,hsl(167_55%_24%),hsl(167_30%_32%))] text-[hsl(var(--accent))] ${className} ${placeholderClassName}`,
       role: alt ? 'img' : undefined,
       'aria-label': alt || undefined,
       'aria-hidden': alt ? undefined : true,
@@ -357,17 +357,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   };
   return (
     <div dir={meta[language].dir} className="grain min-h-[100dvh] w-full min-w-0 overflow-x-hidden bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
-      <aside ref={drawerRef} id="marketplace-navigation-drawer" dir={meta[language].dir} className={`marketplace-navigation-drawer ${isArabicLayout ? 'marketplace-navigation-drawer--rtl' : 'marketplace-navigation-drawer--ltr'} fixed bottom-0 z-40 flex w-[280px] max-w-[85vw] flex-col overflow-y-auto bg-[#22362C] px-5 py-6 text-[#F4E9CF] shadow-2xl transition-transform duration-[250ms] motion-reduce:transition-none ${open ? 'translate-x-0' : isArabicLayout ? 'translate-x-full' : '-translate-x-full'}`} aria-label={t('mainNavigation')} aria-hidden={!open} inert={!open}>
+      <aside ref={drawerRef} id="marketplace-navigation-drawer" dir={meta[language].dir} className={`marketplace-navigation-drawer ${isArabicLayout ? 'marketplace-navigation-drawer--rtl' : 'marketplace-navigation-drawer--ltr'} fixed bottom-0 z-40 flex w-[280px] max-w-[85vw] flex-col overflow-y-auto bg-[#14362E] px-5 py-6 text-[#F2EDE3] shadow-2xl transition-transform duration-[250ms] motion-reduce:transition-none ${open ? 'translate-x-0' : isArabicLayout ? 'translate-x-full' : '-translate-x-full'}`} aria-label={t('mainNavigation')} aria-hidden={!open} inert={!open}>
         <div className="mb-10 flex items-center justify-between">
           <HeaderBrand variant="sidebar" direction={meta[language].dir} />
-          <button type="button" onClick={closeNavigation} className="rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E9B949]" aria-label={t('closeMenu')} data-testid="button-close-menu"><X size={19} /></button>
+          <button type="button" onClick={closeNavigation} className="rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2516B]" aria-label={t('closeMenu')} data-testid="button-close-menu"><X size={19} /></button>
         </div>
         <nav className="space-y-1">
           <span className="mb-3 block px-3 text-[10px] font-bold tracking-[.16em] text-white/40">{t('mainArea')}</span>
           {navItems.filter((item) => ENABLE_PAID_LISTINGS || item.href !== '/payments').map((item) => {
             const active = item.href === '/' ? location === '/' : location.startsWith(item.href);
             const Icon = item.icon;
-              return <Link key={item.href} href={item.href} onClick={closeNavigation} aria-current={active ? 'page' : undefined} className={`group flex items-center gap-3 rounded-xl border-b border-white/[.15] px-3 py-[14px] text-[17px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E9B949] ${active ? 'bg-[hsl(var(--sidebar-accent))] text-[#E9B949]' : 'text-white/80 hover:bg-white/[.07] hover:text-[#E9B949]'}`} data-testid={`link-nav-${item.label}`}>
+              return <Link key={item.href} href={item.href} onClick={closeNavigation} aria-current={active ? 'page' : undefined} className={`group flex items-center gap-3 rounded-xl border-b border-white/[.15] px-3 py-[14px] text-[17px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2516B] ${active ? 'bg-[hsl(var(--sidebar-accent))] text-[#C2516B]' : 'text-white/80 hover:bg-white/[.07] hover:text-[#C2516B]'}`} data-testid={`link-nav-${item.label}`}>
               <Icon size={18} strokeWidth={active ? 2.4 : 1.8} /><span>{t(item.label)}</span>
               {item.href === '/notifications' && Boolean(notifications?.unreadCount) && <span className="ms-auto min-w-5 rounded-full bg-[hsl(var(--accent))] px-1.5 py-0.5 text-center text-[10px] font-black text-[hsl(var(--primary))]">{formatNumber(notifications?.unreadCount ?? 0)}</span>}
             </Link>;

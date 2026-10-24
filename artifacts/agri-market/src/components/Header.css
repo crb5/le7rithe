@@ -23,10 +23,10 @@
 }
 
 .auth-topbar {
-  --sh-bg: #22362c;
-  --sh-fg: #f4e9cf;
-  --sh-accent: #e9b949;
-  --sh-menu: #2e4a3c;
+  --sh-bg: #14362e;
+  --sh-fg: #f2ede3;
+  --sh-accent: #c2516b;
+  --sh-menu: #1e4a3f;
   min-height: calc(82px + env(safe-area-inset-top, 0px));
   padding: calc(12px + env(safe-area-inset-top, 0px)) clamp(14px, 5vw, 56px) 12px;
   background: var(--sh-bg);
@@ -43,14 +43,14 @@
 .marketplace-navigation-drawer--ltr {
   right: auto;
   left: 0;
-  border-right: 1px solid #e9b949;
+  border-right: 1px solid #c2516b;
 }
 
 .marketplace-navigation-drawer--rtl {
   right: 0;
   left: auto;
   border-right: 0;
-  border-left: 1px solid #e9b949;
+  border-left: 1px solid #c2516b;
 }
 
 .market-content-shell {
@@ -58,10 +58,10 @@
 }
 
 .sh {
-  --sh-bg: #22362c;
-  --sh-fg: #f4e9cf;
-  --sh-accent: #e9b949;
-  --sh-menu: #2e4a3c;
+  --sh-bg: #14362e;
+  --sh-fg: #f2ede3;
+  --sh-accent: #c2516b;
+  --sh-menu: #1e4a3f;
   position: relative;
   z-index: 30;
   display: flex;
@@ -284,8 +284,8 @@
 }
 
 .sh-logo-sidebar {
-  --sh-fg: #f4e9cf;
-  --sh-accent: #e9b949;
+  --sh-fg: #f2ede3;
+  --sh-accent: #c2516b;
 }
 
 .sh-logo:focus-visible {

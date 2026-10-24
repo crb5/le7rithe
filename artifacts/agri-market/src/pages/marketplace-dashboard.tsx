@@ -68,7 +68,7 @@ export function Dashboard() {
       <StatCard label={t('saved')} value={summary.savedCount} icon={Bookmark} href="/saved" />
     </div>
     <div className="mt-8 grid min-w-0 gap-7 xl:grid-cols-[minmax(0,1fr)_330px]">
-      <section className="overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] shadow-[0_8px_24px_hsl(155_20%_18%/.04)]">
+      <section className="overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] shadow-[0_8px_24px_hsl(167_30%_12%/.04)]">
         <div className="flex items-center justify-between border-b border-[hsl(var(--border))] p-5"><div><h2 className="font-bold text-[hsl(var(--primary))]">{t('recentListings')}</h2><p className="mt-1 text-[11px] text-[hsl(var(--muted-foreground))]">{t('recentListingsDescription')}</p></div><MoreHorizontal size={18} className="text-[hsl(var(--muted-foreground))]" /></div>
         <div>{summary.recentListings?.length ? summary.recentListings.map((listing) => <div key={listing.id} className="flex flex-wrap items-center gap-3 border-b border-[hsl(var(--border))] p-4 last:border-0">
           <div className="h-14 w-16 shrink-0 overflow-hidden rounded-lg bg-[hsl(var(--secondary))]">

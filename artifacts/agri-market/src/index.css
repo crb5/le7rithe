@@ -136,64 +136,64 @@
   /* Automatic computation of border around primary / danger buttons */
   --opaque-button-border-intensity: -8; /* In terms of percentages */
 
-  --background: 42 37% 96%;
-  --foreground: 154 26% 15%;
-  --border: 38 22% 86%;
-  --card: 40 33% 99%;
-  --card-foreground: 154 26% 15%;
-  --card-border: 38 22% 88%;
-  --sidebar: 155 33% 16%;
-  --sidebar-foreground: 42 34% 94%;
-  --sidebar-border: 154 26% 25%;
-  --sidebar-primary: 42 87% 61%;
-  --sidebar-primary-foreground: 155 33% 16%;
-  --sidebar-accent: 153 26% 23%;
-  --sidebar-accent-foreground: 42 34% 94%;
-  --sidebar-ring: 42 87% 61%;
-  --popover: 40 33% 99%;
-  --popover-foreground: 154 26% 15%;
-  --popover-border: 38 22% 88%;
-  --primary: 155 33% 23%;
-  --primary-foreground: 42 34% 96%;
-  --secondary: 42 48% 90%;
-  --secondary-foreground: 154 26% 18%;
-  --muted: 42 29% 92%;
-  --muted-foreground: 153 12% 43%;
-  --accent: 42 87% 61%;
-  --accent-foreground: 154 26% 15%;
+  --background: 38 44% 96%;
+  --foreground: 167 55% 24%;
+  --border: 38 15% 87%;
+  --card: 0 0% 100%;
+  --card-foreground: 167 55% 24%;
+  --card-border: 38 15% 89%;
+  --sidebar: 167 45% 13%;
+  --sidebar-foreground: 38 30% 94%;
+  --sidebar-border: 167 20% 24%;
+  --sidebar-primary: 346 50% 55%;
+  --sidebar-primary-foreground: 167 45% 13%;
+  --sidebar-accent: 167 25% 20%;
+  --sidebar-accent-foreground: 38 30% 94%;
+  --sidebar-ring: 346 50% 55%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 167 55% 24%;
+  --popover-border: 38 15% 89%;
+  --primary: 167 55% 24%;
+  --primary-foreground: 38 44% 96%;
+  --secondary: 156 18% 92%;
+  --secondary-foreground: 167 55% 22%;
+  --muted: 38 20% 92%;
+  --muted-foreground: 161 15% 42%;
+  --accent: 346 42% 43%;
+  --accent-foreground: 38 44% 96%;
   --destructive: 4 62% 48%;
-  --destructive-foreground: 40 33% 99%;
-  --input: 38 22% 82%;
-  --ring: 155 33% 23%;
-  --chart-1: 155 33% 23%;
-  --chart-2: 42 87% 61%;
-  --chart-3: 22 72% 56%;
-  --chart-4: 185 31% 44%;
-  --chart-5: 94 28% 48%;
+  --destructive-foreground: 38 44% 96%;
+  --input: 38 15% 82%;
+  --ring: 167 55% 24%;
+  --chart-1: 167 55% 24%;
+  --chart-2: 346 42% 43%;
+  --chart-3: 210 15% 45%;
+  --chart-4: 167 35% 45%;
+  --chart-5: 346 30% 60%;
 
   --app-font-sans: 'IBM Plex Sans Arabic', sans-serif;
   --app-font-serif: 'IBM Plex Sans Arabic', sans-serif;
   --app-font-mono: 'IBM Plex Sans Arabic', sans-serif;
   --radius: 1.25rem; /* 20px — generous rounding for cards/inputs/dialogs; buttons/badges use rounded-full directly, not this scale */
   /* Soft, warm-tinted shadow scale (uses the palette's own near-black foreground hue, not a generic gray). */
-  --shadow-2xs: 0px 1px 2px 0px hsl(155 20% 18% / 0.04);
-  --shadow-xs: 0px 1px 3px 0px hsl(155 20% 18% / 0.05);
+  --shadow-2xs: 0px 1px 2px 0px hsl(167 30% 12% / 0.04);
+  --shadow-xs: 0px 1px 3px 0px hsl(167 30% 12% / 0.05);
   --shadow-sm:
-    0px 2px 6px -1px hsl(155 20% 18% / 0.06),
-    0px 1px 2px -1px hsl(155 20% 18% / 0.05);
+    0px 2px 6px -1px hsl(167 30% 12% / 0.06),
+    0px 1px 2px -1px hsl(167 30% 12% / 0.05);
   --shadow:
-    0px 4px 10px -2px hsl(155 20% 18% / 0.08),
-    0px 2px 4px -2px hsl(155 20% 18% / 0.05);
+    0px 4px 10px -2px hsl(167 30% 12% / 0.08),
+    0px 2px 4px -2px hsl(167 30% 12% / 0.05);
   --shadow-md:
-    0px 8px 16px -4px hsl(155 20% 18% / 0.1),
-    0px 2px 6px -2px hsl(155 20% 18% / 0.06);
+    0px 8px 16px -4px hsl(167 30% 12% / 0.1),
+    0px 2px 6px -2px hsl(167 30% 12% / 0.06);
   --shadow-lg:
-    0px 14px 28px -6px hsl(155 20% 18% / 0.13),
-    0px 4px 10px -4px hsl(155 20% 18% / 0.07);
+    0px 14px 28px -6px hsl(167 30% 12% / 0.13),
+    0px 4px 10px -4px hsl(167 30% 12% / 0.07);
   --shadow-xl:
-    0px 20px 40px -8px hsl(155 20% 18% / 0.16),
-    0px 8px 16px -6px hsl(155 20% 18% / 0.08);
-  --shadow-2xl: 0px 28px 56px -10px hsl(155 20% 18% / 0.2);
+    0px 20px 40px -8px hsl(167 30% 12% / 0.16),
+    0px 8px 16px -6px hsl(167 30% 12% / 0.08);
+  --shadow-2xl: 0px 28px 56px -10px hsl(167 30% 12% / 0.2);
   /* Colored "glow" shadows for CTA-grade elements (primary buttons, hero CTA, featured cards). */
   --shadow-glow-primary: 0px 10px 24px -4px hsl(var(--primary) / 0.22);
   --shadow-glow-accent: 0px 10px 24px -4px hsl(var(--accent) / 0.3);
@@ -258,42 +258,42 @@
 
   --opaque-button-border-intensity: 9; /* In terms of percentages */
 
-  --background: 154 25% 10%;
-  --foreground: 42 34% 95%;
-  --border: 154 18% 26%;
-  --card: 154 22% 14%;
-  --card-foreground: 42 34% 95%;
-  --card-border: 154 18% 26%;
-  --sidebar: 154 29% 9%;
-  --sidebar-foreground: 42 34% 95%;
-  --sidebar-border: 154 18% 23%;
-  --sidebar-primary: 42 87% 61%;
-  --sidebar-primary-foreground: 154 26% 15%;
-  --sidebar-accent: 154 21% 18%;
-  --sidebar-accent-foreground: 42 34% 95%;
-  --sidebar-ring: 42 87% 61%;
-  --popover: 154 22% 14%;
-  --popover-foreground: 42 34% 95%;
-  --popover-border: 154 18% 26%;
-  --primary: 42 87% 61%;
-  --primary-foreground: 154 26% 15%;
-  --secondary: 154 21% 20%;
-  --secondary-foreground: 42 34% 95%;
-  --muted: 154 18% 20%;
-  --muted-foreground: 42 16% 68%;
-  --accent: 42 87% 61%;
-  --accent-foreground: 154 26% 15%;
+  --background: 167 30% 9%;
+  --foreground: 38 30% 94%;
+  --border: 167 18% 24%;
+  --card: 167 22% 13%;
+  --card-foreground: 38 30% 94%;
+  --card-border: 167 18% 24%;
+  --sidebar: 167 35% 8%;
+  --sidebar-foreground: 38 30% 94%;
+  --sidebar-border: 167 18% 21%;
+  --sidebar-primary: 346 50% 60%;
+  --sidebar-primary-foreground: 167 35% 8%;
+  --sidebar-accent: 167 20% 17%;
+  --sidebar-accent-foreground: 38 30% 94%;
+  --sidebar-ring: 346 50% 60%;
+  --popover: 167 22% 13%;
+  --popover-foreground: 38 30% 94%;
+  --popover-border: 167 18% 24%;
+  --primary: 346 50% 60%;
+  --primary-foreground: 167 35% 8%;
+  --secondary: 167 18% 18%;
+  --secondary-foreground: 38 30% 94%;
+  --muted: 167 15% 18%;
+  --muted-foreground: 38 14% 68%;
+  --accent: 346 50% 60%;
+  --accent-foreground: 167 35% 8%;
   --destructive: 4 62% 58%;
-  --destructive-foreground: 154 25% 10%;
+  --destructive-foreground: 167 30% 9%;
 
   /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
-  --input: 154 18% 30%;
-  --ring: 42 87% 61%;
-  --chart-1: 42 87% 61%;
-  --chart-2: 155 33% 50%;
-  --chart-3: 22 72% 56%;
-  --chart-4: 185 31% 55%;
-  --chart-5: 94 28% 58%;
+  --input: 167 18% 28%;
+  --ring: 346 50% 60%;
+  --chart-1: 346 50% 60%;
+  --chart-2: 167 45% 50%;
+  --chart-3: 210 15% 55%;
+  --chart-4: 167 30% 60%;
+  --chart-5: 346 30% 70%;
 
   /* Dark mode: background is already dark green, so shadows lean on near-black at higher alpha to read as depth. */
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.2);
@@ -676,13 +676,13 @@
 /* Keep interaction states above the utility-layer border and shadow classes on each card. */
 .category-card:active {
   transform: scale(.985);
-  box-shadow: 0 2px 8px hsl(155 20% 18% / .04);
+  box-shadow: 0 2px 8px hsl(167 30% 12% / .04);
 }
 @media (hover: hover) {
   .category-card:hover {
     transform: translateY(-2px);
     border-color: hsl(var(--accent));
-    box-shadow: 0 10px 20px hsl(155 20% 18% / .08);
+    box-shadow: 0 10px 20px hsl(167 30% 12% / .08);
   }
   .category-card:hover .category-card-icon { transform: rotate(6deg); }
 }

@@ -826,18 +826,18 @@ export function Home() {
 
   return <AppShell>
     {debugLoad ? <HomeLoadDebugPanel /> : null}
-    <FadeIn enabled={false}><section className="relative isolate overflow-hidden rounded-[2rem] bg-[hsl(var(--primary))] px-6 py-8 text-[hsl(var(--primary-foreground))] sm:px-10 sm:py-11 lg:px-14 lg:py-14" data-testid="section-home-hero">
+    <FadeIn enabled={false}><section className="relative isolate overflow-hidden px-2 pb-10 pt-6 sm:px-4 sm:pt-10 lg:pt-14" data-testid="section-home-hero">
       <div className="relative z-10 max-w-2xl lg:max-w-[62%]">
-        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[.07] px-3 py-1.5 text-[11px] font-semibold text-white/75">{t('seasonalMarket')}</div>
-        <h1 className="max-w-xl text-[clamp(2rem,5vw,4.2rem)] font-bold leading-[1.13] tracking-tight">{t('everythingForYourLand')}</h1>
-        <p className="mt-5 max-w-lg text-sm leading-7 text-white/60 sm:text-base">{t('homeIntro')}</p>
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[hsl(var(--accent)/.1)] px-3 py-1.5 text-[11px] font-semibold text-[hsl(var(--accent))]">{t('seasonalMarket')}</div>
+        <h1 className="max-w-xl text-[clamp(2.4rem,6vw,4.8rem)] font-bold leading-[1.06] tracking-tight text-[hsl(var(--foreground))]">{t('everythingForYourLand')}</h1>
+        <p className="mt-5 max-w-lg text-base leading-8 text-[hsl(var(--muted-foreground))]">{t('homeIntro')}</p>
         <div className="mt-8 max-w-xl"><SearchBar value={search} onChange={setSearch} onSubmit={submitSearch} onFilterClick={openFilters} /></div>
-        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[11px] text-white/45"><span>{t('mostSearched')}</span><button type="button" onClick={() => { setSearch('جرار'); setLocation('/listings?q=جرار'); }} className="text-white/75 hover:text-[hsl(var(--accent))]" data-testid="button-trend-tractor">{t('tractors')}</button><button type="button" onClick={() => { setSearch('أرض'); setLocation('/listings?q=أرض'); }} className="text-white/75 hover:text-[hsl(var(--accent))]" data-testid="button-trend-land">{t('agriculturalLand')}</button><button type="button" onClick={() => setLocation('/listings?category=spare-parts')} className="text-white/75 hover:text-[hsl(var(--accent))]" data-testid="button-trend-parts">{t('spareParts')}</button></div>
+        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[11px] text-[hsl(var(--muted-foreground))]"><span>{t('mostSearched')}</span><button type="button" onClick={() => { setSearch('جرار'); setLocation('/listings?q=جرار'); }} className="text-[hsl(var(--foreground))] underline decoration-[hsl(var(--border))] underline-offset-2 hover:text-[hsl(var(--accent))]" data-testid="button-trend-tractor">{t('tractors')}</button><button type="button" onClick={() => { setSearch('أرض'); setLocation('/listings?q=أرض'); }} className="text-[hsl(var(--foreground))] underline decoration-[hsl(var(--border))] underline-offset-2 hover:text-[hsl(var(--accent))]" data-testid="button-trend-land">{t('agriculturalLand')}</button><button type="button" onClick={() => setLocation('/listings?category=spare-parts')} className="text-[hsl(var(--foreground))] underline decoration-[hsl(var(--border))] underline-offset-2 hover:text-[hsl(var(--accent))]" data-testid="button-trend-parts">{t('spareParts')}</button></div>
       </div>
-      <div className="pointer-events-none absolute -left-8 -top-20 h-[420px] w-[420px] rounded-full border-[46px] border-[hsl(var(--accent)/.1)] sm:left-[45%] sm:top-[-150px]" /><div className="pointer-events-none absolute -bottom-36 left-[43%] h-[360px] w-[360px] rounded-full border-[1px] border-[hsl(var(--accent)/.2)]" />
-      <div className="pointer-events-none absolute bottom-0 left-10 hidden opacity-40 lg:block"><LandPlot size={160} strokeWidth={.5} /></div>
-      <div className="pointer-events-none absolute bottom-[-70px] left-[58%] hidden h-[300px] w-[300px] rounded-full border border-[hsl(var(--accent)/.25)] lg:block" />
-      <div className="pointer-events-none absolute left-[62%] top-1/2 hidden -translate-y-1/2 text-[hsl(var(--accent)/.18)] lg:block"><Tractor size={190} strokeWidth={.55} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-20 h-[420px] w-[420px] rounded-full border-[46px] border-[hsl(var(--primary)/.08)] sm:left-[45%] sm:top-[-150px]" /><div className="pointer-events-none absolute -bottom-36 left-[43%] h-[360px] w-[360px] rounded-full border-[1px] border-[hsl(var(--accent)/.25)]" />
+      <div className="pointer-events-none absolute bottom-0 left-10 hidden opacity-30 text-[hsl(var(--primary))] lg:block"><LandPlot size={160} strokeWidth={.5} /></div>
+      <div className="pointer-events-none absolute bottom-[-70px] left-[58%] hidden h-[300px] w-[300px] rounded-full border border-[hsl(var(--accent)/.3)] lg:block" />
+      <div className="pointer-events-none absolute left-[62%] top-1/2 hidden -translate-y-1/2 text-[hsl(var(--accent)/.2)] lg:block"><Tractor size={190} strokeWidth={.55} /></div>
     </section></FadeIn>
 
       <FadeIn enabled={false}><StorefrontsSection /></FadeIn>

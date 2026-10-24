@@ -59,7 +59,7 @@ export function AdminNotifications() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col bg-[hsl(42_37%_96%)]">
+    <div className="flex min-h-full flex-1 flex-col bg-[hsl(38_44%_96%)]">
       <AdminHeader
         title={t('adminNotificationsTitle')}
         description={t('adminNotificationsDescription')}
@@ -69,7 +69,7 @@ export function AdminNotifications() {
         <div className="mx-auto max-w-4xl space-y-4">
           <div
             aria-label={t('adminNotificationFiltersLabel')}
-            className="flex flex-wrap gap-2 rounded-xl border border-[hsl(38_22%_86%)] bg-white p-2 shadow-sm"
+            className="flex flex-wrap gap-2 rounded-xl border border-[hsl(38_15%_87%)] bg-white p-2 shadow-sm"
           >
             {filters.map((option) => {
               const unreadCount = unreadCounts?.[option.value] ?? 0;
@@ -81,18 +81,18 @@ export function AdminNotifications() {
                   data-testid={`admin-notification-filter-${option.value}`}
                   aria-pressed={isSelected}
                   onClick={() => selectFilter(option.value)}
-                  className={`inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[hsl(42_87%_61%)] ${
+                  className={`inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[hsl(346_42%_43%)] ${
                     isSelected
-                      ? 'bg-[hsl(155_33%_23%)] text-white'
-                      : 'text-[hsl(155_33%_23%)] hover:bg-[hsl(42_37%_96%)]'
+                      ? 'bg-[hsl(167_55%_24%)] text-white'
+                      : 'text-[hsl(167_55%_24%)] hover:bg-[hsl(38_44%_96%)]'
                   }`}
                 >
                   {option.label}
                   {unreadCount > 0 && (
                     <span className={`rounded-full px-2 py-0.5 text-xs ${
                       isSelected
-                        ? 'bg-[hsl(42_87%_61%)] text-[hsl(155_33%_16%)]'
-                        : 'bg-[hsl(42_87%_61%)/.25] text-[hsl(155_33%_23%)]'
+                        ? 'bg-[hsl(346_42%_43%)] text-[hsl(167_45%_13%)]'
+                        : 'bg-[hsl(346_42%_43%)/.25] text-[hsl(167_55%_24%)]'
                     }`}>
                       {unreadCount}
                     </span>
@@ -102,13 +102,13 @@ export function AdminNotifications() {
             })}
           </div>
           {isLoading ? (
-            <div className="flex items-center justify-center rounded-xl border border-[hsl(38_22%_86%)] bg-white py-20 text-[hsl(153_12%_43%)]">
+            <div className="flex items-center justify-center rounded-xl border border-[hsl(38_15%_87%)] bg-white py-20 text-[hsl(161_15%_42%)]">
               <Loader2 className="animate-spin" />
             </div>
           ) : notifications.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-[hsl(38_22%_80%)] bg-white px-6 py-20 text-center">
-              <Bell className="mx-auto mb-4 text-[hsl(153_12%_55%)]" size={34} />
-              <p className="font-semibold text-[hsl(155_33%_23%)]">{t('adminNoNotifications')}</p>
+            <div className="rounded-xl border border-dashed border-[hsl(38_15%_80%)] bg-white px-6 py-20 text-center">
+              <Bell className="mx-auto mb-4 text-[hsl(161_15%_52%)]" size={34} />
+              <p className="font-semibold text-[hsl(167_55%_24%)]">{t('adminNoNotifications')}</p>
             </div>
           ) : (
             <>
@@ -118,36 +118,36 @@ export function AdminNotifications() {
                   type="button"
                   data-testid={`admin-notification-${notification.id}`}
                   onClick={() => openNotification(notification)}
-                  className={`group w-full rounded-xl border bg-white p-5 text-start shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[hsl(42_87%_61%)] ${
+                  className={`group w-full rounded-xl border bg-white p-5 text-start shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[hsl(346_42%_43%)] ${
                     notification.read
-                      ? 'border-[hsl(38_22%_86%)]'
-                      : 'border-[hsl(42_87%_61%)] bg-[hsl(42_87%_61%)/.08]'
+                      ? 'border-[hsl(38_15%_87%)]'
+                      : 'border-[hsl(346_42%_43%)] bg-[hsl(346_42%_43%)/.08]'
                   }`}
                 >
                   <div className="flex items-start gap-4">
                     <span className={`mt-0.5 rounded-full p-2.5 ${
                       notification.read
-                        ? 'bg-[hsl(155_33%_16%)/.08] text-[hsl(155_33%_23%)]'
-                        : 'bg-[hsl(42_87%_61%)] text-[hsl(155_33%_16%)]'
+                        ? 'bg-[hsl(167_45%_13%)/.08] text-[hsl(167_55%_24%)]'
+                        : 'bg-[hsl(346_42%_43%)] text-[hsl(167_45%_13%)]'
                     }`}>
                       {notification.read ? <Check size={18} /> : <Bell size={18} />}
                       </span>
                     <span className="min-w-0 flex-1">
                       <span className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                        <span className="font-bold text-[hsl(155_33%_23%)]">
+                        <span className="font-bold text-[hsl(167_55%_24%)]">
                           {notification.type === 'admin_new_report'
                             ? t('adminNotificationNewReport')
                             : t('adminNotificationNewListing')}
                         </span>
                         <span className={`text-[10px] font-bold uppercase tracking-wide ${
-                          notification.read ? 'text-[hsl(153_12%_55%)]' : 'text-[hsl(4_62%_58%)]'
+                          notification.read ? 'text-[hsl(161_15%_52%)]' : 'text-[hsl(4_62%_58%)]'
                         }`}>
                           {notification.read ? t('adminNotificationRead') : t('adminNotificationUnread')}
                         </span>
                       </span>
-                      <span className="mt-2 block text-sm text-[hsl(153_12%_43%)]">{notification.body}</span>
+                      <span className="mt-2 block text-sm text-[hsl(161_15%_42%)]">{notification.body}</span>
                       {notification.type === 'admin_new_report' ? (
-                        <span className="mt-4 grid gap-3 text-xs text-[hsl(155_33%_23%)] sm:grid-cols-2">
+                        <span className="mt-4 grid gap-3 text-xs text-[hsl(167_55%_24%)] sm:grid-cols-2">
                           <span><strong>{t('adminNotificationReport')}:</strong> #{notification.reportId}</span>
                           <span><strong>{t('adminNotificationListing')}:</strong> {notification.listingTitle || t('notAvailable')}</span>
                           <span className="flex items-center gap-1.5">
@@ -158,7 +158,7 @@ export function AdminNotifications() {
                           <span><strong>{t('adminNotificationReportStatus')}:</strong> {t(notification.reportStatus === 'resolved' ? 'reportStatusResolved' : 'reportStatusOpen')}</span>
                         </span>
                       ) : (
-                        <span className="mt-4 grid gap-3 text-xs text-[hsl(155_33%_23%)] sm:grid-cols-2">
+                        <span className="mt-4 grid gap-3 text-xs text-[hsl(167_55%_24%)] sm:grid-cols-2">
                           <span className="flex flex-wrap items-center gap-1.5">
                             <strong>{t('adminNotificationSeller')}:</strong>
                             {notification.sellerName || t('unknownSeller')}
@@ -174,7 +174,7 @@ export function AdminNotifications() {
                           <span><strong>{t('adminNotificationListingStatus')}:</strong> {t(listingStatusKey(notification.listingStatus) as any)}</span>
                         </span>
                       )}
-                      <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[hsl(155_33%_23%)] group-hover:text-[hsl(4_62%_58%)]">
+                      <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[hsl(167_55%_24%)] group-hover:text-[hsl(4_62%_58%)]">
                         {notification.type === 'admin_new_report'
                           ? t('adminNotificationOpenReports')
                           : t('adminNotificationOpenListings')}{' '}
@@ -189,7 +189,7 @@ export function AdminNotifications() {
                   type="button"
                   onClick={() => void fetchNextPage()}
                   disabled={isFetchingNextPage}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-[hsl(38_22%_86%)] bg-white px-4 py-3 text-sm font-bold text-[hsl(155_33%_23%)] shadow-sm transition hover:bg-[hsl(42_37%_96%)] focus:outline-none focus:ring-2 focus:ring-[hsl(42_87%_61%)] disabled:cursor-wait disabled:opacity-60"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-[hsl(38_15%_87%)] bg-white px-4 py-3 text-sm font-bold text-[hsl(167_55%_24%)] shadow-sm transition hover:bg-[hsl(38_44%_96%)] focus:outline-none focus:ring-2 focus:ring-[hsl(346_42%_43%)] disabled:cursor-wait disabled:opacity-60"
                 >
                   {isFetchingNextPage ? <Loader2 className="animate-spin" size={16} /> : <ChevronDown size={16} />}
                   {isFetchingNextPage ? t('adminNotificationLoadingMore') : t('adminNotificationLoadMore')}

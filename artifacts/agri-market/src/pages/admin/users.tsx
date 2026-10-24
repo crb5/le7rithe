@@ -17,7 +17,7 @@ export function AdminUsers() {
   const items = data?.items || [];
 
   return (
-    <div className="flex-1 flex flex-col bg-[hsl(42_37%_96%)] h-full">
+    <div className="flex-1 flex flex-col bg-[hsl(38_44%_96%)] h-full">
       <AdminHeader 
         title={t('adminUsersTitle')}
         description={t('adminUsersDescription')}
@@ -56,16 +56,16 @@ export function AdminUsers() {
               </thead>
               <tbody>
                 {items.map((user: any) => (
-                  <tr key={user.id} className="hover:bg-[hsl(42_37%_97%)] transition-colors">
-                    <AdminTd className="font-numeric text-[11px] text-[hsl(153_12%_43%)]">#{formatNumber(Number(user.id))}</AdminTd>
+                  <tr key={user.id} className="hover:bg-[hsl(38_33%_97%)] transition-colors">
+                    <AdminTd className="font-numeric text-[11px] text-[hsl(161_15%_42%)]">#{formatNumber(Number(user.id))}</AdminTd>
                     <AdminTd>
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-[hsl(155_33%_23%)/0.1] text-[hsl(155_33%_23%)] flex items-center justify-center font-bold text-lg shrink-0">
+                        <div className="w-10 h-10 rounded-full bg-[hsl(167_55%_24%)/0.1] text-[hsl(167_55%_24%)] flex items-center justify-center font-bold text-lg shrink-0">
                           {user.name ? user.name.charAt(0) : t('adminUnknownUserInitial')}
                         </div>
                         <div>
                           <div className="flex flex-wrap items-center gap-1.5">
-                            <span className="font-bold text-[hsl(155_33%_23%)]">{user.name || t('unknownUser')}</span>
+                            <span className="font-bold text-[hsl(167_55%_24%)]">{user.name || t('unknownUser')}</span>
                             {user.verified && <VerifiedBadge testId={`badge-verified-user-${user.id}`} />}
                           </div>
                         </div>
@@ -80,11 +80,11 @@ export function AdminUsers() {
                           <UserCog size={13} /> {t('userRoleAdmin')}
                         </span>
                       ) : user.role === 'moderator' ? (
-                        <span className="flex items-center gap-1.5 text-[11px] font-bold text-[hsl(155_33%_23%)] bg-[hsl(155_33%_23%)/0.1] px-2 py-1 rounded-md w-fit">
+                        <span className="flex items-center gap-1.5 text-[11px] font-bold text-[hsl(167_55%_24%)] bg-[hsl(167_55%_24%)/0.1] px-2 py-1 rounded-md w-fit">
                           <Shield size={13} /> {t('userRoleModerator')}
                         </span>
                       ) : (
-                          <span className="text-[12px] text-[hsl(153_12%_43%)]">{t('userRoleSeller')}</span>
+                          <span className="text-[12px] text-[hsl(161_15%_42%)]">{t('userRoleSeller')}</span>
                       )}
                     </AdminTd>
                     <AdminTd>
@@ -113,7 +113,7 @@ export function AdminUsers() {
                               title={t('adminActivateUser')}
                               description={t('adminActivateUserDescription', { name: user.name || t('unknownUser') })}
                               confirmText={t('adminActivate')}
-                              trigger={<button className="flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(155_33%_23%)/0.1] text-[hsl(155_33%_23%)] text-[11px] font-bold rounded-full hover:bg-[hsl(155_33%_23%)/0.2] transition-colors"><Shield size={14} /> {t('adminActivate')}</button>}
+                              trigger={<button className="flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(167_55%_24%)/0.1] text-[hsl(167_55%_24%)] text-[11px] font-bold rounded-full hover:bg-[hsl(167_55%_24%)/0.2] transition-colors"><Shield size={14} /> {t('adminActivate')}</button>}
                               onConfirm={() => updateStatus.mutateAsync({ id: user.id, status: 'active' })}
                             />
                           )}
@@ -127,7 +127,7 @@ export function AdminUsers() {
                               <button
                                 type="button"
                                 disabled={updateVerification.isPending}
-                                className="flex items-center gap-1.5 rounded-lg bg-[hsl(155_33%_23%)/0.1] px-3 py-1.5 text-[11px] font-bold text-[hsl(155_33%_23%)] transition-colors hover:bg-[hsl(155_33%_23%)/0.2] disabled:opacity-50"
+                                className="flex items-center gap-1.5 rounded-lg bg-[hsl(167_55%_24%)/0.1] px-3 py-1.5 text-[11px] font-bold text-[hsl(167_55%_24%)] transition-colors hover:bg-[hsl(167_55%_24%)/0.2] disabled:opacity-50"
                                 data-testid={`button-user-verification-${user.id}`}
                               >
                                 <BadgeCheck size={14} />
@@ -143,7 +143,7 @@ export function AdminUsers() {
                 ))}
                 {items.length === 0 && (
                   <tr>
-                    <td colSpan={8} className="px-4 py-12 text-center text-sm text-[hsl(153_12%_43%)]">
+                    <td colSpan={8} className="px-4 py-12 text-center text-sm text-[hsl(161_15%_42%)]">
                       {t('adminNoUsersFound')}
                     </td>
                   </tr>

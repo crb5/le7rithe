@@ -38,7 +38,7 @@ export function AdminRentalSeason() {
     },
   });
 
-  return <div className="flex min-h-full flex-1 flex-col bg-[hsl(42_37%_96%)]">
+  return <div className="flex min-h-full flex-1 flex-col bg-[hsl(38_44%_96%)]">
     <AdminHeader title={t('rentalSeasonTitle')} description={t('rentalSeasonDescription')} />
     <main className="w-full max-w-4xl p-4 sm:p-6 lg:p-8">
       {season.isLoading ? <p className="rounded-xl bg-white p-6">{t('loading')}</p> : null}

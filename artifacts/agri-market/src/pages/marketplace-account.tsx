@@ -277,7 +277,7 @@ export function Account() {
   return <AppShell>
     <PageHeading eyebrow={t('accountProfile')} title={t('account')} description={t('accountDescription')} />
     <div className="grid min-w-0 gap-7 lg:grid-cols-[320px_minmax(0,1fr)]">
-      <section className="rounded-2xl border border-[hsl(var(--primary)/.2)] bg-[hsl(var(--primary))] p-6 text-[hsl(var(--primary-foreground))] shadow-[0_14px_30px_hsl(155_20%_18%/.12)]">
+      <section className="rounded-2xl border border-[hsl(var(--primary)/.2)] bg-[hsl(var(--primary))] p-6 text-[hsl(var(--primary-foreground))] shadow-[0_14px_30px_hsl(167_30%_12%/.12)]">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[hsl(var(--accent))] text-xl font-bold text-[hsl(var(--primary))]">{displayName.charAt(0)}</div>
         <h2 className="mt-5 flex flex-wrap items-center gap-2 text-xl font-bold">
           {displayName}
@@ -286,7 +286,7 @@ export function Account() {
         <p className="mt-1 text-xs text-white/55">{email}</p>
         <div className="mt-7 flex items-center gap-2 text-xs text-white/65"><CheckCircle2 size={16} className="text-[hsl(var(--accent))]" />{t('clerkSession')}</div>
       </section>
-      <form onSubmit={saveChanges} className="space-y-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 shadow-[0_8px_24px_hsl(155_20%_18%/.04)] sm:p-6">
+      <form onSubmit={saveChanges} className="space-y-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 shadow-[0_8px_24px_hsl(167_30%_12%/.04)] sm:p-6">
         <div className="flex items-center gap-3 border-b border-[hsl(var(--border))] pb-5"><UserRound size={18} className="text-[hsl(var(--primary))]" /><div><h3 className="text-sm font-bold">{t('personalInformation')}</h3><p className="mt-1 text-[11px] text-[hsl(var(--muted-foreground))]">{t('personalInformationHelp')}</p></div></div>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="field-label">{t('firstName')}<input value={firstName} onChange={(event) => setFirstName(event.target.value)} required className="field-input" autoComplete="given-name" data-testid="input-account-first-name" /></label>
