@@ -138,7 +138,12 @@ if (staticDir) {
         res.sendFile(indexPath);
         return;
       }
-      const injected = html.replace(/<title>.*?<\/title>/i, "").replace("</head>", `    ${tags}\n  </head>`);
+      // Remove the shell's generic title + og/twitter/description meta so the
+      // listing-specific tags are the only ones scrapers see.
+      const stripped = html
+        .replace(/<title>.*?<\/title>/i, "")
+        .replace(/[ \t]*<meta\s+(?:property|name)="(?:og:[^"]*|twitter:[^"]*|description)"[^>]*>\s*\n?/gi, "");
+      const injected = stripped.replace("</head>", `    ${tags}\n  </head>`);
       res.type("html").send(injected);
     } catch (error) {
       req.log.error({ err: error }, "Failed to render listing meta");
