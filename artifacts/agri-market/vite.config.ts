@@ -31,8 +31,8 @@ export default defineConfig(async () => {
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'logo.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Le7rithe — السوق الزراعي الموريتاني',
-        short_name: 'Le7rithe',
+        name: 'le7rithe — السوق الزراعي الموريتاني',
+        short_name: 'le7rithe',
         description: 'سوق زراعي موريتاني لبيع وشراء وتأجير الأراضي والآليات والبذور والأسمدة والمنتجات الزراعية.',
         lang: 'ar',
         dir: 'rtl',

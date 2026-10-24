@@ -12,9 +12,9 @@ test('shows the official brand without a subtitle on auth and publishing entry p
   for (const path of ['/sign-in', '/sign-up']) {
     await page.goto(path);
     const brand = page.getByTestId('link-header-brand');
-    await expect(brand).toHaveAttribute('aria-label', 'Le7rithe.com');
+    await expect(brand).toHaveAttribute('aria-label', 'le7rithe');
     await expect(brand).toHaveAttribute('href', '/');
-    await expect(brand.locator('.sh-word')).toHaveText('Le7rithe.com');
+    await expect(brand.locator('.sh-word')).toHaveText('le7rithe');
     await expect(brand.locator('.sh-word')).toHaveAttribute('dir', 'ltr');
     await expect(brand.locator('.sh-mark')).toHaveCount(1);
     await expect(brand.locator('.sh-mark')).toBeVisible();
@@ -27,8 +27,8 @@ test('shows the official brand without a subtitle on auth and publishing entry p
   await page.goto('/add-listing');
   const publishPrompt = page.getByTestId('publish-auth-prompt');
   await expect(publishPrompt).toBeVisible();
-  await expect(publishPrompt.getByRole('link', { name: 'Le7rithe.com' }))
-    .toHaveText('Le7rithe.com');
+  await expect(publishPrompt.getByRole('link', { name: 'le7rithe' }))
+    .toHaveText('le7rithe');
 });
 
 test('keeps the sign-in page on-brand and correctly ordered in every locale', async ({ page }) => {

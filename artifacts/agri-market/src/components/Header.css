@@ -311,14 +311,6 @@
   font-weight: 600;
 }
 
-.sh-word small {
-  margin-left: 2px;
-  font-family: var(--app-font-sans);
-  font-size: .5em;
-  font-weight: 600;
-  opacity: .8;
-}
-
 @media (max-width: 520px) {
   .sh {
     min-height: calc(74px + env(safe-area-inset-top, 0px));

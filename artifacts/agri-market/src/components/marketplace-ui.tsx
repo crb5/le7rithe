@@ -392,6 +392,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </div>
           </div></Show>
           <Show when="signed-out"><Link href="/sign-in" className="flex items-center justify-center rounded-xl border border-white/15 px-3 py-2.5 text-xs font-bold text-white" data-testid="link-sidebar-sign-in">{t('signIn')}</Link></Show>
+          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/10 pt-4 text-[11px] font-semibold text-white/45">
+            <Link href="/privacy" onClick={closeNavigation} className="transition-colors hover:text-white/80" data-testid="link-sidebar-privacy">{t('privacyPolicy')}</Link>
+            <Link href="/terms" onClick={closeNavigation} className="transition-colors hover:text-white/80" data-testid="link-sidebar-terms">{t('termsOfService')}</Link>
+          </div>
         </div>
       </aside>
       {open && <button type="button" onClick={closeNavigation} aria-label={t('closeMenu')} className="fixed inset-0 z-30 touch-none bg-black/50" data-testid="button-overlay-menu" />}
@@ -427,21 +431,31 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <main className="mx-auto w-full min-w-0 max-w-[1420px] px-4 pt-6 pb-[calc(9rem+env(safe-area-inset-bottom))] sm:px-7 sm:pt-8 lg:px-8 lg:pt-10 xl:pb-24"><PageFade key={location} enabled={location !== '/'}>{Number.isFinite(detailListingId) && detailListingId > 0 && <div className="mb-4 flex justify-end"><ListingShareButton listing={{ id: detailListingId }} /></div>}{children}</PageFade></main>
       </div>
       <footer className="border-t border-[hsl(var(--border)/.75)] bg-[hsl(var(--card)/.45)] px-4 py-8 sm:px-7 lg:px-8" data-testid="footer-marketplace">
-        <div className="mx-auto flex max-w-[1420px] flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-sm">
-            <Link href="/" dir="ltr" aria-label={SITE_NAME} className="inline-flex flex-col items-start text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-brand">
-              <strong dir="ltr" className="block text-sm font-bold tracking-[.035em]">{SITE_NAME}</strong>
-            </Link>
+        <div className="mx-auto flex max-w-[1420px] flex-col gap-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+            <div className="max-w-sm">
+              <Link href="/" dir="ltr" aria-label={SITE_NAME} className="inline-flex flex-col items-start text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-brand">
+                <strong dir="ltr" className="block text-sm font-bold tracking-[.035em]">{SITE_NAME}</strong>
+              </Link>
+              <div className="mt-4 flex items-start gap-2 text-[hsl(var(--primary))]">
+                <ShieldCheck size={16} className="mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-xs font-bold">{t('trustedTrade')}</p>
+                  <p className="mt-1 max-w-xs text-[11px] leading-6 text-[hsl(var(--muted-foreground))]">{t('trustedTradeDescription')}</p>
+                </div>
+              </div>
+            </div>
+            <nav className="flex flex-wrap items-center gap-x-5 gap-y-3 text-xs font-semibold text-[hsl(var(--muted-foreground))]" aria-label={t('mainNavigation')}>
+              <Link href="/" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-home">{t('discover')}</Link>
+              <Link href="/listings" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-listings">{t('allListings')}</Link>
+              <Link href="/categories" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-categories">{t('categories')}</Link>
+              <Link href="/support" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-support">{t('support')}</Link>
+              <Link href="/privacy" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-privacy">{t('privacyPolicy')}</Link>
+              <Link href="/terms" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-terms">{t('termsOfService')}</Link>
+              <Link href="/add-listing" className="text-[hsl(var(--primary))] transition-colors hover:text-[hsl(var(--accent-foreground))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-add-listing">{t('addListing')}</Link>
+            </nav>
           </div>
-          <nav className="flex flex-wrap items-center gap-x-5 gap-y-3 text-xs font-semibold text-[hsl(var(--muted-foreground))]" aria-label={t('mainNavigation')}>
-            <Link href="/" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-home">{t('discover')}</Link>
-            <Link href="/listings" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-listings">{t('allListings')}</Link>
-            <Link href="/categories" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-categories">{t('categories')}</Link>
-            <Link href="/support" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-support">{t('support')}</Link>
-            <Link href="/privacy" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-privacy">{t('privacyPolicy')}</Link>
-            <Link href="/terms" className="transition-colors hover:text-[hsl(var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-terms">{t('termsOfService')}</Link>
-            <Link href="/add-listing" className="text-[hsl(var(--primary))] transition-colors hover:text-[hsl(var(--accent-foreground))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]" data-testid="link-footer-add-listing">{t('addListing')}</Link>
-          </nav>
+          <p dir="ltr" className="border-t border-[hsl(var(--border)/.75)] pt-5 text-[11px] text-[hsl(var(--muted-foreground))]">&copy; {new Date().getFullYear()} <bdi>{SITE_NAME}</bdi>. {t('footerRights')}</p>
         </div>
       </footer>
       <Show when="signed-in"><Link href="/support" className={`fixed bottom-[4.5rem] start-3 z-20 inline-flex h-11 items-center justify-center transition-[transform,translate,opacity] duration-300 ease-out motion-reduce:transition-none xl:bottom-5 xl:start-5 ${floatingActionsVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`} aria-label={t('support')} aria-hidden={!floatingActionsVisible} inert={!floatingActionsVisible} onFocus={() => setFloatingActionsHaveFocus(true)} onBlur={() => setFloatingActionsHaveFocus(false)} data-floating-visibility={floatingActionsVisible ? 'visible' : 'hidden'} data-testid="link-floating-support"><span className="inline-flex h-9 items-center gap-1 rounded-full border border-[hsl(var(--primary)/.18)] bg-[hsl(var(--card)/.96)] px-2 text-[10px] font-bold text-[hsl(var(--primary))] shadow-[0_7px_20px_hsl(155_20%_18%/.14)] backdrop-blur-sm transition-colors hover:bg-[hsl(var(--secondary))]"><MessageCircle size={14} />{t('support')}</span></Link></Show>

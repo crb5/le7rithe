@@ -12,24 +12,24 @@ const languageOptions = [
     label: 'العربية',
     heading: 'إعلانات تستحق المشاهدة',
     dir: 'rtl',
-    title: 'Le7rithe.com | السوق الزراعي الموريتاني',
-    heroBrand: 'Le7rithe.com · السوق الزراعي الموريتاني',
+    title: 'le7rithe | السوق الزراعي الموريتاني',
+    heroBrand: 'le7rithe · السوق الزراعي الموريتاني',
   },
   {
     value: 'fr',
     label: 'Français',
     heading: 'Des annonces à découvrir',
     dir: 'ltr',
-    title: 'Le7rithe.com | Marché agricole mauritanien',
-    heroBrand: 'Le7rithe.com · marché agricole mauritanien',
+    title: 'le7rithe | Marché agricole mauritanien',
+    heroBrand: 'le7rithe · marché agricole mauritanien',
   },
   {
     value: 'en',
     label: 'English',
     heading: 'Listings worth a look',
     dir: 'ltr',
-    title: 'Le7rithe.com | Mauritanian agricultural marketplace',
-    heroBrand: 'Le7rithe.com · Mauritania’s farm market',
+    title: 'le7rithe | Mauritanian agricultural marketplace',
+    heroBrand: 'le7rithe · Mauritania’s farm market',
   },
 ] as const;
 
@@ -95,13 +95,13 @@ for (const viewport of [
       await expect(selector).toBeVisible();
       await expect(selector).toHaveAttribute('data-language', 'ar');
       await expect(page).toHaveTitle(languageOptions[0].title);
-      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Le7rithe\.com/);
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /le7rithe\.com/);
       await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', languageOptions[0].title);
       await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', languageOptions[0].title);
       await expect(headerLogo).toBeVisible();
-      await expect(headerLogo).toContainText('Le7rithe.com');
+      await expect(headerLogo).toContainText('le7rithe');
       await expect(page.getByTestId('site-header')).toHaveAttribute('dir', 'ltr');
-      await expect(page.getByTestId('link-footer-brand')).toContainText('Le7rithe.com');
+      await expect(page.getByTestId('link-footer-brand')).toContainText('le7rithe');
       await expect(page.getByText(languageOptions[0].heroBrand, { exact: true })).toBeVisible();
       await selector.click();
       await expect(page.getByRole('option')).toHaveCount(3);
@@ -144,10 +144,10 @@ for (const viewport of [
         await expect(page.locator('html')).toHaveAttribute('lang', option.value);
         await expect(page.locator('html')).toHaveAttribute('dir', option.dir);
         await expect(page).toHaveTitle(option.title);
-        await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Le7rithe\.com/);
+        await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /le7rithe\.com/);
         await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', option.title);
         await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', option.title);
-        await expect(headerLogo).toContainText('Le7rithe.com');
+        await expect(headerLogo).toContainText('le7rithe');
         await expect(page.getByText(option.heroBrand, { exact: true })).toBeVisible();
         await expect(
           page
@@ -165,7 +165,7 @@ for (const viewport of [
       const headerLogo = page.getByTestId('link-header-brand');
       await expect(selector).toBeVisible();
       await expect(headerLogo).toBeVisible();
-      await expect(headerLogo).toContainText('Le7rithe.com');
+      await expect(headerLogo).toContainText('le7rithe');
       await expect(page.getByTestId('site-header')).toHaveAttribute('dir', 'ltr');
       await expect(page.getByTestId('input-search')).toBeVisible();
 
@@ -185,7 +185,7 @@ for (const viewport of [
       await expect(firstListing).toBeVisible();
       await firstListing.click();
       await expect(page.getByTestId('link-back-listings')).toBeVisible();
-      await expect(headerLogo).toContainText('Le7rithe.com');
+      await expect(headerLogo).toContainText('le7rithe');
 
       const detailUrl = page.url();
       for (const option of listingLanguageOptions) {

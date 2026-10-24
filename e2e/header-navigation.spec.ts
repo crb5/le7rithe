@@ -18,7 +18,7 @@ test.describe('shared marketplace header', () => {
     const header = page.getByTestId('marketplace-header');
     const siteHeader = page.getByTestId('site-header');
     const languageButton = page.getByTestId('select-language');
-    await expect(page.getByTestId('link-footer-brand')).toHaveText('Le7rithe.com');
+    await expect(page.getByTestId('link-footer-brand')).toHaveText('le7rithe');
     await expect(header).toHaveAttribute('data-header-state', 'visible');
     await expect(languageButton).toHaveAttribute('data-language', 'ar');
     await expect(languageButton).toHaveAttribute('aria-label', 'Language: العربية (AR)');
@@ -145,9 +145,9 @@ test.describe('shared marketplace header', () => {
     await expect(sidebarNotifications).toHaveAttribute('href', '/notifications');
     const sidebarBrand = page.getByTestId('link-sidebar-brand');
     await expect(sidebarBrand).toBeVisible();
-    await expect(sidebarBrand).toHaveAttribute('aria-label', 'Le7rithe.com');
+    await expect(sidebarBrand).toHaveAttribute('aria-label', 'le7rithe');
     await expect(sidebarBrand).toHaveAttribute('href', '/');
-    await expect(sidebarBrand.locator('.sh-word')).toHaveText('Le7rithe.com');
+    await expect(sidebarBrand.locator('.sh-word')).toHaveText('le7rithe');
     await expect(sidebarBrand.locator('.sh-tagline')).toHaveCount(0);
     await expect(sidebarBrand.locator('.sh-mark')).toHaveCount(1);
     await page.mouse.move(300, 500);

@@ -31,7 +31,7 @@ test("renders every public privacy policy section and internal link in all suppo
     await expect(page.getByTestId("privacy-policy-introduction")).toBeVisible();
     await expect(page.getByTestId("privacy-policy-contents")).toBeVisible();
     await expect(page.getByTestId("privacy-policy-footer")).toBeVisible();
-    await expect(page.getByTestId("link-footer-brand")).toContainText("Le7rithe.com");
+    await expect(page.getByTestId("link-footer-brand")).toContainText("le7rithe");
 
     const sections = page.locator('[data-testid^="legal-section-privacy-"]');
     const contentsLinks = page.locator('[data-testid^="link-privacy-contents-"]');

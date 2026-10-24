@@ -1,4 +1,4 @@
-export const SITE_NAME = 'Le7rithe.com';
+export const SITE_NAME = 'le7rithe';
 
 const LEGACY_SITE_NAME = 'لحريثه';
 

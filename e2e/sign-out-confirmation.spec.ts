@@ -44,13 +44,13 @@ async function openMarketplaceSignOut(
   if ((page.viewportSize()?.width ?? 0) < 640) {
     await expect(page.getByTestId('button-open-menu')).toBeVisible();
     await expect(page.getByTestId('link-header-brand')).toBeVisible();
-    await expect(page.getByTestId('link-header-brand')).toContainText('Le7rithe.com');
+    await expect(page.getByTestId('link-header-brand')).toContainText('le7rithe');
     await expect(page.getByTestId('select-language')).toBeVisible();
     await expect(page.getByTestId('link-header-notifications')).toHaveCount(0);
     await expect(page.getByTestId('link-nav-notifications')).toHaveCount(1);
     await expect(page.getByTestId('button-header-sign-out')).toBeHidden();
     await expect(page.getByTestId('link-header-account')).toBeHidden();
-    await expect(page.locator('header')).toContainText('Le7rithe.com');
+    await expect(page.locator('header')).toContainText('le7rithe');
     await expect(page.getByTestId('link-header-brand').locator('.sh-tagline')).toHaveCount(0);
     await expect(page.getByTestId('link-floating-support')).toBeVisible();
     await expect(page.getByTestId('link-mobile-add')).toBeVisible();
@@ -72,7 +72,7 @@ async function openMarketplaceSignOut(
     await page.getByTestId('button-open-menu').click();
     await expect(page.getByTestId('link-nav-notifications')).toBeVisible();
     await expect(
-      page.locator('#marketplace-navigation-drawer').getByText('Le7rithe.com', { exact: true }),
+      page.locator('#marketplace-navigation-drawer').getByText('le7rithe', { exact: true }),
     ).toBeVisible();
   }
   await expect(triggerButton).toBeVisible();

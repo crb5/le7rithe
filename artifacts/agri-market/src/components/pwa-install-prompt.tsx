@@ -8,9 +8,9 @@ type BeforeInstallPromptEvent = Event & {
 };
 
 const COPY = {
-  ar: { title: 'ثبّت تطبيق Le7rithe', body: 'أضِف السوق إلى شاشتك الرئيسية للوصول السريع.', install: 'تثبيت', dismiss: 'لاحقًا' },
-  fr: { title: "Installer l'application Le7rithe", body: "Ajoutez le marché à votre écran d'accueil pour un accès rapide.", install: 'Installer', dismiss: 'Plus tard' },
-  en: { title: 'Install the Le7rithe app', body: 'Add the marketplace to your home screen for quick access.', install: 'Install', dismiss: 'Later' },
+  ar: { title: 'ثبّت تطبيق le7rithe', body: 'أضِف السوق إلى شاشتك الرئيسية للوصول السريع.', install: 'تثبيت', dismiss: 'لاحقًا' },
+  fr: { title: "Installer l'application le7rithe", body: "Ajoutez le marché à votre écran d'accueil pour un accès rapide.", install: 'Installer', dismiss: 'Plus tard' },
+  en: { title: 'Install the le7rithe app', body: 'Add the marketplace to your home screen for quick access.', install: 'Install', dismiss: 'Later' },
 } as const;
 
 const DISMISS_KEY = 'pwa-install-dismissed';

@@ -40,8 +40,8 @@ const privacyCopy: Record<MarketplaceLanguage, PrivacyCopy> = {
   ar: {
     title: 'سياسة الخصوصية',
     eyebrow: 'الخصوصية',
-    description: 'سياسة الخصوصية — Le7rithe.com',
-    introduction: 'مرحبًا بك في Le7rithe.com. نحترم خصوصيتك ونلتزم بحماية المعلومات التي تقدمها عند استخدام خدماتنا.',
+    description: 'سياسة الخصوصية — le7rithe',
+    introduction: 'مرحبًا بك في le7rithe. نحترم خصوصيتك ونلتزم بحماية المعلومات التي تقدمها عند استخدام خدماتنا.',
     lastUpdated: 'آخر تحديث',
     version: 'الإصدار',
     loadingDate: 'جارٍ تحميل التاريخ…',
@@ -144,7 +144,7 @@ const privacyCopy: Record<MarketplaceLanguage, PrivacyCopy> = {
         title: 'حقوق المستخدم',
         paragraphs: [
           'وفقًا للقوانين المطبقة، قد يكون للمستخدم حقوق تتعلق بمعلوماته الشخصية، مثل طلب الوصول إلى بعض بياناته أو تصحيحها أو حذفها عندما يكون ذلك متاحًا قانونيًا.',
-          'يمكن التواصل مع دعم Le7rithe بخصوص طلبات الخصوصية.',
+          'يمكن التواصل مع دعم le7rithe بخصوص طلبات الخصوصية.',
         ],
       },
       {
@@ -160,20 +160,20 @@ const privacyCopy: Record<MarketplaceLanguage, PrivacyCopy> = {
       },
       {
         title: 'التواصل',
-        paragraphs: ['للاستفسارات المتعلقة بالخصوصية أو البيانات الشخصية، يمكن التواصل مع دعم Le7rithe من خلال وسائل الدعم المتاحة داخل المنصة.'],
+        paragraphs: ['للاستفسارات المتعلقة بالخصوصية أو البيانات الشخصية، يمكن التواصل مع دعم le7rithe من خلال وسائل الدعم المتاحة داخل المنصة.'],
       },
       {
         title: 'الموافقة',
-        paragraphs: ['باستخدام Le7rithe وإنشاء حساب عندما تكون الموافقة مطلوبة، يقر المستخدم بأنه قرأ هذه السياسة وفهم كيفية التعامل مع المعلومات وفقًا لما هو موضح فيها.'],
+        paragraphs: ['باستخدام le7rithe وإنشاء حساب عندما تكون الموافقة مطلوبة، يقر المستخدم بأنه قرأ هذه السياسة وفهم كيفية التعامل مع المعلومات وفقًا لما هو موضح فيها.'],
       },
     ],
-    footer: 'Le7rithe.com',
+    footer: 'le7rithe',
   },
   fr: {
     title: 'Politique de confidentialité',
     eyebrow: 'Confidentialité',
-    description: 'Politique de confidentialité — Le7rithe.com',
-    introduction: 'Bienvenue sur Le7rithe.com. Nous respectons votre vie privée et nous nous engageons à protéger les informations que vous fournissez lorsque vous utilisez nos services.',
+    description: 'Politique de confidentialité — le7rithe',
+    introduction: 'Bienvenue sur le7rithe. Nous respectons votre vie privée et nous nous engageons à protéger les informations que vous fournissez lorsque vous utilisez nos services.',
     lastUpdated: 'Dernière mise à jour',
     version: 'Version',
     loadingDate: 'Chargement de la date…',
@@ -276,7 +276,7 @@ const privacyCopy: Record<MarketplaceLanguage, PrivacyCopy> = {
         title: 'Droits de l’utilisateur',
         paragraphs: [
           'Selon les lois applicables, l’utilisateur peut disposer de droits concernant ses informations personnelles, tels que demander l’accès à certaines de ses données, leur rectification ou leur suppression lorsque la loi le permet.',
-          'Les demandes relatives à la confidentialité peuvent être adressées au support de Le7rithe.',
+          'Les demandes relatives à la confidentialité peuvent être adressées au support de le7rithe.',
         ],
       },
       {
@@ -292,20 +292,20 @@ const privacyCopy: Record<MarketplaceLanguage, PrivacyCopy> = {
       },
       {
         title: 'Contact',
-        paragraphs: ['Pour toute question relative à la confidentialité ou aux données personnelles, vous pouvez contacter le support de Le7rithe par les moyens d’assistance disponibles sur la plateforme.'],
+        paragraphs: ['Pour toute question relative à la confidentialité ou aux données personnelles, vous pouvez contacter le support de le7rithe par les moyens d’assistance disponibles sur la plateforme.'],
       },
       {
         title: 'Consentement',
-        paragraphs: ['En utilisant Le7rithe et en créant un compte lorsque le consentement est requis, l’utilisateur reconnaît avoir lu cette politique et compris la manière dont les informations sont traitées conformément à ce qui y est indiqué.'],
+        paragraphs: ['En utilisant le7rithe et en créant un compte lorsque le consentement est requis, l’utilisateur reconnaît avoir lu cette politique et compris la manière dont les informations sont traitées conformément à ce qui y est indiqué.'],
       },
     ],
-    footer: 'Le7rithe.com',
+    footer: 'le7rithe',
   },
   en: {
     title: 'Privacy Policy',
     eyebrow: 'Privacy',
-    description: 'Privacy Policy — Le7rithe.com',
-    introduction: 'Welcome to Le7rithe.com. We respect your privacy and are committed to protecting the information you provide when using our services.',
+    description: 'Privacy Policy — le7rithe',
+    introduction: 'Welcome to le7rithe. We respect your privacy and are committed to protecting the information you provide when using our services.',
     lastUpdated: 'Last updated',
     version: 'Version',
     loadingDate: 'Loading date…',
@@ -408,7 +408,7 @@ const privacyCopy: Record<MarketplaceLanguage, PrivacyCopy> = {
         title: 'User Rights',
         paragraphs: [
           'Depending on applicable laws, users may have rights concerning their personal information, such as requesting access to some of their data, its correction, or its deletion where legally available.',
-          'Users may contact Le7rithe support about privacy requests.',
+          'Users may contact le7rithe support about privacy requests.',
         ],
       },
       {
@@ -424,14 +424,14 @@ const privacyCopy: Record<MarketplaceLanguage, PrivacyCopy> = {
       },
       {
         title: 'Contact',
-        paragraphs: ['For questions about privacy or personal data, users may contact Le7rithe support through the support options available within the platform.'],
+        paragraphs: ['For questions about privacy or personal data, users may contact le7rithe support through the support options available within the platform.'],
       },
       {
         title: 'Consent',
-        paragraphs: ['By using Le7rithe and creating an account when consent is required, the user acknowledges that they have read this policy and understand how information is handled as described in it.'],
+        paragraphs: ['By using le7rithe and creating an account when consent is required, the user acknowledges that they have read this policy and understand how information is handled as described in it.'],
       },
     ],
-    footer: 'Le7rithe.com',
+    footer: 'le7rithe',
   },
 };
 

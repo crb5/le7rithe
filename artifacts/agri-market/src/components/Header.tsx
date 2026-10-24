@@ -160,7 +160,7 @@ export function HeaderBrand({
           />
         </svg>
         <span className="sh-word" dir="ltr">
-          Le<b>7</b>rithe<small>.com</small>
+          le<b>7</b>rithe
         </span>
       </span>
     </Link>

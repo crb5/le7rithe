@@ -442,8 +442,8 @@
 }
 
 @layer base {
-  html { direction: rtl; width: 100%; max-width: 100%; min-width: 0; }
-  body { width: 100%; max-width: 100%; min-width: 0; }
+  html { direction: rtl; width: 100%; max-width: 100%; min-width: 0; overscroll-behavior-y: none; }
+  body { width: 100%; max-width: 100%; min-width: 0; overscroll-behavior-y: none; }
   #root { width: 100%; max-width: 100%; min-width: 0; }
   .market-content-shell { width: 100%; box-sizing: border-box; }
   button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
