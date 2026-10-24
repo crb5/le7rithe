@@ -122,7 +122,7 @@
   gap: 5px;
   padding: 0;
   border: 0;
-  border-radius: 0;
+  border-radius: 9999px;
   background: transparent;
   color: var(--sh-fg);
   cursor: pointer;
@@ -168,7 +168,7 @@
   min-height: 40px;
   padding: 4px 7px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 9999px;
   background: transparent;
   color: var(--sh-fg);
   font: 600 15px/1.2 Cairo, system-ui, sans-serif;
@@ -215,7 +215,7 @@
   padding: 6px;
   list-style: none;
   border: 1px solid rgb(233 185 73 / 72%);
-  border-radius: 10px;
+  border-radius: 20px;
   background: var(--sh-menu);
   box-shadow: 0 12px 30px rgb(15 29 22 / 28%);
 }
@@ -228,7 +228,7 @@
   padding: 8px 10px;
   gap: 5px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 12px;
   background: transparent;
   color: var(--sh-fg);
   text-align: start;

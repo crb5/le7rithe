@@ -87,8 +87,8 @@ function PackageForm({ packageData, onSave, onCancel }: { packageData?: any, onS
         <span className="text-sm font-bold text-[hsl(154_26%_15%)]">{t('packageActive')}</span>
       </label>
       <div className="flex gap-3 justify-end pt-4 border-t border-[hsl(38_22%_86%)]">
-        <button type="button" onClick={onCancel} className="px-5 py-2.5 rounded-xl border border-[hsl(38_22%_86%)] text-sm font-bold text-[hsl(153_12%_43%)] hover:bg-[hsl(42_37%_97%)]">{t('cancel')}</button>
-        <button type="submit" disabled={loading} className="px-5 py-2.5 bg-[hsl(155_33%_23%)] text-white text-sm font-bold rounded-xl hover:bg-[hsl(155_33%_18%)] disabled:opacity-50">{t('save')}</button>
+        <button type="button" onClick={onCancel} className="px-5 py-2.5 rounded-full border border-[hsl(38_22%_86%)] text-sm font-bold text-[hsl(153_12%_43%)] hover:bg-[hsl(42_37%_97%)]">{t('cancel')}</button>
+        <button type="submit" disabled={loading} className="px-5 py-2.5 bg-[hsl(155_33%_23%)] text-white text-sm font-bold rounded-full hover:bg-[hsl(155_33%_18%)] disabled:opacity-50">{t('save')}</button>
       </div>
     </form>
   );
@@ -186,7 +186,7 @@ export function AdminPackages() {
                      confirmText={t('delete')}
                     confirmVariant="danger"
                     trigger={
-                       <button aria-label={t('deletePackage')} className="flex items-center justify-center px-4 py-2 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] rounded-xl hover:bg-[hsl(4_62%_48%)/0.2] transition-colors">
+                       <button aria-label={t('deletePackage')} className="flex items-center justify-center px-4 py-2 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] rounded-full hover:bg-[hsl(4_62%_48%)/0.2] transition-colors">
                         <Trash2 size={16} />
                       </button>
                     }

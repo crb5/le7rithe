@@ -100,7 +100,7 @@ export function AdminReports() {
                           description={t('replyToReportDescription')}
                           confirmText={t('sendReportReply')}
                           requireReason
-                          trigger={<button className="px-3 py-1.5 bg-[hsl(155_33%_23%)] text-white text-[11px] font-bold rounded-lg hover:bg-[hsl(155_33%_18%)] transition-colors">{report.action ? t('replyAgain') : t('replyAndClose')}</button>}
+                          trigger={<button className="px-3 py-1.5 bg-[hsl(155_33%_23%)] text-white text-[11px] font-bold rounded-full hover:bg-[hsl(155_33%_18%)] transition-colors">{report.action ? t('replyAgain') : t('replyAndClose')}</button>}
                           onConfirm={(action) => resolveReport.mutateAsync({ id: report.id, status: 'resolved', action })}
                         />
                       </div>

@@ -303,7 +303,7 @@ export function Account() {
             {t('resendCode')}{resendCountdown > 0 && <> (<span dir="ltr">{resendCountdown}s</span>)</>}
           </button>
         </div>}
-        <div className="flex justify-end border-t border-[hsl(var(--border))] pt-5"><button type="submit" disabled={isSaving} className="flex items-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] disabled:cursor-not-allowed disabled:opacity-60" data-testid="button-save-account">{isSaving && <LoaderCircle size={15} className="animate-spin" />}{isSaving ? t('saving') : pendingPhone ? t('verifyAndContinue') : t('saveChanges')}</button></div>
+        <div className="flex justify-end border-t border-[hsl(var(--border))] pt-5"><button type="submit" disabled={isSaving} className="flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-5 py-3 text-xs font-bold text-[hsl(var(--primary-foreground))] disabled:cursor-not-allowed disabled:opacity-60" data-testid="button-save-account">{isSaving && <LoaderCircle size={15} className="animate-spin" />}{isSaving ? t('saving') : pendingPhone ? t('verifyAndContinue') : t('saveChanges')}</button></div>
       </form>
     </div>
     <section className="rounded-2xl border border-red-200 bg-red-50 p-5 sm:p-6" aria-labelledby="delete-account-heading" data-testid="account-deletion-section">
@@ -312,7 +312,7 @@ export function Account() {
         <div className="min-w-0 flex-1">
           <h2 id="delete-account-heading" className="text-sm font-bold text-red-900">{t('deleteAccount')}</h2>
           <p className="mt-2 text-xs leading-6 text-red-900/80">{t('deleteAccountDescription')}</p>
-          <button type="button" onClick={deleteAccount} disabled={isDeleting || isSaving} className="mt-4 inline-flex min-h-10 items-center gap-2 rounded-xl bg-red-700 px-4 py-2.5 text-xs font-bold text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60" data-testid="button-delete-account">
+          <button type="button" onClick={deleteAccount} disabled={isDeleting || isSaving} className="mt-4 inline-flex min-h-10 items-center gap-2 rounded-full bg-red-700 px-4 py-2.5 text-xs font-bold text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60" data-testid="button-delete-account">
             {isDeleting ? <LoaderCircle size={15} className="animate-spin" /> : <Trash2 size={15} />}
             {isDeleting ? t('deletingAccount') : t('deleteAccount')}
           </button>

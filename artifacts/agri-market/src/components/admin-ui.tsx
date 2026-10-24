@@ -100,7 +100,7 @@ export function AdminAppShell({ children }: { children: ReactNode }) {
                 key={item.href} 
                 href={item.href} 
                 onClick={() => setMenuOpen(false)}
-                 className={`flex min-h-11 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(155_33%_16%)] ${
+                 className={`flex min-h-11 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(155_33%_16%)] ${
                   active 
                     ? 'bg-[hsl(42_87%_61%)] text-[hsl(155_33%_16%)]' 
                     : 'text-[hsl(42_34%_94%)] hover:bg-white/10'
@@ -128,7 +128,7 @@ export function AdminAppShell({ children }: { children: ReactNode }) {
             type="button"
              onClick={() => setShowSignOutConfirm(true)}
             disabled={isSigningOut}
-             className="flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-[hsl(4_62%_68%)] transition-colors hover:bg-[hsl(4_62%_48%)/0.15] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)]"
+             className="flex min-h-11 w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[hsl(4_62%_68%)] transition-colors hover:bg-[hsl(4_62%_48%)/0.15] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)]"
             data-testid="button-admin-sign-out"
           >
             {isSigningOut ? <Loader2 size={18} className="animate-spin" /> : <LogOut size={18} />}
@@ -139,7 +139,7 @@ export function AdminAppShell({ children }: { children: ReactNode }) {
       
        <main className={`flex min-h-[100dvh] min-w-0 flex-col ${language === 'ar' ? 'lg:mr-[260px]' : 'lg:ml-[260px]'}`}>
          <div className="sticky top-0 z-40 flex min-h-14 items-center justify-between border-b border-[hsl(38_22%_86%)] bg-[hsl(155_33%_16%)] px-4 py-3 text-white shadow-sm lg:hidden">
-           <button type="button" onClick={() => setMenuOpen(true)} className="rounded-lg border border-white/15 p-2 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)]" aria-label={t('openAdminMenu')} data-testid="button-open-admin-menu"><Menu size={20} /></button>
+           <button type="button" onClick={() => setMenuOpen(true)} className="rounded-full border border-white/15 p-2 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)]" aria-label={t('openAdminMenu')} data-testid="button-open-admin-menu"><Menu size={20} /></button>
           <span className="text-sm font-bold">{t('admin')}</span>
           <span className="h-9 w-9" />
         </div>
@@ -263,12 +263,12 @@ export function AdminActionDialog({
           
            <div className="mt-2 flex flex-col-reverse justify-end gap-2 sm:flex-row">
             <DialogPrimitive.Close asChild>
-               <button className="min-h-11 rounded-xl border border-[hsl(38_22%_86%)] px-5 py-2.5 text-sm font-bold text-[hsl(153_12%_43%)] transition-colors hover:bg-[hsl(42_37%_97%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(155_33%_23%)/0.3]">{t('cancel')}</button>
+               <button className="min-h-11 rounded-full border border-[hsl(38_22%_86%)] px-5 py-2.5 text-sm font-bold text-[hsl(153_12%_43%)] transition-colors hover:bg-[hsl(42_37%_97%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(155_33%_23%)/0.3]">{t('cancel')}</button>
             </DialogPrimitive.Close>
-            <button 
+            <button
               onClick={handleConfirm}
               disabled={loading}
-               className={`flex min-h-11 min-w-[100px] items-center justify-center rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)] focus-visible:ring-offset-2 ${
+               className={`flex min-h-11 min-w-[100px] items-center justify-center rounded-full px-5 py-2.5 text-sm font-bold text-white transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(42_87%_61%)] focus-visible:ring-offset-2 ${
                 confirmVariant === 'danger' ? 'bg-[hsl(4_62%_48%)] hover:bg-[hsl(4_62%_42%)]' : 'bg-[hsl(155_33%_23%)] hover:bg-[hsl(155_33%_18%)]'
               } disabled:opacity-50`}
             >
@@ -331,14 +331,14 @@ export function Pagination({ page, limit, total, onPageChange }: { page: number;
         <button 
           onClick={() => onPageChange(page - 1)} 
           disabled={page === 1}
-           className="min-h-10 rounded-lg border border-[hsl(38_22%_86%)] px-3 py-1.5 text-xs font-bold transition-colors hover:bg-[hsl(42_37%_97%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(155_33%_23%)/0.3] disabled:opacity-40"
+           className="min-h-10 rounded-full border border-[hsl(38_22%_86%)] px-3 py-1.5 text-xs font-bold transition-colors hover:bg-[hsl(42_37%_97%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(155_33%_23%)/0.3] disabled:opacity-40"
         >
           {t('previous')}
         </button>
         <button 
           onClick={() => onPageChange(page + 1)} 
           disabled={page === totalPages}
-           className="min-h-10 rounded-lg border border-[hsl(38_22%_86%)] px-3 py-1.5 text-xs font-bold transition-colors hover:bg-[hsl(42_37%_97%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(155_33%_23%)/0.3] disabled:opacity-40"
+           className="min-h-10 rounded-full border border-[hsl(38_22%_86%)] px-3 py-1.5 text-xs font-bold transition-colors hover:bg-[hsl(42_37%_97%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(155_33%_23%)/0.3] disabled:opacity-40"
         >
           {t('next')}
         </button>

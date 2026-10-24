@@ -105,7 +105,7 @@ export function AdminUsers() {
                               description={t('adminSuspendUserDescription', { name: user.name || t('unknownUser') })}
                               confirmText={t('adminSuspend')}
                               confirmVariant="danger"
-                              trigger={<button className="flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] text-[11px] font-bold rounded-lg hover:bg-[hsl(4_62%_48%)/0.2] transition-colors"><ShieldBan size={14} /> {t('adminSuspend')}</button>}
+                              trigger={<button className="flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(4_62%_48%)/0.1] text-[hsl(4_62%_48%)] text-[11px] font-bold rounded-full hover:bg-[hsl(4_62%_48%)/0.2] transition-colors"><ShieldBan size={14} /> {t('adminSuspend')}</button>}
                               onConfirm={() => updateStatus.mutateAsync({ id: user.id, status: 'suspended' })}
                             />
                           ) : (
@@ -113,7 +113,7 @@ export function AdminUsers() {
                               title={t('adminActivateUser')}
                               description={t('adminActivateUserDescription', { name: user.name || t('unknownUser') })}
                               confirmText={t('adminActivate')}
-                              trigger={<button className="flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(155_33%_23%)/0.1] text-[hsl(155_33%_23%)] text-[11px] font-bold rounded-lg hover:bg-[hsl(155_33%_23%)/0.2] transition-colors"><Shield size={14} /> {t('adminActivate')}</button>}
+                              trigger={<button className="flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(155_33%_23%)/0.1] text-[hsl(155_33%_23%)] text-[11px] font-bold rounded-full hover:bg-[hsl(155_33%_23%)/0.2] transition-colors"><Shield size={14} /> {t('adminActivate')}</button>}
                               onConfirm={() => updateStatus.mutateAsync({ id: user.id, status: 'active' })}
                             />
                           )}

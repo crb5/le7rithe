@@ -168,7 +168,7 @@ export function AdminBanners() {
           <div>
             <p className="text-xs text-[hsl(153_12%_43%)]">{t('adminBannersIndependentNote')}</p>
           </div>
-          <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-xl bg-[hsl(155_33%_16%)] px-4 py-3 text-sm font-bold text-white transition hover:bg-[hsl(155_33%_24%)]" data-testid="button-create-banner">
+          <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-full bg-[hsl(155_33%_16%)] px-4 py-3 text-sm font-bold text-white transition hover:bg-[hsl(155_33%_24%)]" data-testid="button-create-banner">
             <Plus size={17} /> {t('createBanner')}
           </button>
         </div>
@@ -229,8 +229,8 @@ export function AdminBanners() {
               </div>
             </div>
             <div className="flex justify-end gap-3 border-t border-[hsl(154_20%_86%)] px-6 py-5">
-              <button type="button" onClick={closeForm} className="rounded-xl border border-[hsl(154_20%_82%)] px-5 py-3 text-sm font-bold" disabled={saving || uploading}>{t('cancel')}</button>
-              <button type="submit" disabled={saving || uploading} className="inline-flex items-center gap-2 rounded-xl bg-[hsl(155_33%_16%)] px-5 py-3 text-sm font-bold text-white disabled:opacity-50">{saving && <LoaderCircle size={16} className="animate-spin" />}{t('saveBanner')}</button>
+              <button type="button" onClick={closeForm} className="rounded-full border border-[hsl(154_20%_82%)] px-5 py-3 text-sm font-bold" disabled={saving || uploading}>{t('cancel')}</button>
+              <button type="submit" disabled={saving || uploading} className="inline-flex items-center gap-2 rounded-full bg-[hsl(155_33%_16%)] px-5 py-3 text-sm font-bold text-white disabled:opacity-50">{saving && <LoaderCircle size={16} className="animate-spin" />}{t('saveBanner')}</button>
             </div>
           </form>
         </div>

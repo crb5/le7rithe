@@ -608,7 +608,7 @@ function LegalPage({ kind, icon: Icon }: { kind: 'privacy' | 'terms'; icon: type
 
             <footer className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-[hsl(var(--border))] pt-5" data-testid="privacy-policy-footer">
               <span dir="ltr" className="text-xs font-bold tracking-wide text-[hsl(var(--muted-foreground))]">{policy.footer}</span>
-              <Link href="/" className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-2 text-xs font-bold text-[hsl(var(--primary))] transition hover:border-[hsl(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))]" data-testid="link-legal-back-privacy">
+              <Link href="/" className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-2 text-xs font-bold text-[hsl(var(--primary))] transition hover:border-[hsl(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))]" data-testid="link-legal-back-privacy">
                 {language === 'ar' ? <ArrowRight size={15} /> : <ArrowLeft size={15} />}
                 {policy.back}
               </Link>
@@ -636,7 +636,7 @@ function LegalPage({ kind, icon: Icon }: { kind: 'privacy' | 'terms'; icon: type
             </div>
           </section>
           ))}
-          <Link href="/" className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-2 text-xs font-bold text-[hsl(var(--primary))] transition hover:border-[hsl(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))]" data-testid={`link-legal-back-${kind}`}>{language === 'ar' ? <ArrowRight size={15} /> : <ArrowLeft size={15} />}{content.back}</Link>
+          <Link href="/" className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-2 text-xs font-bold text-[hsl(var(--primary))] transition hover:border-[hsl(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent))]" data-testid={`link-legal-back-${kind}`}>{language === 'ar' ? <ArrowRight size={15} /> : <ArrowLeft size={15} />}{content.back}</Link>
         </div>
       </div>
     </AppShell>

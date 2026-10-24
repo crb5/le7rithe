@@ -149,7 +149,7 @@ export function PaymentConfirmationPanel({ listingId, onDone }: { listingId: num
               <label className="field-label sm:col-span-2">{t('paymentAccountHolder')} *<input required value={accountHolderName} onChange={(event) => setAccountHolderName(event.target.value)} className="field-input" data-testid="input-payment-account-holder" /></label>
               <label className="field-label sm:col-span-2">{t('paymentProof')} *<span className="mt-1 flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-[hsl(var(--border))] bg-white px-4 py-3 text-sm"><Upload size={17} /><span>{proofFile ? t('paymentProofSelected') : t('paymentProofChoose')}</span><input required type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => handleProof(event.target.files?.[0])} className="sr-only" data-testid="input-payment-proof" /></span></label>
             </div>
-             <button type="submit" disabled={isSubmitting || options.isLoading} className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-5 py-3 text-sm font-bold text-[hsl(var(--primary-foreground))] disabled:opacity-60" data-testid="button-submit-payment">{isSubmitting && <LoaderCircle size={16} className="animate-spin" />}{t('submitPaymentConfirmation')}</button>
+             <button type="submit" disabled={isSubmitting || options.isLoading} className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[hsl(var(--primary))] px-5 py-3 text-sm font-bold text-[hsl(var(--primary-foreground))] disabled:opacity-60" data-testid="button-submit-payment">{isSubmitting && <LoaderCircle size={16} className="animate-spin" />}{t('submitPaymentConfirmation')}</button>
           </>
         )}
       </form>

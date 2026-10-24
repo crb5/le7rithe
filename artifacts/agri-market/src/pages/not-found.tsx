@@ -18,7 +18,7 @@ export default function NotFound() {
           <p className="mt-4 text-sm leading-7 text-[hsl(var(--muted-foreground))]">
             {t('pageNotFoundDescription')}
           </p>
-          <Link href="/" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary-foreground))]" data-testid="link-not-found-home">{t('backToMarket')} {language === 'ar' ? <ArrowRight size={15} /> : <ArrowLeft size={15} />}</Link>
+          <Link href="/" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary-foreground))]" data-testid="link-not-found-home">{t('backToMarket')} {language === 'ar' ? <ArrowRight size={15} /> : <ArrowLeft size={15} />}</Link>
         </CardContent>
       </Card>
     </div>

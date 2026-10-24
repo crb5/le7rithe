@@ -77,7 +77,7 @@ export function AdminSupportSettings() {
             </label>
           </div>
           <div className="mt-6 flex justify-end border-t border-[hsl(38_22%_86%)] pt-5">
-            <button type="submit" disabled={updateSettings.isPending || settingsQuery.isLoading} className="inline-flex items-center gap-2 rounded-xl bg-[hsl(155_33%_23%)] px-5 py-3 text-xs font-bold text-white transition hover:-translate-y-0.5 disabled:opacity-50" data-testid="button-save-support-settings">
+            <button type="submit" disabled={updateSettings.isPending || settingsQuery.isLoading} className="inline-flex items-center gap-2 rounded-full bg-[hsl(155_33%_23%)] px-5 py-3 text-xs font-bold text-white transition hover:-translate-y-0.5 disabled:opacity-50" data-testid="button-save-support-settings">
               <Save size={15} />{updateSettings.isPending ? t('saving') : t('saveChanges')}
             </button>
           </div>
