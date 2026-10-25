@@ -37,6 +37,11 @@ ENV NODE_ENV=production \
 COPY --from=build /build/node_modules /app/node_modules
 COPY --from=build /build/artifacts/api-server/dist /app/server/dist
 COPY --from=build /build/artifacts/agri-market/dist/public /app/public
+# Ops scripts (DB/object-storage verification, backups) — run via
+# `docker compose exec app node /app/scripts/verify-object-storage.mjs`.
+# Not part of the running server; just shipped so they're always available
+# without a separate git pull/copy step on the host.
+COPY --from=build /build/scripts/src/verify-object-storage.mjs /app/scripts/verify-object-storage.mjs
 
 EXPOSE 3000
 CMD ["node", "--enable-source-maps", "/app/server/dist/index.mjs"]

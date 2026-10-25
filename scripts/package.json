@@ -10,9 +10,12 @@
     "benchmark:serve": "node ./src/image-benchmark-server.mjs",
     "cleanup:legacy-listing-image-originals": "tsx ./src/cleanup-legacy-listing-image-originals.ts",
     "migrate:pg-to-mongo": "node ./src/pg-to-mongo.mjs",
+    "migrate:export-replit-objects": "node ./src/export-replit-objects.mjs",
+    "migrate:verify-object-storage": "node ./src/verify-object-storage.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
+    "@google-cloud/storage": "^7.14.0",
     "@types/node": "^25.3.3",
     "lighthouse": "^13.5.0",
     "mongodb": "^6.9.0",
