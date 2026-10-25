@@ -13,6 +13,7 @@ import {
   History,
   LogOut,
   FolderTree,
+  MapPin,
   KeyRound,
   X,
   AlertTriangle,
@@ -46,6 +47,7 @@ const navItems = [
   { href: '/admin/payment-methods', label: 'adminPaymentMethodsTitle', icon: List, adminOnly: true },
   { href: '/admin/support-settings', label: 'adminSupportSettingsTitle', icon: PhoneCall, adminOnly: true },
   { href: '/admin/categories', label: 'manageCategories', icon: FolderTree, adminOnly: true },
+  { href: '/admin/regions', label: 'manageRegions', icon: MapPin, adminOnly: true },
   { href: '/admin/audit-logs', label: 'adminAuditLogsTitle', icon: History, adminOnly: true },
   { href: '/admin/security', label: 'adminSecurityTitle', icon: KeyRound, adminOnly: true },
 ] as const;

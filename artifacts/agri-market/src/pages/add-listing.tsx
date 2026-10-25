@@ -3,9 +3,11 @@ import { LoaderCircle, ShieldCheck } from 'lucide-react';
 import {
   getListCategoriesQueryKey,
   getListLocationsQueryKey,
+  getListRegionsQueryKey,
   useCreateListing,
   useListCategories,
   useListLocations,
+  useListRegions,
   type ListingInput,
 } from '@workspace/api-client-react';
 import { useLocation } from 'wouter';
@@ -15,7 +17,7 @@ import {
   formFieldsForCategory,
   LAND_CATEGORY_SLUG,
   LAND_ONLY_FIELD_KEYS,
-  regions,
+  regions as staticRegionsFallback,
 } from '@/lib/category-catalog';
 import { translatedName, useLanguage } from '@/lib/language';
 import { ENABLE_PAID_LISTINGS } from '@/lib/features';
@@ -80,6 +82,7 @@ export function AddListing() {
   const { language, t } = useLanguage();
   const categoriesQuery = useListCategories({ query: { queryKey: getListCategoriesQueryKey() } });
   const locationsQuery = useListLocations({ query: { queryKey: getListLocationsQueryKey() } });
+  const regionsQuery = useListRegions({ query: { queryKey: getListRegionsQueryKey() } });
   const createListing = useCreateListing();
   const [form, setForm] = useState<ListingFormState>({
     title: '', category: '', subcategory: '', price: '', location: '',
@@ -97,6 +100,7 @@ export function AddListing() {
   const [phoneValidationAttempted, setPhoneValidationAttempted] = useState(false);
   const [rejectedPhoneInputs, setRejectedPhoneInputs] = useState({ contactPhone: false, whatsappPhone: false });
   const categories = categoriesQuery.data ?? categoriesFallback;
+  const regionNames = regionsQuery.data ? regionsQuery.data.map((item) => item.name) : staticRegionsFallback;
   const selectedCategory = categories.find((item) => item.slug === form.category);
   const isLandCategory = form.category === LAND_CATEGORY_SLUG;
   const fields = formFieldsForCategory(form.category);
@@ -190,7 +194,7 @@ export function AddListing() {
       Object.entries(form.attributes).filter(([key]) => isLandCategory || !landOnlyFieldKeys.has(key)),
     );
     if (isLandCategory) {
-      if (regions.includes(form.location)) {
+      if (regionNames.includes(form.location)) {
         attributes.region = form.location;
         if (form.location !== 'آخر') delete attributes.customRegion;
       } else {
@@ -298,8 +302,8 @@ export function AddListing() {
               placeholder={t('chooseRegion')}
               direction={language === 'ar' ? 'rtl' : 'ltr'}
               options={[
-                ...regions.map((region) => ({ value: region, label: translateLocationName(region, language) })),
-                ...(locationsQuery.data ?? []).filter((item) => !regions.includes(item.name)).map((item) => ({ value: item.name, label: translateLocationName(item.name, language) })),
+                ...regionNames.map((region) => ({ value: region, label: translateLocationName(region, language) })),
+                ...(locationsQuery.data ?? []).filter((item) => !regionNames.includes(item.name)).map((item) => ({ value: item.name, label: translateLocationName(item.name, language) })),
               ]}
               onValueChange={(value) => {
                 setForm((current) => {

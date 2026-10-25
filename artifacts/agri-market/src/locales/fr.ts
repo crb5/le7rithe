@@ -126,6 +126,8 @@ const fr: TranslationDictionary = {
   save: 'Enregistrer', editCategory: 'Modifier la catégorie', deleteCategory: 'Supprimer la catégorie', deleteSubcategory: 'Supprimer la sous-catégorie', newCategory: 'Nouvelle catégorie', manageCategories: 'Gérer les catégories',
   manageCategoriesDescription: 'Ajoutez des catégories et sous-catégories, et modifiez les noms, traductions, ordre et état sans changer le code.',
   addSubcategory: 'Ajouter une sous-catégorie', subcategories: 'Sous-catégories', deleteCategoryConfirm: 'Supprimer la catégorie « {name} » ?', deleteSubcategoryConfirm: 'Supprimer « {name} » ?',
+  manageRegions: 'Gérer les régions', manageRegionsDescription: 'Ajoutez des régions et modifiez les noms, traductions, ordre et état sans changer le code.',
+  newRegion: 'Nouvelle région', editRegion: 'Modifier la région', deleteRegion: 'Supprimer la région', deleteRegionConfirm: 'Supprimer la région « {name} » ?',
   adminPortal: 'Portail administrateur', restrictedAccess: 'L’accès est réservé aux membres autorisés.',
   status: 'État', location: 'Lieu', manufacturer: 'Fabricant', model: 'Modèle',
   seasonalMarket: 'لحريثه · marché agricole mauritanien', everythingForYourLand: 'Tout ce dont votre terre a besoin, au même endroit.',

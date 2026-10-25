@@ -55,6 +55,7 @@ const AdminAuditLogs = lazy(() => import('@/pages/admin/audit-logs').then((modul
 const AdminNotifications = lazy(() => import('@/pages/admin/notifications').then((module) => ({ default: module.AdminNotifications })));
 const AdminSupportSettings = lazy(() => import('@/pages/admin/support-settings').then((module) => ({ default: module.AdminSupportSettings })));
 const AdminSecurity = lazy(() => import('@/pages/admin/security').then((module) => ({ default: module.AdminSecurity })));
+const AdminRegions = lazy(() => import('@/pages/admin/regions').then((module) => ({ default: module.AdminRegions })));
 
 const queryClient = new QueryClient();
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -159,6 +160,7 @@ function Router() {
         <Route path="/admin/reports">{() => <AdminGuard><AdminReports /></AdminGuard>}</Route>
         <Route path="/admin/audit-logs">{() => <AdminGuard><AdminAuditLogs /></AdminGuard>}</Route>
         <Route path="/admin/categories">{() => <AdminGuard><AdminCategories /></AdminGuard>}</Route>
+        <Route path="/admin/regions">{() => <AdminGuard><AdminRegions /></AdminGuard>}</Route>
         <Route path="/admin">{() => <AdminGuard><AdminOverview /></AdminGuard>}</Route>
 
         <Route path="/" component={Home} />

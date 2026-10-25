@@ -261,6 +261,8 @@ const en = {
   save: 'Save', editCategory: 'Edit category', deleteCategory: 'Delete category', deleteSubcategory: 'Delete subcategory', newCategory: 'New category', manageCategories: 'Manage categories',
   manageCategoriesDescription: 'Add categories and subcategories, and edit names, translations, order and status without changing code.',
   addSubcategory: 'Add subcategory', subcategories: 'Subcategories', deleteCategoryConfirm: 'Delete category “{name}”?', deleteSubcategoryConfirm: 'Delete “{name}”?',
+  manageRegions: 'Manage regions', manageRegionsDescription: 'Add regions and edit names, translations, order and status without changing code.',
+  newRegion: 'New region', editRegion: 'Edit region', deleteRegion: 'Delete region', deleteRegionConfirm: 'Delete region “{name}”?',
   adminPortal: 'Administrator portal', restrictedAccess: 'Access is restricted to authorized members only.',
   status: 'Status', location: 'Location', manufacturer: 'Manufacturer', model: 'Model',
   seasonalMarket: 'لحريثه · Mauritania’s farm market', everythingForYourLand: 'Everything your land needs, in one place.',

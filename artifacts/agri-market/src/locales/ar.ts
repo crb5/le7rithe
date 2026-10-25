@@ -126,6 +126,8 @@ const ar: TranslationDictionary = {
   save: 'حفظ', editCategory: 'تعديل الفئة', deleteCategory: 'حذف الفئة', deleteSubcategory: 'حذف الفئة الفرعية', newCategory: 'فئة جديدة', manageCategories: 'إدارة الفئات',
   manageCategoriesDescription: 'أضف الفئات والفئات الفرعية وعدّل الأسماء والترجمات والترتيب والحالة دون تعديل الكود.',
   addSubcategory: 'إضافة فرعية', subcategories: 'الفئات الفرعية', deleteCategoryConfirm: 'حذف فئة «{name}»؟', deleteSubcategoryConfirm: 'حذف «{name}»؟',
+  manageRegions: 'إدارة المناطق', manageRegionsDescription: 'أضف مناطق وعدّل الأسماء والترجمات والترتيب والحالة دون تعديل الكود.',
+  newRegion: 'منطقة جديدة', editRegion: 'تعديل المنطقة', deleteRegion: 'حذف المنطقة', deleteRegionConfirm: 'حذف منطقة «{name}»؟',
   adminPortal: 'بوابة المشرفين', restrictedAccess: 'الوصول مقيّد للأعضاء المصرّح لهم فقط.',
   status: 'الحالة', location: 'الموقع', manufacturer: 'الصانع', model: 'الموديل',
   seasonalMarket: 'لحريثه · السوق الزراعي الموريتاني', everythingForYourLand: 'كل ما تحتاجه لحريثتك في مكان واحد.',

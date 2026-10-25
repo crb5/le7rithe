@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { LoaderCircle, X } from 'lucide-react';
-import { getGetDashboardSummaryQueryKey, getGetListingQueryKey, getListListingsQueryKey, getListSellerActiveListingsQueryKey, useUpdateListing } from '@workspace/api-client-react';
+import { getGetDashboardSummaryQueryKey, getGetListingQueryKey, getListListingsQueryKey, getListRegionsQueryKey, getListSellerActiveListingsQueryKey, useListRegions, useUpdateListing } from '@workspace/api-client-react';
 import { WhatsAppIcon } from '@/components/whatsapp-icon';
 import { ListingEditPhotos } from '@/components/listing-edit-photos';
 import { ListingContentEditSection } from '@/components/listing-content-edit-section';
 import { EDIT_WINDOW_MINUTES, getListingContentEditWindow } from '@workspace/api-zod/listing-edit-window';
 import { useQueryClient } from '@tanstack/react-query';
 import { ListingImage, getListingImageSources } from '@/components/marketplace-ui';
-import { formFieldsForCategory, regions } from '@/lib/category-catalog';
+import { formFieldsForCategory } from '@/lib/category-catalog';
 import { useLanguage } from '@/lib/language';
 import { canonicalizeLocationName, translateLocationName, translateMarketplaceOption } from '@/lib/listing-localization';
 import { useListingTaxonomy } from '@/lib/listing-taxonomy';
@@ -129,6 +129,8 @@ export function EditListingDialog({ listing, onClose, onSaved, mutation }: { lis
     };
   }, [listing.createdAt]);
   const fields = formFieldsForCategory(listing.categorySlug).filter((field) => field.key !== 'customRegion');
+  const regionsQuery = useListRegions({ query: { queryKey: getListRegionsQueryKey() } });
+  const regionNames = regionsQuery.data?.map((item) => item.name) ?? [];
   const originalContactPhone = getMauritaniaPhoneInputValue(listing.contactPhone ?? '');
   const originalWhatsappPhone = getMauritaniaPhoneInputValue(listing.whatsappPhone ?? '');
   const normalizedSavedContactPhone = normalizeMauritaniaPhone(listing.contactPhone ?? '');
@@ -340,7 +342,7 @@ export function EditListingDialog({ listing, onClose, onSaved, mutation }: { lis
         <label className="field-label">{t('mainCategory')}<input value={categoryName(listing.categorySlug, listing.category)} readOnly className="field-input cursor-not-allowed bg-[hsl(var(--muted)/.4)]" data-testid="input-edit-category" /></label>
         <label className="field-label">{t('subcategory')}<input value={listing.subcategory ? subcategoryName(listing.categorySlug, listing.subcategorySlug ?? '', listing.subcategory ?? '') : t('notAvailable')} readOnly className="field-input cursor-not-allowed bg-[hsl(var(--muted)/.4)]" data-testid="input-edit-subcategory" /></label>
         <label className="field-label min-w-0">{t('price')}<div dir={language === 'ar' ? 'rtl' : 'ltr'} className="flex min-w-0 gap-0"><input required min="0" type="number" value={form.price} onChange={(event) => update('price', event.target.value)} className={`field-input min-w-0 flex-1 ${language === 'ar' ? 'rounded-l-none' : 'rounded-r-none'}`} data-testid="input-edit-price" /><span className={`field-input flex w-24 shrink-0 items-center justify-center font-numeric ${language === 'ar' ? 'rounded-r-none border-r-0' : 'rounded-l-none border-l-0'}`} dir="ltr" data-testid="edit-listing-currency">MRU</span></div></label>
-        <label className="field-label">{t('location')}<input required value={translateLocationName(form.location, language)} onChange={(event) => update('location', canonicalizeLocationName(event.target.value, language))} className="field-input" list="edit-listing-regions" data-testid="input-edit-location" /><datalist id="edit-listing-regions">{regions.map((region) => <option key={region} value={translateLocationName(region, language)} />)}</datalist></label>
+        <label className="field-label">{t('location')}<input required value={translateLocationName(form.location, language)} onChange={(event) => update('location', canonicalizeLocationName(event.target.value, language))} className="field-input" list="edit-listing-regions" data-testid="input-edit-location" /><datalist id="edit-listing-regions">{regionNames.map((region) => <option key={region} value={translateLocationName(region, language)} />)}</datalist></label>
          <label className="field-label">
            {t('condition')}
             <ListingFormSelect
