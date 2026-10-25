@@ -103,6 +103,7 @@ import {
   listingImageRequiresConsent,
 } from "../lib/listing-image-access";
 import { normalizeListingPhones } from "../lib/mauritania-phone";
+import { notifyNewBuyerMessage } from "../lib/whatsapp";
 import {
   hasCurrentLegalConsentForClerkUser,
   requireCurrentLegalConsent,
@@ -2451,6 +2452,9 @@ router.post("/messages", async (req, res): Promise<void> => {
     type: "message",
     read: false,
   });
+  const [seller] = await db.select({ phone: usersTable.phone, phoneVerifiedAt: usersTable.phoneVerifiedAt })
+    .from(usersTable).where(eq(usersTable.id, listing.sellerId)).limit(1);
+  if (seller?.phoneVerifiedAt) notifyNewBuyerMessage(seller.phone, listing.title);
   res.status(201).json(SendMessageResponse.parse({
     id: message.id,
     listingId: message.listingId,

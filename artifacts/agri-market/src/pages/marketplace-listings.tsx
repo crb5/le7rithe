@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type SetStateAction } from 'react';
 import { useLocation } from 'wouter';
 import { Search, SlidersHorizontal, Star } from 'lucide-react';
-import { getListCategoriesQueryKey, getListListingsQueryKey, getListLocationsQueryKey, useListCategories, useListListings, useListLocations } from '@workspace/api-client-react';
+import { getListCategoriesQueryKey, getListListingsQueryKey, getListRegionsQueryKey, useListCategories, useListListings, useListRegions } from '@workspace/api-client-react';
 import { useToggleFavorite } from '@/lib/use-favorites';
 import { Stagger, StaggerItem } from '@/components/motion';
 import { AppShell, EmptyState, ErrorState, ListingCard, ListingSkeleton, PageHeading, SearchBar } from '@/components/marketplace-ui';
@@ -44,7 +44,7 @@ export function Listings() {
   });
   const [filtersOpen, setFiltersOpen] = useState(() => queryParams.get('filters') === 'open');
   const categoriesQuery = useListCategories({ query: { queryKey: getListCategoriesQueryKey() } });
-  const locationsQuery = useListLocations({ query: { queryKey: getListLocationsQueryKey() } });
+  const locationsQuery = useListRegions({ query: { queryKey: getListRegionsQueryKey() } });
   const categories = categoriesQuery.data ?? categoriesFallback;
   const selectedCategory = categories.find((item) => item.slug === category);
   const activeSubcategories = selectedCategory?.subcategories.filter((item) => item.active) ?? [];

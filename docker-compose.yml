@@ -52,6 +52,11 @@ services:
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
       OIDC_ISSUER: ${OIDC_ISSUER:-http://authentik-server:9000/application/o/agri-market/}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-}
+      # Optional: seller WhatsApp notifications (listing approved/rejected, new
+      # buyer message, payment confirmed). Leave unset to disable — sends are
+      # skipped silently, nothing else depends on these being set.
+      WHATSAPP_ACCESS_TOKEN: ${WHATSAPP_ACCESS_TOKEN:-}
+      WHATSAPP_PHONE_NUMBER_ID: ${WHATSAPP_PHONE_NUMBER_ID:-}
     volumes:
       - app-objects:/data/objects
     # No public port: Caddy is the only ingress and reaches it as app:3000.

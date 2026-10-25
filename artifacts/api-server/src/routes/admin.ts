@@ -40,6 +40,7 @@ import {
 import { ENABLE_PAID_LISTINGS } from "../lib/features";
 import { loadPaymentProofResponse } from "../lib/paymentProof";
 import { invalidSupportPhoneField } from "../lib/mauritania-phone";
+import { notifyListingApproved, notifyListingRejected, notifyPaymentConfirmed } from "../lib/whatsapp";
 import { verifiedAdminIdentity } from "../lib/admin-identity";
 import { adminRouteAccessFailure } from "../lib/admin-route-access";
 import { imageUrlForClient } from "./marketplace";
@@ -1235,6 +1236,14 @@ router.patch("/admin/listings/:id/status", async (req, res): Promise<void> => {
   }
 
   await audit(req, `listing.${status}`, "listing", id, { reason: reason || null });
+  if (status === "active" || status === "rejected") {
+    const [seller] = await db.select({ name: usersTable.name, phone: usersTable.phone, phoneVerifiedAt: usersTable.phoneVerifiedAt })
+      .from(usersTable).where(eq(usersTable.id, result.listing.sellerId)).limit(1);
+    if (seller?.phoneVerifiedAt) {
+      if (status === "active") notifyListingApproved(seller.phone, seller.name, result.listing.title);
+      else notifyListingRejected(seller.phone, result.listing.title);
+    }
+  }
   res.json(withoutListingExpiration(result.listing));
 });
 
@@ -1501,6 +1510,11 @@ router.patch("/admin/payments/:id/status", async (req, res): Promise<void> => {
       });
       return updated;
     });
+    if (status === "confirmed" && payment.userId !== null) {
+      const [payer] = await db.select({ phone: usersTable.phone, phoneVerifiedAt: usersTable.phoneVerifiedAt })
+        .from(usersTable).where(eq(usersTable.id, payment.userId)).limit(1);
+      if (payer?.phoneVerifiedAt) notifyPaymentConfirmed(payer.phone, payment.amount, payment.currency);
+    }
     res.json(payment);
   } catch (error) {
     if (error instanceof Error && error.message === "PAYMENT_ALREADY_REVIEWED") {

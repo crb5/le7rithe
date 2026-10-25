@@ -189,6 +189,12 @@ export function AddListing() {
       event.currentTarget.querySelector<HTMLButtonElement>('[data-testid="select-listing-location"]')?.focus();
       return;
     }
+    const customRegionInput = String(form.attributes.customRegion ?? '').trim();
+    if (form.location === 'آخر' && !customRegionInput) {
+      const selector = isLandCategory ? '[data-testid="category-field-customRegion"]' : '[data-testid="input-listing-custom-region"]';
+      event.currentTarget.querySelector<HTMLInputElement>(selector)?.focus();
+      return;
+    }
     if (imageUploadBlocked) return;
     const attributes = Object.fromEntries(
       Object.entries(form.attributes).filter(([key]) => isLandCategory || !landOnlyFieldKeys.has(key)),
@@ -202,8 +208,8 @@ export function AddListing() {
         attributes.customRegion = form.location;
       }
     }
-    const finalLocation = isLandCategory && attributes.region === 'آخر'
-      ? String(attributes.customRegion ?? '').trim() || form.location
+    const finalLocation = form.location === 'آخر'
+      ? customRegionInput || form.location
       : form.location;
     const data: ListingInput = {
       title: form.title, category: form.category, subcategory: form.subcategory || null,
@@ -320,6 +326,19 @@ export function AddListing() {
             />
             {requiredSelectError === 'location' && <span id="listing-location-error" role="alert" className="mt-1 block text-xs font-medium text-[hsl(var(--destructive))]">{t('locationSelectionRequired')}</span>}
           </label>
+          {form.location === 'آخر' && !isLandCategory && (
+            <label className="field-label">
+              {t('fieldCustomRegion')} *
+              <input
+                required
+                value={dynamicValue('customRegion')}
+                onChange={(event) => updateDynamic('customRegion', event.target.value)}
+                placeholder={t('fieldCustomRegion')}
+                className="field-input"
+                data-testid="input-listing-custom-region"
+              />
+            </label>
+          )}
             <label className="field-label min-w-0">{t('price')} *<div dir={language === 'ar' ? 'rtl' : 'ltr'} className="flex min-w-0 gap-0"><input required min="0" type="number" value={form.price} onChange={(event) => update('price', event.target.value)} className={`field-input min-w-0 flex-1 ${language === 'ar' ? 'rounded-l-none' : 'rounded-r-none'}`} data-testid="input-listing-price" /><span className={`field-input flex w-24 shrink-0 items-center justify-center font-numeric ${language === 'ar' ? 'rounded-r-none border-r-0' : 'rounded-l-none border-l-0'}`} dir="ltr" data-testid="listing-currency">MRU</span></div></label>
            <label className="field-label">
              {t('listingContactPhone')} *
