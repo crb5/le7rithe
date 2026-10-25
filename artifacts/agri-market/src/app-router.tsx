@@ -34,6 +34,7 @@ const Saved = lazy(() => import('@/pages/marketplace-saved').then(m => ({ defaul
 const AdminGuard = lazy(() => import('@/components/admin-ui').then(m => ({ default: m.AdminGuard })));
 const AdminLogin = lazy(() => import('@/pages/admin/login').then(m => ({ default: m.AdminLogin })));
 const ListingDetail = lazy(() => import('@/pages/listing-detail').then((module) => ({ default: module.ListingDetail })));
+const SellerProfile = lazy(() => import('@/pages/seller-profile').then((module) => ({ default: module.SellerProfile })));
 const Notifications = lazy(() => import('@/pages/notifications').then((module) => ({ default: module.Notifications })));
 const ReportDetails = lazy(() => import('@/pages/report-details').then((module) => ({ default: module.ReportDetails })));
 const Payments = lazy(() => import('@/pages/payments').then((module) => ({ default: module.Payments })));
@@ -70,6 +71,7 @@ function isPublicMarketplaceRoute(path: string): boolean {
   return path === '/'
     || path === '/listings'
     || path.startsWith('/listings/')
+    || path.startsWith('/sellers/')
     || path === '/categories'
     || path.startsWith('/categories/')
     || path === '/privacy'
@@ -162,6 +164,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/listings" component={Listings} />
         <Route path="/listings/:id" component={ListingDetail} />
+        <Route path="/sellers/:id" component={SellerProfile} />
         <Route path="/categories" component={Categories} />
         <Route path="/saved" component={Saved} />
         <Route path="/support" component={Support} />

@@ -42,6 +42,12 @@ COPY --from=build /build/artifacts/agri-market/dist/public /app/public
 # Not part of the running server; just shipped so they're always available
 # without a separate git pull/copy step on the host.
 COPY --from=build /build/scripts/src/verify-object-storage.mjs /app/scripts/verify-object-storage.mjs
+# Drizzle schema + config (source, not compiled — drizzle-kit reads TS
+# directly) so schema migrations can be applied from inside the running
+# container, which already has the real DATABASE_URL:
+#   docker compose exec app node_modules/.bin/drizzle-kit push --config lib/db/drizzle.config.ts
+COPY --from=build /build/lib/db/src /app/lib/db/src
+COPY --from=build /build/lib/db/drizzle.config.ts /app/lib/db/drizzle.config.ts
 
 EXPOSE 3000
 CMD ["node", "--enable-source-maps", "/app/server/dist/index.mjs"]

@@ -25,6 +25,7 @@ import {
   paymentMethodsTable,
   paymentPackagesTable,
   paymentsTable,
+  regionsTable,
   reportsTable,
   rentalSeasonSettingsTable,
   reviewsTable,
@@ -38,10 +39,13 @@ import {
   CreateCategoryResponse,
   CreateListingBody,
   CreateListingResponse,
+  CreateRegionBody,
+  CreateRegionResponse,
   CreateSubcategoryBody,
   CreateSubcategoryParams,
   CreateSubcategoryResponse,
   DeleteCategoryParams,
+  DeleteRegionParams,
   DeleteSubcategoryParams,
   DeleteListingParams,
   GetDashboardSummaryResponse,
@@ -49,12 +53,15 @@ import {
   GetMarketPulseResponse,
   GetListingParams,
   GetListingResponse,
+  GetSellerProfileResponse,
   ListAdminCategoriesResponse,
+  ListAdminRegionsResponse,
   ListCategoriesResponse,
   ListListingsQueryParams,
   ListListingsResponse,
   ListLocationsResponse,
   ListMessagesResponse,
+  ListRegionsResponse,
   ListSavedListingsResponse,
   ListSellerActiveListingsResponse,
   MarkMessageReadResponse,
@@ -76,6 +83,9 @@ import {
   UpdateListingBody,
   UpdateListingParams,
   UpdateListingResponse,
+  UpdateRegionBody,
+  UpdateRegionParams,
+  UpdateRegionResponse,
   ProcessListingImageUploadBody,
   ProcessListingImageUploadResponse,
   UpdateSubcategoryBody,
@@ -232,6 +242,7 @@ const requireAdminForMarketplace = async (
 
 router.use("/admin/categories", requireAdminForMarketplace);
 router.use("/admin/subcategories", requireAdminForMarketplace);
+router.use("/admin/regions", requireAdminForMarketplace);
 
 const marketplaceUserForRequest = async (req: Request) => {
   const { userId } = getAuth(req);
@@ -363,6 +374,7 @@ export const cleanupAbandonedPaymentProofs = (log: Pick<Logger, "error" | "info"
 
 let seedPromise: Promise<void> | undefined;
 let rentalSeasonSettingsPromise: Promise<void> | undefined;
+let regionsSeedPromise: Promise<unknown> | undefined;
 
 const categoryCatalog = [
   { name: "الأراضي الزراعية", nameFr: "Terrains agricoles", nameEn: "Agricultural land", slug: "land", icon: "land", subcategories: [{ name: "للبيع", nameFr: "À vendre", nameEn: "For sale", slug: "land-sale" }, { name: "للإيجار", nameFr: "À louer", nameEn: "For rent", slug: "land-rent" }] },
@@ -547,6 +559,22 @@ const ensureSeed = async (): Promise<void> => {
       throw error;
     });
   await rentalSeasonSettingsPromise;
+  regionsSeedPromise ??= db.insert(regionsTable)
+    .values([
+      { name: "روصو", nameFr: "Rosso", nameEn: "Rosso", sortOrder: 0 },
+      { name: "كرمسين", nameFr: "Keur Macène", nameEn: "Keur Macène", sortOrder: 1 },
+      { name: "اركيز", nameFr: "R'Kiz", nameEn: "R'Kiz", sortOrder: 2 },
+      { name: "انتيكان", nameFr: "Antékan", nameEn: "Antekan", sortOrder: 3 },
+      { name: "بوگي", nameFr: "Boghé", nameEn: "Boghé", sortOrder: 4 },
+      { name: "لكصيب", nameFr: "Lexeïba", nameEn: "Lexeiba", sortOrder: 5 },
+      { name: "آخر", nameFr: "Autre", nameEn: "Other", sortOrder: 6 },
+    ])
+    .onConflictDoNothing()
+    .catch((error) => {
+      regionsSeedPromise = undefined;
+      throw error;
+    });
+  await regionsSeedPromise;
   if (!shouldRunMarketplaceDemoSeed(
     process.env.NODE_ENV,
     process.env.ENABLE_MARKETPLACE_DEMO_SEED,
@@ -718,6 +746,22 @@ const getCategoryCatalog = async (activeOnly = true, includeE2E = false) => {
   }));
 };
 
+const getRegionCatalog = async (activeOnly = true) => {
+  const regions = activeOnly
+    ? await db.select().from(regionsTable).where(eq(regionsTable.active, true)).orderBy(asc(regionsTable.sortOrder), asc(regionsTable.id))
+    : await db.select().from(regionsTable).orderBy(asc(regionsTable.sortOrder), asc(regionsTable.id));
+  const counts = await db
+    .select({ name: listingsTable.location, total: count(listingsTable.id) })
+    .from(listingsTable)
+    .where(publicActiveListingWhere())
+    .groupBy(listingsTable.location);
+  const countByName = new Map(counts.map((item) => [item.name, Number(item.total)]));
+  return regions.map((region) => ({
+    ...region,
+    count: countByName.get(region.name) ?? 0,
+  }));
+};
+
 router.get("/banners", async (_req, res): Promise<void> => {
   const banners = await db.select().from(bannersTable)
     .where(activeBannerWhere())
@@ -871,6 +915,60 @@ router.delete("/admin/subcategories/:id", async (req, res): Promise<void> => {
   const [subcategory] = await db.update(subcategoriesTable).set({ active: false }).where(eq(subcategoriesTable.id, params.data.id)).returning();
   if (!subcategory) {
     res.status(404).json({ error: "Subcategory not found" });
+    return;
+  }
+  res.sendStatus(204);
+});
+
+router.get("/regions", async (_req, res): Promise<void> => {
+  await ensureSeed();
+  res.json(ListRegionsResponse.parse(await getRegionCatalog()));
+});
+
+router.get("/admin/regions", async (_req, res): Promise<void> => {
+  await ensureSeed();
+  res.json(ListAdminRegionsResponse.parse(await getRegionCatalog(false)));
+});
+
+router.post("/admin/regions", async (req, res): Promise<void> => {
+  await ensureSeed();
+  const parsed = CreateRegionBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: parsed.error.message });
+    return;
+  }
+  const [region] = await db.insert(regionsTable).values(parsed.data).returning();
+  const result = (await getRegionCatalog(false)).find((item) => item.id === region.id);
+  res.status(201).json(CreateRegionResponse.parse(result));
+});
+
+router.patch("/admin/regions/:id", async (req, res): Promise<void> => {
+  await ensureSeed();
+  const params = UpdateRegionParams.safeParse(req.params);
+  const parsed = UpdateRegionBody.safeParse(req.body);
+  if (!params.success || !parsed.success) {
+    res.status(400).json({ error: "Invalid region payload" });
+    return;
+  }
+  const [region] = await db.update(regionsTable).set(parsed.data).where(eq(regionsTable.id, params.data.id)).returning();
+  if (!region) {
+    res.status(404).json({ error: "Region not found" });
+    return;
+  }
+  const result = (await getRegionCatalog(false)).find((item) => item.id === region.id);
+  res.json(UpdateRegionResponse.parse(result));
+});
+
+router.delete("/admin/regions/:id", async (req, res): Promise<void> => {
+  await ensureSeed();
+  const params = DeleteRegionParams.safeParse(req.params);
+  if (!params.success) {
+    res.status(400).json({ error: params.error.message });
+    return;
+  }
+  const [region] = await db.update(regionsTable).set({ active: false }).where(eq(regionsTable.id, params.data.id)).returning();
+  if (!region) {
+    res.status(404).json({ error: "Region not found" });
     return;
   }
   res.sendStatus(204);
@@ -1095,6 +1193,43 @@ router.get("/listings/:id", async (req, res): Promise<void> => {
     includeContactPhone: true,
     isSaved: savedIds.has(row.listing.id),
   })));
+});
+
+router.get("/sellers/:id", async (req, res): Promise<void> => {
+  const sellerId = Number(req.params.id);
+  if (!Number.isInteger(sellerId) || sellerId <= 0) {
+    res.status(400).json({ error: "Invalid seller" });
+    return;
+  }
+  const [seller] = await db.select({
+    id: usersTable.id,
+    name: usersTable.name,
+    initials: usersTable.initials,
+    verified: usersTable.verified,
+    createdAt: usersTable.createdAt,
+  }).from(usersTable).where(eq(usersTable.id, sellerId)).limit(1);
+  if (!seller) {
+    res.status(404).json({ error: "Seller not found" });
+    return;
+  }
+  const [[listingCount], [agg]] = await Promise.all([
+    db.select({ total: count() }).from(listingsTable)
+      .where(and(eq(listingsTable.sellerId, sellerId), activeListingWhere())),
+    db.select({
+      average: sql<string>`coalesce(avg(${reviewsTable.rating}), 0)`,
+      total: count(),
+    }).from(reviewsTable).where(eq(reviewsTable.sellerId, sellerId)),
+  ]);
+  res.json(GetSellerProfileResponse.parse({
+    id: seller.id,
+    name: seller.name,
+    initials: seller.initials,
+    verified: seller.verified,
+    memberSince: seller.createdAt,
+    listingCount: Number(listingCount.total),
+    reviewAverage: Math.round(Number(agg?.average ?? 0) * 10) / 10,
+    reviewCount: Number(agg?.total ?? 0),
+  }));
 });
 
 router.get("/sellers/:id/reviews", async (req, res): Promise<void> => {
@@ -2376,6 +2511,7 @@ const accountProfilePayload = (profile: typeof usersTable.$inferSelect) => ({
   verified: profile.verified,
   phone: profile.phoneVerifiedAt ? profile.phone : null,
   phoneVerified: Boolean(profile.phoneVerifiedAt && profile.phone),
+  createdAt: profile.createdAt,
 });
 
 router.get("/account/me", async (req, res): Promise<void> => {

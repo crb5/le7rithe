@@ -38,7 +38,6 @@ import {
   withListingImageProcessing,
 } from "../lib/listing-image-processing";
 import { ENABLE_PAID_LISTINGS } from "../lib/features";
-import { isFeaturedListingVisible } from "../lib/featured-listing-policy";
 import { loadPaymentProofResponse } from "../lib/paymentProof";
 import { invalidSupportPhoneField } from "../lib/mauritania-phone";
 import { verifiedAdminIdentity } from "../lib/admin-identity";
@@ -1245,28 +1244,15 @@ router.patch("/admin/listings/:id/featured", async (req, res): Promise<void> => 
   const requestedPinned = requestedFeatured && Boolean(req.body?.pinned);
 
   if (requestedFeatured) {
+    // Admin-panel featuring is a free editorial override, independent of the
+    // paid-packages system — it only requires the listing to be active.
     const [eligibleListing] = await db
-      .select({
-        id: listingsTable.id,
-        status: listingsTable.status,
-        packageFeatured: paymentPackagesTable.featured,
-      })
+      .select({ id: listingsTable.id })
       .from(listingsTable)
-      .innerJoin(paymentsTable, eq(paymentsTable.listingId, listingsTable.id))
-      .innerJoin(paymentPackagesTable, eq(paymentsTable.packageId, paymentPackagesTable.id))
-      .where(and(
-        eq(listingsTable.id, id),
-        eq(listingsTable.status, "active"),
-        eq(paymentsTable.status, "confirmed"),
-        eq(paymentPackagesTable.featured, true),
-      ))
+      .where(and(eq(listingsTable.id, id), eq(listingsTable.status, "active")))
       .limit(1);
-    if (!eligibleListing || !isFeaturedListingVisible({
-      status: eligibleListing.status,
-      featured: true,
-      hasConfirmedFeaturedPayment: eligibleListing.packageFeatured,
-    })) {
-      res.status(409).json({ error: "Only an active listing with a confirmed featured package can be featured" });
+    if (!eligibleListing) {
+      res.status(409).json({ error: "Only an active listing can be featured" });
       return;
     }
   }

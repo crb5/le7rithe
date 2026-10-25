@@ -535,6 +535,7 @@ export function ListingShareButton({ listing, compact = false, isMarqueeDuplicat
 }
 
 export function ListingCard({ listing, onSave, featured = false, iconSize = 32, isMarqueeDuplicate = false }: { listing: Listing; onSave?: (listing: Listing) => void | Promise<unknown>; featured?: boolean; iconSize?: 24 | 32; isMarqueeDuplicate?: boolean }) {
+  const [, navigate] = useLocation();
   const [optimisticSaved, setOptimisticSaved] = useState<boolean | null>(null);
   useEffect(() => setOptimisticSaved(null), [listing.id, listing.isSaved]);
   const saved = optimisticSaved ?? Boolean(listing.isSaved);
@@ -596,7 +597,14 @@ export function ListingCard({ listing, onSave, featured = false, iconSize = 32, 
             <time dateTime={listing.createdAt} className="mb-1 block text-[10px] text-[hsl(var(--muted-foreground))]" data-testid={`time-listing-published-${listing.id}`}>{publishedAt}</time>
             <h3 className="text-[14px] font-bold leading-6 text-[hsl(var(--primary))]">{listing.title}</h3>
             <div className="listing-card-seller">
-              <span className="truncate">{listing.seller.name}</span>
+              <span
+                role="link"
+                tabIndex={0}
+                className="truncate hover:underline"
+                onClick={(event) => { event.stopPropagation(); event.preventDefault(); navigate(`/sellers/${listing.seller.id}`); }}
+                onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.stopPropagation(); event.preventDefault(); navigate(`/sellers/${listing.seller.id}`); } }}
+                data-testid={`link-seller-${listing.seller.id}`}
+              >{listing.seller.name}</span>
               {listing.seller.verified && <VerifiedBadge size="compact" testId={`badge-verified-listing-${listing.id}`} />}
             </div>
             <div className="listing-card-price-line">

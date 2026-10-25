@@ -339,6 +339,79 @@ paths:
           schema: { type: integer }
       responses:
         "204": { description: Deleted }
+  /regions:
+    get:
+      operationId: listRegions
+      tags: [marketplace]
+      summary: List marketplace regions
+      responses:
+        "200":
+          description: Regions
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Region" }
+  /admin/regions:
+    get:
+      operationId: listAdminRegions
+      tags: [dashboard]
+      summary: List regions for administration
+      responses:
+        "200":
+          description: Admin region catalog
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Region" }
+    post:
+      operationId: createRegion
+      tags: [dashboard]
+      summary: Create a marketplace region
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RegionInput" }
+      responses:
+        "201":
+          description: Created region
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Region" }
+  /admin/regions/{id}:
+    patch:
+      operationId: updateRegion
+      tags: [dashboard]
+      summary: Update a marketplace region
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RegionUpdate" }
+      responses:
+        "200":
+          description: Updated region
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Region" }
+    delete:
+      operationId: deleteRegion
+      tags: [dashboard]
+      summary: Delete a marketplace region
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204": { description: Deleted }
   /locations:
     get:
       operationId: listLocations
@@ -541,6 +614,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FavoriteState"
+  /sellers/{id}:
+    get:
+      operationId: getSellerProfile
+      tags: [marketplace]
+      summary: Get a seller's public profile summary
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Seller profile summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SellerProfile"
+        "404":
+          description: Seller not found
   /saved-listings:
     get:
       operationId: listSavedListings
@@ -1412,6 +1505,29 @@ components:
     SubcategoryUpdate:
       allOf:
         - $ref: "#/components/schemas/SubcategoryInput"
+    Region:
+      type: object
+      required: [id, name, nameFr, nameEn, sortOrder, active, count]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        nameFr: { type: string }
+        nameEn: { type: string }
+        sortOrder: { type: integer }
+        active: { type: boolean }
+        count: { type: integer }
+    RegionInput:
+      type: object
+      required: [name, nameFr, nameEn]
+      properties:
+        name: { type: string, minLength: 1 }
+        nameFr: { type: string, minLength: 1 }
+        nameEn: { type: string, minLength: 1 }
+        sortOrder: { type: integer, default: 0 }
+        active: { type: boolean, default: true }
+    RegionUpdate:
+      allOf:
+        - $ref: "#/components/schemas/RegionInput"
     Location:
       type: object
       required: [id, name, country, listingCount]
@@ -1449,6 +1565,18 @@ components:
         initials: { type: string }
         verified: { type: boolean }
         phone: { type: ["string", "null"] }
+    SellerProfile:
+      type: object
+      required: [id, name, initials, verified, memberSince, listingCount, reviewAverage, reviewCount]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        initials: { type: string }
+        verified: { type: boolean }
+        memberSince: { type: string, format: date-time }
+        listingCount: { type: integer }
+        reviewAverage: { type: number }
+        reviewCount: { type: integer }
     Listing:
       type: object
       required: [id, title, category, categorySlug, price, currency, location, condition, imageUrl, images, seller, createdAt, featured, attributes, contactPhone, whatsappPhone, saleStatus, soldAt, saleRevertUntil, canRevertSale, rentalStatus, rentalSeasonArchivedAt, rentalAdminHiddenAt, rentedAt]
@@ -1641,13 +1769,14 @@ components:
         retryAfterSeconds: { type: integer, minimum: 1 }
     MyAccountProfile:
       type: object
-      required: [id, name, verified, phone, phoneVerified]
+      required: [id, name, verified, phone, phoneVerified, createdAt]
       properties:
         id: { type: ["integer", "null"] }
         name: { type: string, maxLength: 120 }
         verified: { type: boolean }
         phone: { type: ["string", "null"] }
         phoneVerified: { type: boolean }
+        createdAt: { type: string, format: date-time }
     MyAccountProfileUpdate:
       type: object
       required: [name]

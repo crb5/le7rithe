@@ -118,6 +118,7 @@ const ar: TranslationDictionary = {
   sendInquiry: 'أرسل استفسارك', messagePlaceholder: 'اكتب رسالتك هنا...', sendMessage: 'إرسال الرسالة',
   safeCommunication: 'تواصل بأمان. لا تحوّل أي مبلغ قبل معاينة المعدة أو الأرض والتأكد من هوية البائع.',
   listingUnavailable: 'هذا الإعلان غير متاح أو ربما تم حذفه.', listingCount: '{count} إعلان', subcategoryCount: '{count} فئة فرعية',
+  sellerProfileEyebrow: 'ملف البائع', memberSince: 'عضو منذ', sellerListingCount: '{count} إعلان نشط', sellerProfileUnavailable: 'تعذر تحميل ملف البائع', viewMyListings: 'عرض إعلاناتي', phoneNotLinked: 'لا يوجد رقم هاتف مرتبط',
   footerRights: 'جميع الحقوق محفوظة.', serverConnectionError: 'حدث خطأ أثناء الاتصال بالخادم',
   marketCatalog: 'كتالوج السوق', chooseCategory: 'اختر المجال الأقرب لاحتياجك، ثم انتقل مباشرة إلى الإعلانات أو الفئة الفرعية المناسبة.',
   noCategories: 'لا توجد فئات بعد', noCategoriesDescription: 'ستظهر هنا فئات السوق عند إضافتها من لوحة الإدارة.',

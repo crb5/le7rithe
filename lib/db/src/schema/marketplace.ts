@@ -74,6 +74,15 @@ export const subcategoriesTable = pgTable("marketplace_subcategories", {
   active: boolean("active").notNull().default(true),
 });
 
+export const regionsTable = pgTable("marketplace_regions", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull().unique(),
+  nameFr: text("name_fr").notNull().default(""),
+  nameEn: text("name_en").notNull().default(""),
+  sortOrder: integer("sort_order").notNull().default(0),
+  active: boolean("active").notNull().default(true),
+});
+
 export const listingsTable = pgTable("marketplace_listings", {
   id: serial("id").primaryKey(),
   sellerId: integer("seller_id").notNull().references(() => usersTable.id),
@@ -311,6 +320,7 @@ export type Review = typeof reviewsTable.$inferSelect;
 export const insertUserSchema = createInsertSchema(usersTable).omit({ id: true, createdAt: true });
 export const insertCategorySchema = createInsertSchema(categoriesTable).omit({ id: true });
 export const insertSubcategorySchema = createInsertSchema(subcategoriesTable).omit({ id: true });
+export const insertRegionSchema = createInsertSchema(regionsTable).omit({ id: true });
 export const insertListingSchema = createInsertSchema(listingsTable).omit({ id: true, createdAt: true, updatedAt: true });
 export const insertBannerSchema = createInsertSchema(bannersTable).omit({ id: true, createdAt: true, updatedAt: true });
 export const insertSavedListingSchema = createInsertSchema(savedListingsTable).omit({ id: true, createdAt: true });
@@ -324,6 +334,7 @@ export const insertAuditLogSchema = createInsertSchema(auditLogsTable).omit({ id
 export type User = typeof usersTable.$inferSelect;
 export type Category = typeof categoriesTable.$inferSelect;
 export type Subcategory = typeof subcategoriesTable.$inferSelect;
+export type Region = typeof regionsTable.$inferSelect;
 export type Listing = typeof listingsTable.$inferSelect;
 export type Banner = typeof bannersTable.$inferSelect;
 export type SavedListing = typeof savedListingsTable.$inferSelect;

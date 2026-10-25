@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Link } from 'wouter';
 import type { Listing } from '@workspace/api-client-react';
 import { getListCategoriesQueryKey, useListCategories } from '@workspace/api-client-react';
 import { dynamicFieldsForCategory, type DynamicField } from '@/lib/category-catalog';
@@ -132,7 +133,7 @@ export function ListingSellerCard({ listing, children }: { listing: Listing; chi
   return (
     <div className="mt-5 border-t border-[hsl(var(--border))] pt-4" data-testid="listing-seller-info">
       <h3 className="mb-3 text-xs font-bold text-[hsl(var(--primary))]">{t('sellerContactInfo')}</h3>
-      <div className="flex min-h-10 items-center gap-3">
+      <Link href={`/sellers/${listing.seller.id}`} className="flex min-h-10 items-center gap-3" data-testid={`link-seller-${listing.seller.id}`}>
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[hsl(var(--accent))] text-xs font-bold text-[hsl(var(--primary))]">{listing.seller.initials}</span>
         <div className="min-w-0 flex-1">
           <div className="flex min-w-0 flex-wrap items-center gap-1.5">
@@ -143,7 +144,7 @@ export function ListingSellerCard({ listing, children }: { listing: Listing; chi
             <span className="mt-1 block text-[10px] text-[hsl(var(--muted-foreground))]">{t('unverifiedSeller')}</span>
           )}
         </div>
-      </div>
+      </Link>
       {children}
     </div>
   );

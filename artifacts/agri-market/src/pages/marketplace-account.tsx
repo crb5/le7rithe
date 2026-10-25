@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'wouter';
 import { useAuth, useClerk, useUser } from '@/lib/auth';
 import { AlertTriangle, CheckCircle2, LoaderCircle, Trash2, UserRound } from 'lucide-react';
 import {
@@ -52,7 +53,7 @@ export function Account() {
   const { user } = useUser();
   const { getToken } = useAuth();
   const { signOut } = useClerk();
-  const { t } = useLanguage();
+  const { t, formatDate } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const profileQuery = useGetMyAccountProfile({
@@ -276,6 +277,31 @@ export function Account() {
 
   return <AppShell>
     <PageHeading eyebrow={t('accountProfile')} title={t('account')} description={t('accountDescription')} />
+    <section className="mb-7 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 shadow-[0_8px_24px_hsl(155_20%_18%/.04)] sm:p-6" data-testid="account-profile-summary">
+      <div className="flex flex-wrap items-center gap-4">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[hsl(var(--accent))] text-xl font-bold text-[hsl(var(--primary))]">{displayName.charAt(0)}</div>
+        <div className="min-w-0 flex-1">
+          <h2 className="flex flex-wrap items-center gap-2 text-lg font-bold text-[hsl(var(--primary))]">
+            {displayName}
+            {profileQuery.data?.verified && <VerifiedBadge display="label" testId="badge-verified-account-summary" />}
+          </h2>
+          {profileQuery.data?.createdAt && (
+            <p className="mt-1 text-xs text-[hsl(var(--muted-foreground))]">
+              {t('memberSince')} {formatDate(profileQuery.data.createdAt, { dateStyle: 'medium' })}
+            </p>
+          )}
+          <p className="mt-1 text-xs text-[hsl(var(--muted-foreground))]" dir="ltr">{currentPhone || t('phoneNotLinked')}</p>
+          <p className="mt-1 text-xs text-[hsl(var(--muted-foreground))]">{email}</p>
+        </div>
+        <Link
+          href="/dashboard"
+          className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-[hsl(var(--border))] px-4 py-2.5 text-xs font-bold text-[hsl(var(--primary))] hover:bg-[hsl(var(--secondary))]"
+          data-testid="link-view-my-listings"
+        >
+          {t('viewMyListings')}
+        </Link>
+      </div>
+    </section>
     <div className="grid min-w-0 gap-7 lg:grid-cols-[320px_minmax(0,1fr)]">
       <section className="rounded-2xl border border-[hsl(var(--primary)/.2)] bg-[hsl(var(--primary))] p-6 text-[hsl(var(--primary-foreground))] shadow-[0_14px_30px_hsl(155_20%_18%/.12)]">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[hsl(var(--accent))] text-xl font-bold text-[hsl(var(--primary))]">{displayName.charAt(0)}</div>

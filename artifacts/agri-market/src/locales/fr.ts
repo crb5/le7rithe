@@ -118,6 +118,7 @@ const fr: TranslationDictionary = {
   sendInquiry: 'Envoyer une demande', messagePlaceholder: 'Écrivez votre message ici…', sendMessage: 'Envoyer le message',
   safeCommunication: 'Communiquez en toute sécurité. Ne versez aucune somme avant d’avoir inspecté l’équipement ou le terrain et confirmé l’identité du vendeur.',
   listingUnavailable: 'Cette annonce n’est pas disponible ou a peut-être été supprimée.', listingCount: '{count} annonce', subcategoryCount: '{count} sous-catégorie',
+  sellerProfileEyebrow: 'Profil du vendeur', memberSince: 'Membre depuis', sellerListingCount: '{count} annonce active', sellerProfileUnavailable: 'Impossible de charger le profil du vendeur', viewMyListings: 'Voir mes annonces', phoneNotLinked: 'Aucun numéro associé',
   footerRights: 'Tous droits réservés.', serverConnectionError: 'Une erreur est survenue lors de la connexion au serveur',
   marketCatalog: 'Catalogue du marché', chooseCategory: 'Choisissez le domaine le plus proche de vos besoins, puis accédez directement aux annonces ou à la sous-catégorie concernée.',
   noCategories: 'Aucune catégorie pour le moment', noCategoriesDescription: 'Les catégories du marché apparaîtront ici après leur ajout depuis le panneau d’administration.',
