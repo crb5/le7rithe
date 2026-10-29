@@ -141,7 +141,9 @@ export function flowNonFieldError(challenge: FlowChallenge | null | undefined): 
 }
 
 export function isFlowSuccess(challenge: FlowChallenge | null | undefined): boolean {
-  return challenge?.type === 'redirect';
+  // Confirmed live: a completed flow responds with component "xak-flow-redirect"
+  // (not the `type: "redirect"` shape the docs lead with) — checking for both.
+  return challenge?.type === 'redirect' || challenge?.component === 'xak-flow-redirect';
 }
 
 export function isFlowDenied(challenge: FlowChallenge | null | undefined): boolean {

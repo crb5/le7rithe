@@ -120,6 +120,21 @@ export default defineConfig(async () => {
         target: authentikProxyTarget,
         changeOrigin: true,
         rewrite: (urlPath) => urlPath.replace(/^\/authentik-api/, ''),
+        // Authentik sometimes replies to a stage POST with a 302 to its own
+        // root-relative path (e.g. "/api/v3/flows/executor/..."), with no
+        // idea it's reached through this stripped /authentik-api prefix.
+        // Re-add it so the browser's follow-up request comes back through
+        // this proxy instead of falling through to the app's own /api.
+        // Mirrors the Caddy header_down rule used in production (see
+        // Caddyfile).
+        configure: (proxy) => {
+          proxy.on('proxyRes', (proxyRes) => {
+            const location = proxyRes.headers.location;
+            if (typeof location === 'string' && location.startsWith('/') && !location.startsWith('/authentik-api')) {
+              proxyRes.headers.location = `/authentik-api${location}`;
+            }
+          });
+        },
       },
     },
   },
