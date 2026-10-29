@@ -24,7 +24,16 @@ if (branch === 'HEAD') {
   fail('in detached HEAD — check out the branch you want to deploy first.');
 }
 
-const tag = `docker-v${new Date().toISOString().replace(/[-:]/g, '').replace(/\..+/, '')}`;
+run('git fetch --tags -q');
+const existingTags = run('git tag -l "docker-v*"').split('\n').filter(Boolean);
+const versions = existingTags
+  .map((t) => t.match(/^docker-v(\d+)\.(\d+)\.(\d+)$/))
+  .filter(Boolean)
+  .map((m) => [Number(m[1]), Number(m[2]), Number(m[3])]);
+const [major, minor, patch] = versions.length
+  ? versions.sort((a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2]).at(-1)
+  : [0, 1, 0];
+const tag = `docker-v${major}.${minor}.${patch + 1}`;
 
 console.log(`deploy: pushing ${branch}...`);
 run(`git push origin ${branch}`);
