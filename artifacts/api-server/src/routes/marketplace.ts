@@ -102,7 +102,7 @@ import {
   getListingImageAccessPolicy,
   listingImageRequiresConsent,
 } from "../lib/listing-image-access";
-import { normalizeListingPhones } from "../lib/mauritania-phone";
+import { normalizeListingPhones, normalizeMauritaniaPhone } from "../lib/mauritania-phone";
 import { notifyNewBuyerMessage } from "../lib/whatsapp";
 import {
   hasCurrentLegalConsentForClerkUser,
@@ -2541,13 +2541,25 @@ router.patch("/account/me", async (req, res): Promise<void> => {
     return;
   }
 
+  let phone: string | null | undefined;
+  if (parsed.data.phone !== undefined) {
+    phone = normalizeMauritaniaPhone(parsed.data.phone);
+    if (!phone) {
+      res.status(400).json({ error: "Phone must be a valid Mauritania number." });
+      return;
+    }
+  }
+
   const initials = name
     .split(/\s+/)
     .slice(0, 2)
     .map((part) => part[0] || "")
     .join("") || "م";
   const [updatedProfile] = await db.update(usersTable)
-    .set({ name, initials })
+    // A phone set here is unverified (phoneVerifiedAt untouched) until a
+    // future OTP-verification step confirms it; accountProfilePayload hides
+    // it from API responses until then.
+    .set({ name, initials, ...(phone !== undefined ? { phone } : {}) })
     .where(eq(usersTable.id, profile.id))
     .returning();
 

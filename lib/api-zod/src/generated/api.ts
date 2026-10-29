@@ -1389,10 +1389,13 @@ export const GetMyAccountProfileResponse = zod.object({
  */
 export const updateMyAccountProfileBodyNameMax = 120;
 
+export const updateMyAccountProfileBodyPhoneMax = 40;
+
 
 
 export const UpdateMyAccountProfileBody = zod.object({
-  "name": zod.string().min(1).max(updateMyAccountProfileBodyNameMax)
+  "name": zod.string().min(1).max(updateMyAccountProfileBodyNameMax),
+  "phone": zod.string().min(1).max(updateMyAccountProfileBodyPhoneMax).optional().describe('Normalized server-side; stored unverified (phoneVerified stays false) until a future OTP-verification step confirms it.')
 })
 
 export const updateMyAccountProfileResponseNameMax = 120;

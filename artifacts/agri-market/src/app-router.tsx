@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { setAuthTokenGetter } from '@workspace/api-client-react';
+import { setAuthTokenGetter, updateMyAccountProfile } from '@workspace/api-client-react';
+import { takePendingSignupProfile } from '@/lib/pending-signup-profile';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Spinner } from '@/components/ui/spinner';
@@ -206,6 +207,27 @@ function QueryCacheIdentityReset() {
   return null;
 }
 
+// The sign-up form collects phone (and keeps the entered name) locally rather
+// than sending them to Authentik; this applies that stash exactly once, the
+// first time a real authenticated session shows up after sign-up completes.
+function PendingSignupProfileSync() {
+  const { isLoaded, userId } = useAuth();
+  const applied = useRef(false);
+
+  useEffect(() => {
+    if (!isLoaded || !userId || applied.current) return;
+    const pending = takePendingSignupProfile();
+    if (!pending) return;
+    applied.current = true;
+    void updateMyAccountProfile(pending).catch(() => {
+      // Best-effort: the account still exists and works without this: the
+      // user can add their phone again from account settings.
+    });
+  }, [isLoaded, userId]);
+
+  return null;
+}
+
 function ApiAuthBridge({ children }: { children: ReactNode }) {
   const { getToken, isLoaded } = useAuth();
   const tokenGetter = useRef(getToken);
@@ -242,6 +264,7 @@ function ProviderWithRoutes() {
     <QueryClientProvider client={queryClient}>
       <ApiAuthBridge>
         <QueryCacheIdentityReset />
+        <PendingSignupProfileSync />
         <TooltipProvider>
           <Suspense fallback={<div className="flex min-h-[40vh] items-center justify-center"><Spinner /></div>}>
             <Router />

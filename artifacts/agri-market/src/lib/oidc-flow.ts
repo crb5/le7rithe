@@ -17,6 +17,8 @@
 
 export const LOGIN_FLOW_SLUG =
   import.meta.env.VITE_OIDC_LOGIN_FLOW_SLUG || 'default-authentication-flow';
+export const ENROLLMENT_FLOW_SLUG =
+  import.meta.env.VITE_OIDC_ENROLLMENT_FLOW_SLUG || 'default-enrollment-flow';
 
 const authentikOrigin = (() => {
   try {
@@ -27,6 +29,16 @@ const authentikOrigin = (() => {
 })();
 
 type FlowFieldError = { string: string; code: string };
+
+export type PromptField = {
+  field_key: string;
+  label: string;
+  type: string;
+  /** Hint text for the empty input — not a default value (see initial_value). */
+  placeholder?: string;
+  initial_value?: string;
+  required?: boolean;
+};
 
 export type FlowSource = {
   name: string;
@@ -41,6 +53,7 @@ export type FlowChallenge = {
   response_errors?: Record<string, FlowFieldError[]>;
   user_fields?: string[];
   password_fields?: boolean;
+  fields?: PromptField[];
   sources?: FlowSource[];
   [key: string]: unknown;
 };

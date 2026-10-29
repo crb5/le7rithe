@@ -1782,6 +1782,13 @@ components:
       required: [name]
       properties:
         name: { type: string, minLength: 1, maxLength: 120 }
+        phone:
+          type: string
+          minLength: 1
+          maxLength: 40
+          description: >-
+            Normalized server-side; stored unverified (phoneVerified stays
+            false) until a future OTP-verification step confirms it.
     MyAccountEmail:
       type: object
       required: [email]

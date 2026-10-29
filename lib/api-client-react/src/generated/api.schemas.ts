@@ -561,6 +561,12 @@ export interface MyAccountProfileUpdate {
      * @maxLength 120
      */
   name: string;
+  /**
+     * Normalized server-side; stored unverified (phoneVerified stays false) until a future OTP-verification step confirms it.
+     * @minLength 1
+     * @maxLength 40
+     */
+  phone?: string;
 }
 
 export interface MyAccountEmail {

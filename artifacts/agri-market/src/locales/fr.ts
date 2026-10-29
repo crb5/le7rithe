@@ -266,5 +266,6 @@ const fr: TranslationDictionary = {
   authBackToIdentifier: 'Utiliser un autre compte',
   authGenericError: "Une erreur s'est produite. Veuillez réessayer.", authInvalidCredentials: "Nom d'utilisateur ou mot de passe incorrect.",
   authContinueSecure: 'Continuer dans une fenêtre sécurisée', authTryAgain: 'Réessayer',
+  authPhoneLabel: 'Numéro de téléphone', authInvalidPhone: 'Entrez un numéro de téléphone mauritanien valide.',
 };
 export default withCurrentSiteName(fr);

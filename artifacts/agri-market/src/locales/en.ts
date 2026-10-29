@@ -412,6 +412,7 @@ const en = {
   authBackToIdentifier: 'Use a different account',
   authGenericError: 'Something went wrong. Please try again.', authInvalidCredentials: 'Incorrect username or password.',
   authContinueSecure: 'Continue in a secure window', authTryAgain: 'Try again',
+  authPhoneLabel: 'Phone number', authInvalidPhone: 'Enter a valid Mauritania phone number.',
 } as const;
 
 export type TranslationDictionary = { [K in keyof typeof en]: string };
