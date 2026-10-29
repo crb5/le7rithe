@@ -1,4 +1,4 @@
-import { withCurrentSiteName } from '@/lib/brand';
+import { withCurrentSiteName, SITE_NAME } from '@/lib/brand';
 
 const en = {
   oneListingAvailable: '1 listing available',
@@ -403,6 +403,15 @@ const en = {
   auditActionPaymentMethodCreated: 'Payment method created', auditActionPaymentMethodUpdated: 'Payment method updated', auditActionPaymentMethodDeleted: 'Payment method deleted',
   auditActionReportOpened: 'Report opened', auditActionReportResolved: 'Report resolved',
   auditActionPaymentProofViewed: 'Payment proof viewed', auditActionBannerCreated: 'Banner created', auditActionBannerUpdated: 'Banner updated', auditActionBannerDeleted: 'Banner deleted', auditActionSupportSettingsUpdated: 'Support settings updated',
+  authSignInTitle: 'Sign in', authSignInSubtitle: 'Welcome back. Sign in to continue.',
+  authSignUpTitle: 'Create an account', authSignUpSubtitle: `Join ${SITE_NAME} to buy, sell, and rent.`,
+  authIdentifierLabel: 'Username or email', authPasswordLabel: 'Password',
+  authContinue: 'Continue', authContinueWithGoogle: 'Continue with Google', authOrDivider: 'or',
+  authCreateAccount: 'Create an account', authNoAccountYet: "Don't have an account?",
+  authAlreadyHaveAccount: 'Already have an account?', authSignInInstead: 'Sign in',
+  authBackToIdentifier: 'Use a different account',
+  authGenericError: 'Something went wrong. Please try again.', authInvalidCredentials: 'Incorrect username or password.',
+  authContinueSecure: 'Continue in a secure window', authTryAgain: 'Try again',
 } as const;
 
 export type TranslationDictionary = { [K in keyof typeof en]: string };

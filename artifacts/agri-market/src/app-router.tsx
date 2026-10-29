@@ -1,14 +1,13 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { setAuthTokenGetter } from '@workspace/api-client-react';
-import { AuthProvider, useAuth, useSignInRedirect } from '@/lib/auth';
+import { AuthProvider, useAuth } from '@/lib/auth';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Spinner } from '@/components/ui/spinner';
 import { useImageLoadingHints } from '@/components/viewport-image';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { LanguageProvider } from '@/lib/language';
-import { signupReturnPath } from '@/lib/signup-contact-flow';
 import { LegalConsentGate } from '@/components/legal-consent-gate';
 import { PwaInstallPrompt } from '@/components/pwa-install-prompt';
 import { OfflineIndicator } from '@/components/offline-indicator';
@@ -22,7 +21,7 @@ import {
 import { ENABLE_PAID_LISTINGS } from '@/lib/features';
 import NotFound from '@/pages/not-found';
 import { Home } from '@/pages/marketplace-home';
-import { Route, Switch, useLocation, useSearch, Router as WouterRouter } from 'wouter';
+import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 
 const Account = lazy(() => import('@/pages/marketplace-account').then(m => ({ default: m.Account })));
 const AddListing = lazy(() => import('@/pages/add-listing').then(m => ({ default: m.AddListing })));
@@ -33,6 +32,8 @@ const Support = lazy(() => import('@/pages/marketplace-support').then(m => ({ de
 const Saved = lazy(() => import('@/pages/marketplace-saved').then(m => ({ default: m.Saved })));
 const AdminGuard = lazy(() => import('@/components/admin-ui').then(m => ({ default: m.AdminGuard })));
 const AdminLogin = lazy(() => import('@/pages/admin/login').then(m => ({ default: m.AdminLogin })));
+const SignIn = lazy(() => import('@/pages/sign-in').then(m => ({ default: m.SignIn })));
+const SignUp = lazy(() => import('@/pages/sign-up').then(m => ({ default: m.SignUp })));
 const ListingDetail = lazy(() => import('@/pages/listing-detail').then((module) => ({ default: module.ListingDetail })));
 const SellerProfile = lazy(() => import('@/pages/seller-profile').then((module) => ({ default: module.SellerProfile })));
 const Notifications = lazy(() => import('@/pages/notifications').then((module) => ({ default: module.Notifications })));
@@ -93,9 +94,7 @@ const loadingScreen = (
 
 function Router() {
   const { isLoaded, userId } = useAuth();
-  const signInRedirect = useSignInRedirect();
   const [location, setLocation] = useLocation();
-  const search = useSearch();
 
   const isAuthCallbackRoute = location.startsWith('/auth/callback');
   const isSignInRoute = location === '/sign-in' || location.startsWith('/sign-in/');
@@ -103,40 +102,28 @@ function Router() {
   const isAuthRoute = isSignInRoute || isSignUpRoute;
   const isAdminPath = location === '/admin' || location.startsWith('/admin/');
   const isAdminLogin = location === '/admin/login';
-  const redirectPath = signupReturnPath(search, 'redirect_url');
 
-  // Sign-in / sign-up now redirect to the identity provider.
+  // Sign-in / sign-up render our own custom pages (see pages/sign-in.tsx,
+  // pages/sign-up.tsx), which drive Authentik's flows headlessly — Authentik's
+  // hosted UI is never shown. A protected route without a session routes here.
   useEffect(() => {
-    if (!isLoaded) return;
-    if (userId) {
-      if (isAuthRoute) setLocation(redirectPath, { replace: true });
-      return;
+    if (!isLoaded || isAuthRoute || userId || isAdminPath) return;
+    if (isKnownMarketplaceRoute(location) && !isPublicMarketplaceRoute(location)) {
+      setLocation(`/sign-in?redirect_url=${encodeURIComponent(location)}`, { replace: true });
     }
-    if (isAuthRoute) {
-      void signInRedirect(redirectPath);
-      return;
-    }
-    // A protected (known, non-public, non-admin) route requires sign-in.
-    if (
-      isKnownMarketplaceRoute(location) &&
-      !isPublicMarketplaceRoute(location) &&
-      !isAdminPath
-    ) {
-      void signInRedirect(location);
-    }
-  }, [isAuthRoute, isAdminPath, isLoaded, location, redirectPath, setLocation, signInRedirect, userId]);
+  }, [isAdminPath, isAuthRoute, isLoaded, location, setLocation, userId]);
 
   if (isAuthCallbackRoute) return loadingScreen;
+  if (isSignInRoute) return <SignIn />;
+  if (isSignUpRoute) return <SignUp />;
 
   const isProtectedRoute = isIdentityProtectedPath(location);
   if (shouldShowAuthLoadingScreen(isProtectedRoute, isLoaded, userId, isLoaded)) return loadingScreen;
 
   // Admin area (except its login) is hidden from anonymous visitors.
   if (!userId && isAdminPath && !isAdminLogin) return <NotFound />;
-  // Auth routes are mid-redirect; render nothing.
-  if (isAuthRoute) return loadingScreen;
   if (!isAdminPath && !isKnownMarketplaceRoute(location)) return <NotFound />;
-  // A protected route without a session is redirecting to the IdP.
+  // A protected route without a session is being routed to /sign-in.
   if (!userId && isKnownMarketplaceRoute(location) && !isPublicMarketplaceRoute(location)) {
     return loadingScreen;
   }

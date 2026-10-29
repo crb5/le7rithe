@@ -4,6 +4,12 @@
 # containers, setting X-Forwarded-Proto so the app issues secure cookies.
 
 le7rithe.com {
+	# Same-origin path for the custom login/register pages' flow-executor XHR
+	# calls to Authentik (see agri-market/src/lib/oidc-flow.ts), so they need
+	# no CORS and their session cookie is first-party to this domain.
+	handle_path /authentik-api/* {
+		reverse_proxy authentik-server:9000
+	}
 	reverse_proxy app:3000
 }
 

@@ -1,5 +1,5 @@
 import type { TranslationDictionary } from './en';
-import { withCurrentSiteName } from '@/lib/brand';
+import { withCurrentSiteName, SITE_NAME } from '@/lib/brand';
 
 const ar: TranslationDictionary = {
   oneListingAvailable: 'إعلان واحد متاح',
@@ -257,5 +257,14 @@ const ar: TranslationDictionary = {
   auditActionPaymentMethodCreated: 'إنشاء وسيلة دفع', auditActionPaymentMethodUpdated: 'تحديث وسيلة الدفع', auditActionPaymentMethodDeleted: 'حذف وسيلة الدفع',
   auditActionReportOpened: 'فتح بلاغ', auditActionReportResolved: 'حل البلاغ',
   auditActionPaymentProofViewed: 'عرض إثبات الدفع', auditActionBannerCreated: 'إنشاء لافتة', auditActionBannerUpdated: 'تحديث اللافتة', auditActionBannerDeleted: 'حذف اللافتة', auditActionSupportSettingsUpdated: 'تحديث إعدادات الدعم',
+  authSignInTitle: 'تسجيل الدخول', authSignInSubtitle: 'مرحبًا بعودتك. سجّل الدخول للمتابعة.',
+  authSignUpTitle: 'إنشاء حساب', authSignUpSubtitle: `انضم إلى ${SITE_NAME} للبيع والشراء والتأجير.`,
+  authIdentifierLabel: 'اسم المستخدم أو البريد الإلكتروني', authPasswordLabel: 'كلمة المرور',
+  authContinue: 'استمرار', authContinueWithGoogle: 'الاستمرار باستخدام Google', authOrDivider: 'أو',
+  authCreateAccount: 'إنشاء حساب', authNoAccountYet: 'ليس لديك حساب؟',
+  authAlreadyHaveAccount: 'لديك حساب مسبقًا؟', authSignInInstead: 'تسجيل الدخول',
+  authBackToIdentifier: 'استخدام حساب آخر',
+  authGenericError: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.', authInvalidCredentials: 'اسم المستخدم أو كلمة المرور غير صحيحة.',
+  authContinueSecure: 'الاستمرار في نافذة آمنة', authTryAgain: 'إعادة المحاولة',
 };
 export default withCurrentSiteName(ar);

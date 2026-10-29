@@ -18,6 +18,13 @@ const basePath = process.env.BASE_PATH || '/';
 // Where the API server is reachable during local development.
 const apiProxyTarget = process.env.API_PROXY_TARGET || 'http://localhost:5000';
 
+// Where Authentik is reachable during local development. Mirrors the
+// `/authentik-api` path Caddy proxies in production (see Caddyfile), so the
+// custom login/registration forms' flow-executor calls stay same-origin in
+// both environments — no CORS, and the session cookie Authentik sets is
+// usable by the later OIDC authorize redirect too.
+const authentikProxyTarget = process.env.AUTHENTIK_PROXY_TARGET || 'http://localhost:9000';
+
 export default defineConfig(async () => {
   return {
   base: basePath,
@@ -108,6 +115,11 @@ export default defineConfig(async () => {
       '/api': {
         target: apiProxyTarget,
         changeOrigin: true,
+      },
+      '/authentik-api': {
+        target: authentikProxyTarget,
+        changeOrigin: true,
+        rewrite: (urlPath) => urlPath.replace(/^\/authentik-api/, ''),
       },
     },
   },

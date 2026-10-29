@@ -1,5 +1,5 @@
 import type { TranslationDictionary } from './en';
-import { withCurrentSiteName } from '@/lib/brand';
+import { withCurrentSiteName, SITE_NAME } from '@/lib/brand';
 
 const fr: TranslationDictionary = {
   oneListingAvailable: '1 annonce disponible',
@@ -257,5 +257,14 @@ const fr: TranslationDictionary = {
   auditActionPaymentMethodCreated: 'Moyen de paiement créé', auditActionPaymentMethodUpdated: 'Moyen de paiement mis à jour', auditActionPaymentMethodDeleted: 'Moyen de paiement supprimé',
   auditActionReportOpened: 'Signalement ouvert', auditActionReportResolved: 'Signalement résolu',
   auditActionPaymentProofViewed: 'Preuve de paiement consultée', auditActionBannerCreated: 'Bannière créée', auditActionBannerUpdated: 'Bannière mise à jour', auditActionBannerDeleted: 'Bannière supprimée', auditActionSupportSettingsUpdated: 'Paramètres du support mis à jour',
+  authSignInTitle: 'Connexion', authSignInSubtitle: 'Bon retour. Connectez-vous pour continuer.',
+  authSignUpTitle: 'Créer un compte', authSignUpSubtitle: `Rejoignez ${SITE_NAME} pour acheter, vendre et louer.`,
+  authIdentifierLabel: "Nom d'utilisateur ou e-mail", authPasswordLabel: 'Mot de passe',
+  authContinue: 'Continuer', authContinueWithGoogle: 'Continuer avec Google', authOrDivider: 'ou',
+  authCreateAccount: 'Créer un compte', authNoAccountYet: "Vous n'avez pas de compte ?",
+  authAlreadyHaveAccount: 'Vous avez déjà un compte ?', authSignInInstead: 'Se connecter',
+  authBackToIdentifier: 'Utiliser un autre compte',
+  authGenericError: "Une erreur s'est produite. Veuillez réessayer.", authInvalidCredentials: "Nom d'utilisateur ou mot de passe incorrect.",
+  authContinueSecure: 'Continuer dans une fenêtre sécurisée', authTryAgain: 'Réessayer',
 };
 export default withCurrentSiteName(fr);
