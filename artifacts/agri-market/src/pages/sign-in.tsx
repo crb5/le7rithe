@@ -158,6 +158,7 @@ export function SignIn() {
             <Label htmlFor="sign-in-uid">{t('authIdentifierLabel')}</Label>
             <Input
               id="sign-in-uid"
+              name="username"
               value={uid}
               onChange={(event) => setUid(event.target.value)}
               autoComplete="username"
@@ -172,6 +173,7 @@ export function SignIn() {
               <Label htmlFor="sign-in-password-combined">{t('authPasswordLabel')}</Label>
               <Input
                 id="sign-in-password-combined"
+                name="password"
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
@@ -195,6 +197,7 @@ export function SignIn() {
             <Label htmlFor="sign-in-password">{t('authPasswordLabel')}</Label>
             <Input
               id="sign-in-password"
+              name="password"
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}

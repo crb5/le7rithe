@@ -8,7 +8,15 @@ le7rithe.com {
 	# calls to Authentik (see agri-market/src/lib/oidc-flow.ts), so they need
 	# no CORS and their session cookie is first-party to this domain.
 	handle_path /authentik-api/* {
-		reverse_proxy authentik-server:9000
+		reverse_proxy authentik-server:9000 {
+			# Authentik's flow executor sometimes replies to a stage POST with a
+			# 302 to its own root-relative path (e.g. "/api/v3/flows/executor/..."),
+			# with no idea it's reached through this stripped /authentik-api
+			# prefix. Left alone, the browser follows that redirect straight past
+			# this proxy to the app itself, which 404s. Re-add the prefix so the
+			# follow-up request comes back through here.
+			header_down Location "^/(.*)" "/authentik-api/${1}"
+		}
 	}
 	reverse_proxy app:3000
 }
