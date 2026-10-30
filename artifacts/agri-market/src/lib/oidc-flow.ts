@@ -78,13 +78,32 @@ export function socialSourceUrl(challenge: FlowChallenge | null | undefined, ret
 
 export class FlowExecutorError extends Error {}
 
+// Authentik's DRF session authentication enforces Django's CSRF check on any
+// POST once the browser already carries an *authenticated* Authentik session
+// cookie (e.g. an admin who also has auth.<domain> open) — a brand-new
+// anonymous visitor never has this cookie yet, so this only bites an already
+// logged-in Authentik session, not a fresh sign-up. Without echoing it back,
+// Authentik silently rejects the submission with "CSRF Failed: CSRF token
+// missing." The cookie name isn't documented, so this looks for authentik's
+// own ("authentik_csrf") first, then any cookie whose name contains "csrf"
+// (Django's un-rebranded default is "csrftoken") as a fallback.
+function readCsrfToken(): string | null {
+  const cookies = document.cookie.split(';').map((entry) => entry.trim());
+  const byName = (name: string) => cookies.find((entry) => entry.startsWith(`${name}=`));
+  const match = byName('authentik_csrf') ?? cookies.find((entry) => /^[^=]*csrf[^=]*=/i.test(entry));
+  return match ? decodeURIComponent(match.slice(match.indexOf('=') + 1)) : null;
+}
+
 async function callFlow(slug: string, body?: Record<string, unknown>): Promise<FlowChallenge> {
   let response: Response;
   try {
+    const csrfToken = body ? readCsrfToken() : null;
     response = await fetch(`/authentik-api/api/v3/flows/executor/${slug}/`, {
       method: body ? 'POST' : 'GET',
       credentials: 'include',
-      headers: body ? { 'Content-Type': 'application/json' } : undefined,
+      headers: body
+        ? { 'Content-Type': 'application/json', ...(csrfToken ? { 'X-CSRFToken': csrfToken } : {}) }
+        : undefined,
       body: body ? JSON.stringify(body) : undefined,
     });
   } catch (cause) {
