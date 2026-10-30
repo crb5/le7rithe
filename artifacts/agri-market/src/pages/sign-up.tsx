@@ -6,6 +6,7 @@ import { useLanguage } from '@/lib/language';
 import { signupReturnPath } from '@/lib/signup-contact-flow';
 import { normalizeMauritaniaPhone } from '@/lib/mauritania-phone';
 import { savePendingSignupProfile } from '@/lib/pending-signup-profile';
+import { savePendingLegalConsent } from '@/lib/legal-consent-flow';
 import {
   ENROLLMENT_FLOW_SLUG,
   startFlow,
@@ -38,7 +39,7 @@ function inputTypeFor(fieldType: string): string {
 }
 
 export function SignUp() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { isLoaded, user } = useUser();
   const signInRedirect = useSignInRedirect();
   const [, setLocation] = useLocation();
@@ -50,6 +51,8 @@ export function SignUp() {
   const [values, setValues] = useState<Record<string, string>>({});
   const [phone, setPhone] = useState('');
   const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [agreedToPolicies, setAgreedToPolicies] = useState(false);
+  const [agreementError, setAgreementError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -59,6 +62,7 @@ export function SignUp() {
       setStage('completing');
       const normalizedPhone = normalizeMauritaniaPhone(phone);
       if (normalizedPhone) savePendingSignupProfile({ name: values.name ?? '', phone: normalizedPhone });
+      if (agreedToPolicies) savePendingLegalConsent({ locale: language, redirectPath: redirectTo });
       void signInRedirect(redirectTo);
       return;
     }
@@ -114,6 +118,11 @@ export function SignUp() {
         return;
       }
       setPhoneError(null);
+      if (!agreedToPolicies) {
+        setAgreementError(t('authAgreeRequired'));
+        return;
+      }
+      setAgreementError(null);
     }
     setSubmitting(true);
     setError(null);
@@ -209,6 +218,29 @@ export function SignUp() {
               className="mt-2"
             />
             <AuthFieldError message={phoneError} />
+          </div>
+        )}
+        {showPhone && (
+          <div>
+            <label className="flex items-start gap-2.5 text-sm text-foreground">
+              <input
+                type="checkbox"
+                checked={agreedToPolicies}
+                onChange={(event) => setAgreedToPolicies(event.target.checked)}
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-primary"
+              />
+              <span>
+                {t('authAgreePrefix')}{' '}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">
+                  {t('termsOfService')}
+                </a>
+                {' '}{t('authAgreeAnd')}{' '}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">
+                  {t('privacyPolicy')}
+                </a>
+              </span>
+            </label>
+            <AuthFieldError message={agreementError} />
           </div>
         )}
         <AuthFieldError message={error} />

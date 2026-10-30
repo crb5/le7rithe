@@ -267,5 +267,7 @@ const ar: TranslationDictionary = {
   authGenericError: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.', authInvalidCredentials: 'اسم المستخدم أو كلمة المرور غير صحيحة.',
   authContinueSecure: 'الاستمرار في نافذة آمنة', authTryAgain: 'إعادة المحاولة',
   authPhoneLabel: 'رقم الهاتف', authInvalidPhone: 'أدخل رقم هاتف موريتاني صحيح.',
+  authAgreePrefix: 'أوافق على', authAgreeAnd: 'و',
+  authAgreeRequired: 'يجب الموافقة على شروط الخدمة وسياسة الخصوصية للمتابعة.',
 };
 export default withCurrentSiteName(ar);
