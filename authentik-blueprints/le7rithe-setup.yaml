@@ -144,7 +144,11 @@ entries:
         - matching_mode: strict
           url: https://le7rithe.com/
         - matching_mode: strict
+          url: https://le7rithe.com/sign-in
+        - matching_mode: strict
           url: http://localhost:5173/auth/callback
+        - matching_mode: strict
+          url: http://localhost:5173/sign-in
       sub_mode: hashed_user_id
       include_claims_in_id_token: true
       access_token_validity: hours=8
