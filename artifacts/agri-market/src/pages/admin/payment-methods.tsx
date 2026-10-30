@@ -24,8 +24,8 @@ function MethodForm({ methodData, onSave, onCancel }: { methodData?: any, onSave
     try {
       await onSave({ ...formData, currency: 'MRU' });
       onCancel();
-    } catch (err: any) {
-      toast({ title: t('error'), description: err instanceof Error ? err.message : t('error'), variant: 'destructive' });
+    } catch {
+      toast({ title: t('error'), description: t('tryAgain'), variant: 'destructive' });
     } finally {
       setLoading(false);
     }

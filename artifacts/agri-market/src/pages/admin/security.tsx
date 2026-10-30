@@ -29,9 +29,19 @@ export function AdminSecurity() {
           });
         },
         onError: (error) => {
+          const code = (error as Error & { code?: string })?.code;
+          const description = code === 'ADMIN_PASSWORD_CHANGE_MISMATCH'
+            ? t('adminPasswordChangeMismatch')
+            : code === 'ADMIN_PASSWORD_CHANGE_WEAK'
+              ? t('adminPasswordRequirements', { min: minimumLength, max: maximumLength })
+              : code === 'ADMIN_PASSWORD_CHANGE_INVALID_CURRENT'
+                ? t('adminPasswordInvalid')
+                : code === 'ADMIN_PASSWORD_CHANGE_RATE_LIMITED'
+                  ? t('adminPasswordChangeRateLimited')
+                  : t('tryAgain');
           toast({
             title: t('adminPasswordChangeError'),
-            description: error instanceof Error ? error.message : t('tryAgain'),
+            description,
             variant: 'destructive',
           });
         },

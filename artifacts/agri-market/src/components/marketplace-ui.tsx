@@ -345,6 +345,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener('keydown', closeOnEscape);
   }, [open]);
 
+  // The drawer is a mobile/tablet-only affordance; the desktop breakpoint shows an
+  // inline horizontal navbar instead (see Header.css `@media (min-width: 1024px)`).
+  // If the viewport crosses into desktop width while the drawer happens to be open
+  // (e.g. rotating a tablet or resizing a window), close it so it doesn't linger
+  // behind the now-visible desktop nav.
+  useEffect(() => {
+    const desktopQuery = window.matchMedia('(min-width: 1024px)');
+    const syncToViewport = (matches: boolean) => {
+      if (matches) setOpen(false);
+    };
+    syncToViewport(desktopQuery.matches);
+    const handleChange = (event: MediaQueryListEvent) => syncToViewport(event.matches);
+    desktopQuery.addEventListener('change', handleChange);
+    return () => desktopQuery.removeEventListener('change', handleChange);
+  }, []);
+
   const handleSignOut = async () => {
     if (isSigningOut) return;
     setShowSignOutConfirm(false);
@@ -355,6 +371,60 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       setIsSigningOut(false);
     }
   };
+
+  // Desktop-only horizontal nav links, rendered inline in the Header (hidden on
+  // mobile/tablet via CSS, where the hamburger + drawer above remain the entry point).
+  const desktopNavContent = (
+    <>
+      {navItems.filter((item) => ENABLE_PAID_LISTINGS || item.href !== '/payments').map((item) => {
+        const active = item.href === '/' ? location === '/' : location.startsWith(item.href);
+        const Icon = item.icon;
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            aria-current={active ? 'page' : undefined}
+            className="sh-nav-link"
+            data-testid={`link-nav-header-${item.label}`}
+          >
+            <Icon size={15} strokeWidth={active ? 2.4 : 1.8} />
+            <span>{t(item.label)}</span>
+            {item.href === '/notifications' && Boolean(notifications?.unreadCount) && (
+              <span className="sh-nav-link-badge">{formatNumber(notifications?.unreadCount ?? 0)}</span>
+            )}
+          </Link>
+        );
+      })}
+    </>
+  );
+
+  // Desktop-only account / sign-in area, mirroring the drawer's account section.
+  const desktopAccountContent = (
+    <>
+      <Show when="signed-in">
+        <Link href="/account" className="sh-account-link" data-testid="link-account-header">
+          <span className="sh-account-avatar">{initial}</span>
+          <span className="sh-account-name">{displayName}</span>
+        </Link>
+        <button
+          type="button"
+          onClick={() => setShowSignOutConfirm(true)}
+          disabled={isSigningOut}
+          className="sh-account-signout"
+          aria-label={t('signOut')}
+          data-testid="button-header-sign-out"
+        >
+          {isSigningOut ? <Loader2 size={16} className="animate-spin" /> : <LogOut size={16} />}
+        </button>
+      </Show>
+      <Show when="signed-out">
+        <Link href="/sign-in" className="sh-account-signin" data-testid="link-header-sign-in">
+          {t('signIn')}
+        </Link>
+      </Show>
+    </>
+  );
+
   return (
     <div dir={meta[language].dir} className="grain min-h-[100dvh] w-full min-w-0 overflow-x-hidden bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
       <aside ref={drawerRef} id="marketplace-navigation-drawer" dir={meta[language].dir} className={`marketplace-navigation-drawer ${isArabicLayout ? 'marketplace-navigation-drawer--rtl' : 'marketplace-navigation-drawer--ltr'} fixed bottom-0 z-40 flex w-[280px] max-w-[85vw] flex-col overflow-y-auto bg-[#22362C] px-5 py-6 text-[#F4E9CF] shadow-2xl transition-transform duration-[250ms] motion-reduce:transition-none ${open ? 'translate-x-0' : isArabicLayout ? 'translate-x-full' : '-translate-x-full'}`} aria-label={t('mainNavigation')} aria-hidden={!open} inert={!open}>
@@ -422,6 +492,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             languageMenuOpen={languageMenuOpen}
             onLanguageMenuOpenChange={setLanguageMenuOpen}
             menuLabel={t('openMenu')}
+            navLabel={t('mainNavigation')}
+            desktopNav={desktopNavContent}
+            accountSlot={desktopAccountContent}
           />
         </div>
         <div className="mx-auto mt-2 hidden max-w-[1420px] px-8 xl:block">

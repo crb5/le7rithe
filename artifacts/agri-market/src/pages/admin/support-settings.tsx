@@ -44,7 +44,7 @@ export function AdminSupportSettings() {
       { phone: phone.trim(), whatsappPhone: whatsappPhone.trim() },
       {
         onSuccess: () => toast({ title: t('supportSettingsSaved'), description: t('supportSettingsSavedDescription') }),
-        onError: (error) => toast({ title: t('error'), description: error instanceof Error ? error.message : t('tryAgain'), variant: 'destructive' }),
+        onError: () => toast({ title: t('error'), description: t('tryAgain'), variant: 'destructive' }),
       },
     );
   };

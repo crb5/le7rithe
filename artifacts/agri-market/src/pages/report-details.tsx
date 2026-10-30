@@ -1,44 +1,30 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 import { ArrowLeft, CheckCircle2, Clock3, Flag, Loader2 } from 'lucide-react';
 import { Link, useRoute } from 'wouter';
+import { getGetReportQueryKey, useGetReport, useMarkReportRead } from '@workspace/api-client-react';
 import { AppShell, EmptyState, PageHeading } from '@/components/marketplace-ui';
 import { useLanguage } from '@/lib/language';
-
-type ReportDetailsResponse = {
-  id: number;
-  reason: string;
-  details: string;
-  contactRequested: boolean;
-  status: string;
-  action: string | null;
-  createdAt: string;
-  resolvedAt: string | null;
-  replies: Array<{ id: number; body: string; createdAt: string }>;
-};
 
 export function ReportDetails() {
   const [, params] = useRoute('/reports/:id');
   const { t, formatDate, meta, language } = useLanguage();
   const queryClient = useQueryClient();
-  const query = useQuery<ReportDetailsResponse>({
-    queryKey: ['report-details', params?.id],
-    enabled: Boolean(params?.id),
-    queryFn: async () => {
-      const response = await fetch(`/api/reports/${params?.id}`, { credentials: 'same-origin' });
-      if (!response.ok) throw new Error(t('dataLoadError'));
-      return response.json();
-    },
+  const reportId = params?.id ? Number(params.id) : NaN;
+  const query = useGetReport(reportId, {
+    query: { queryKey: getGetReportQueryKey(reportId), enabled: Number.isFinite(reportId) },
   });
+  const markRead = useMarkReportRead();
 
   const report = query.data;
+  const markedReadFor = useRef<number | null>(null);
   useEffect(() => {
-    if (!report || !params?.id) return;
-    void fetch(`/api/reports/${params.id}/read`, {
-      method: 'PATCH',
-      credentials: 'same-origin',
-    }).then(() => queryClient.invalidateQueries({ queryKey: ['notifications'] }));
-  }, [params?.id, queryClient, report]);
+    if (!report || !Number.isFinite(reportId) || markedReadFor.current === reportId) return;
+    markedReadFor.current = reportId;
+    markRead.mutate({ id: reportId }, {
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
+    });
+  }, [markRead, queryClient, report, reportId]);
   return (
     <AppShell>
       <div dir={meta[language].dir} className="mx-auto max-w-3xl">

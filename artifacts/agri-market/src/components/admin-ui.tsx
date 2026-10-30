@@ -231,8 +231,8 @@ export function AdminActionDialog({
       await onConfirm(reason);
       setOpen(false);
       setReason('');
-    } catch (err: any) {
-       toast({ title: t('error'), description: err.message, variant: 'destructive' });
+    } catch {
+       toast({ title: t('error'), description: t('tryAgain'), variant: 'destructive' });
     } finally {
       setLoading(false);
     }

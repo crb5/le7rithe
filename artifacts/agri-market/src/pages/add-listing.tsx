@@ -12,6 +12,7 @@ import {
 } from '@workspace/api-client-react';
 import { useLocation } from 'wouter';
 import { AppShell, PageHeading } from '@/components/marketplace-ui';
+import { useToast } from '@/hooks/use-toast';
 import { WhatsAppIcon } from '@/components/whatsapp-icon';
 import {
   formFieldsForCategory,
@@ -80,6 +81,7 @@ const landOnlyFieldKeys = new Set<string>(LAND_ONLY_FIELD_KEYS);
 export function AddListing() {
   const [, setLocation] = useLocation();
   const { language, t } = useLanguage();
+  const { toast } = useToast();
   const categoriesQuery = useListCategories({ query: { queryKey: getListCategoriesQueryKey() } });
   const locationsQuery = useListLocations({ query: { queryKey: getListLocationsQueryKey() } });
   const regionsQuery = useListRegions({ query: { queryKey: getListRegionsQueryKey() } });
@@ -226,10 +228,13 @@ export function AddListing() {
       imageUrl: imagePaths[0] || form.imageUrl || undefined,
       images: imagePaths.length ? imagePaths : form.imageUrl ? [form.imageUrl] : [],
     };
-     createListing.mutate({ data }, { onSuccess: (listing) => {
-       if (ENABLE_PAID_LISTINGS) setCreatedListing({ id: listing.id });
-       else setLocation('/dashboard');
-     } });
+     createListing.mutate({ data }, {
+       onSuccess: (listing) => {
+         if (ENABLE_PAID_LISTINGS) setCreatedListing({ id: listing.id });
+         else setLocation('/dashboard');
+       },
+       onError: () => toast({ title: t('listingCreationError'), variant: 'destructive' }),
+     });
   };
 
   if (createdListing) return <AppShell><PaymentConfirmationPanel listingId={createdListing.id} onDone={() => setLocation('/dashboard')} /></AppShell>;

@@ -8,8 +8,8 @@ import {
   LOGIN_FLOW_SLUG,
   startFlow,
   submitFlow,
-  flowFieldError,
-  flowNonFieldError,
+  translateFlowFieldError,
+  translateFlowNonFieldError,
   isFlowSuccess,
   isFlowDenied,
   isFlowUnsupported,
@@ -52,11 +52,11 @@ export function SignIn() {
       return;
     }
     if (isFlowDenied(next)) {
-      setError(flowNonFieldError(next) ?? t('authInvalidCredentials'));
+      setError(translateFlowNonFieldError(t, next) ?? t('authInvalidCredentials'));
       setStage('denied');
       return;
     }
-    setError(flowNonFieldError(next));
+    setError(translateFlowNonFieldError(t, next));
     if (next.component === 'ak-stage-identification' || next.component === 'ak-stage-password') {
       setStage('ready');
       return;
@@ -159,7 +159,7 @@ export function SignIn() {
             required
             className="mt-2"
           />
-          <AuthFieldError message={flowFieldError(challenge, 'uid_field')} />
+          <AuthFieldError message={translateFlowFieldError(t, challenge, 'uid_field')} />
         </div>
         <div>
           <Label htmlFor="sign-in-password">{t('authPasswordLabel')}</Label>
@@ -173,7 +173,7 @@ export function SignIn() {
             required
             className="mt-2"
           />
-          <AuthFieldError message={flowFieldError(challenge, 'password')} />
+          <AuthFieldError message={translateFlowFieldError(t, challenge, 'password')} />
         </div>
         <AuthFieldError message={error} />
         <Button type="submit" disabled={submitting || !uid || !password} className="w-full">

@@ -18,17 +18,20 @@ type NotificationsResponse = {
   unreadCount: number;
 };
 
-async function fetchNotifications(): Promise<NotificationsResponse> {
-  const response = await fetch('/api/notifications', { credentials: 'same-origin' });
+async function fetchNotifications(getToken: () => Promise<string | null>): Promise<NotificationsResponse> {
+  const token = await getToken();
+  const response = await fetch('/api/notifications', {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
   if (!response.ok) throw new Error('Could not load notifications');
   return response.json();
 }
 
 export function useMarketplaceNotifications() {
-  const { isLoaded, userId } = useAuth();
+  const { isLoaded, userId, getToken } = useAuth();
   return useQuery({
     queryKey: ['notifications'],
-    queryFn: fetchNotifications,
+    queryFn: () => fetchNotifications(getToken),
     enabled: isLoaded && Boolean(userId),
     refetchInterval: 10000,
     refetchOnWindowFocus: true,
@@ -37,11 +40,13 @@ export function useMarketplaceNotifications() {
 
 export function useMarkMarketplaceNotificationRead() {
   const queryClient = useQueryClient();
+  const { getToken } = useAuth();
   return useMutation({
     mutationFn: async (id: number) => {
+      const token = await getToken();
       const response = await fetch(`/api/notifications/${id}/read`, {
         method: 'PATCH',
-        credentials: 'same-origin',
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       });
       if (!response.ok) throw new Error('Could not mark notification as read');
       return response.json() as Promise<MarketplaceNotification>;

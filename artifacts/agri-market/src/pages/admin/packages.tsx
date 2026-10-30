@@ -43,10 +43,11 @@ function PackageForm({ packageData, onSave, onCancel }: { packageData?: any, onS
       let parsedFeatures = [];
       try {
         parsedFeatures = parseFeaturesInput(formData.features);
-      } catch (err) {
-        throw new Error(t('packageJsonError'));
+      } catch {
+        toast({ title: t('error'), description: t('packageJsonError'), variant: 'destructive' });
+        return;
       }
-      
+
       await onSave({
         ...formData,
         price: Number(formData.price),
@@ -54,8 +55,8 @@ function PackageForm({ packageData, onSave, onCancel }: { packageData?: any, onS
         features: parsedFeatures
       });
       onCancel();
-    } catch (err: any) {
-      toast({ title: t('error'), description: err instanceof Error ? err.message : t('error'), variant: 'destructive' });
+    } catch {
+      toast({ title: t('error'), description: t('tryAgain'), variant: 'destructive' });
     } finally {
       setLoading(false);
     }

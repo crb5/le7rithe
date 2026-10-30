@@ -3,6 +3,7 @@ import { ArrowRight, CreditCard, FileClock, MessageCircle } from 'lucide-react';
 import { Link } from 'wouter';
 import { AppShell, EmptyState, PageHeading } from '@/components/marketplace-ui';
 import { Spinner } from '@/components/ui/spinner';
+import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/language';
 
 type PaymentRow = {
@@ -26,10 +27,14 @@ const statusKey = {
 
 export function Payments() {
   const { t, language, meta, formatMoney } = useLanguage();
+  const { getToken } = useAuth();
   const query = useQuery<{ items: PaymentRow[] }>({
     queryKey: ['my-payments'],
     queryFn: async () => {
-      const response = await fetch('/api/payments/mine', { credentials: 'same-origin' });
+      const token = await getToken();
+      const response = await fetch('/api/payments/mine', {
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      });
       if (!response.ok) throw new Error(t('dataLoadError'));
       return response.json();
     },

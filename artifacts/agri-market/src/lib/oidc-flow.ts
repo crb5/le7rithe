@@ -128,16 +128,39 @@ export async function submitFlow(slug: string, body: Record<string, unknown>): P
   return advance(await callFlow(slug, body), slug);
 }
 
-export function flowFieldError(challenge: FlowChallenge | null | undefined, field: string): string | null {
-  return challenge?.response_errors?.[field]?.[0]?.string ?? null;
+function flowFieldErrorEntry(challenge: FlowChallenge | null | undefined, field: string): FlowFieldError | null {
+  return challenge?.response_errors?.[field]?.[0] ?? null;
 }
 
-export function flowNonFieldError(challenge: FlowChallenge | null | undefined): string | null {
-  return (
-    flowFieldError(challenge, 'non_field_errors') ??
-    flowFieldError(challenge, '__all__') ??
-    null
-  );
+type TranslateFn = (key: string, vars?: Record<string, unknown>) => string;
+
+// Authentik's flow executor reports field errors as its own English text
+// (e.g. "Invalid password", "This field may not be blank.") in `.string`.
+// That text must never reach the UI untranslated — only the stable `.code`
+// is used to pick one of our own translated strings, with a safe generic
+// fallback for any code this driver doesn't specifically recognize.
+const FIELD_ERROR_TRANSLATION_KEYS: Record<string, Record<string, string>> = {
+  uid_field: { blank: 'authFieldRequired' },
+  password: { blank: 'authFieldRequired' },
+  password_repeat: { password_mismatch: 'authPasswordMismatch', blank: 'authFieldRequired' },
+  username: { unique: 'authUsernameTaken', blank: 'authFieldRequired' },
+  email: { invalid: 'authEmailInvalid', unique: 'authEmailTaken', blank: 'authFieldRequired' },
+  name: { blank: 'authFieldRequired' },
+};
+
+/** Translated replacement for a per-field Authentik validation error. Never renders raw Authentik text. */
+export function translateFlowFieldError(t: TranslateFn, challenge: FlowChallenge | null | undefined, field: string): string | null {
+  const entry = flowFieldErrorEntry(challenge, field);
+  if (!entry) return null;
+  const key = FIELD_ERROR_TRANSLATION_KEYS[field]?.[entry.code] ?? 'authFieldInvalidGeneric';
+  return t(key);
+}
+
+/** Translated replacement for Authentik's non_field_errors / __all__ (e.g. the wrong-password denial). Never renders raw Authentik text. */
+export function translateFlowNonFieldError(t: TranslateFn, challenge: FlowChallenge | null | undefined): string | null {
+  const entry = flowFieldErrorEntry(challenge, 'non_field_errors') ?? flowFieldErrorEntry(challenge, '__all__');
+  if (!entry) return null;
+  return t(entry.code === 'invalid' ? 'authInvalidCredentials' : 'authGenericError');
 }
 
 export function isFlowSuccess(challenge: FlowChallenge | null | undefined): boolean {

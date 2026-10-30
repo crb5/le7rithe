@@ -468,7 +468,7 @@ router.post("/admin/password/change", async (req, res): Promise<void> => {
 
   const parsedPassword = passwordChangeBody.safeParse(req.body);
   if (!parsedPassword.success) {
-    res.status(400).json({ error: "Invalid password payload" });
+    res.status(400).json({ code: "ADMIN_PASSWORD_CHANGE_INVALID_PAYLOAD", error: "Invalid password payload" });
     return;
   }
   const { currentPassword, newPassword, confirmPassword } = parsedPassword.data;
@@ -478,21 +478,21 @@ router.post("/admin/password/change", async (req, res): Promise<void> => {
     || typeof confirmPassword !== "string"
     || newPassword !== confirmPassword
   ) {
-    res.status(400).json({ error: "Password confirmation does not match" });
+    res.status(400).json({ code: "ADMIN_PASSWORD_CHANGE_MISMATCH", error: "Password confirmation does not match" });
     return;
   }
 
   try {
     assertStrongAdminPassword(newPassword);
   } catch {
-    res.status(400).json({ error: "Password must be 12-128 characters with upper, lower, number, and symbol" });
+    res.status(400).json({ code: "ADMIN_PASSWORD_CHANGE_WEAK", error: "Password must be 12-128 characters with upper, lower, number, and symbol" });
     return;
   }
 
   const rateLimit = checkAdminPasswordRateLimit(req, actor.oidcSubject ?? String(actor.id));
   if (!rateLimit.allowed) {
     res.setHeader("Retry-After", String(rateLimit.retryAfterSeconds));
-    res.status(429).json({ error: "Too many password attempts. Try again later." });
+    res.status(429).json({ code: "ADMIN_PASSWORD_CHANGE_RATE_LIMITED", error: "Too many password attempts. Try again later." });
     return;
   }
 
@@ -500,7 +500,7 @@ router.post("/admin/password/change", async (req, res): Promise<void> => {
   const valid = credential ? await verifyAdminPassword(currentPassword, credential.passwordHash) : false;
   if (!valid) {
     recordAdminPasswordFailure(req, actor.oidcSubject ?? String(actor.id));
-    res.status(401).json({ error: "Invalid admin credentials" });
+    res.status(401).json({ code: "ADMIN_PASSWORD_CHANGE_INVALID_CURRENT", error: "Invalid admin credentials" });
     return;
   }
 

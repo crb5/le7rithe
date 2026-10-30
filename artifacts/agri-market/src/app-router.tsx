@@ -78,14 +78,13 @@ function isPublicMarketplaceRoute(path: string): boolean {
     || path === '/categories'
     || path.startsWith('/categories/')
     || path === '/privacy'
-    || path === '/terms'
-    || path === '/add-listing';
+    || path === '/terms';
 }
 
 function isKnownMarketplaceRoute(path: string): boolean {
   return isPublicMarketplaceRoute(path)
     || ['/saved', '/support', '/notifications', '/payments', '/dashboard',
-      '/dashboard/active-listings', '/account'].includes(path)
+      '/dashboard/active-listings', '/account', '/add-listing'].includes(path)
     || /^\/reports\/[^/]+$/.test(path);
 }
 

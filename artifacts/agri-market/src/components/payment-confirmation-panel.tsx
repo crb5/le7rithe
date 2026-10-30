@@ -34,7 +34,10 @@ export function PaymentConfirmationPanel({ listingId, onDone }: { listingId: num
   const options = useQuery<PaymentOptions>({
     queryKey: ['payment-options'],
     queryFn: async () => {
-      const response = await fetch('/api/payment-options', { credentials: 'same-origin' });
+      const token = await getToken();
+      const response = await fetch('/api/payment-options', {
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      });
       if (!response.ok) throw new Error(t('serverConnectionError'));
       return response.json();
     },

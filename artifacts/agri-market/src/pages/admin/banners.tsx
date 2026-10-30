@@ -130,8 +130,8 @@ export function AdminBanners() {
       }
       toast({ title: editing ? t('bannerUpdated') : t('bannerCreated') });
       setFormOpen(false);
-    } catch (error) {
-      toast({ title: error instanceof Error ? error.message : t('serverConnectionError'), variant: 'destructive' });
+    } catch {
+      toast({ title: t('bannerSaveError'), variant: 'destructive' });
     } finally {
       setSaving(false);
     }
@@ -141,8 +141,8 @@ export function AdminBanners() {
     try {
       await updateBanner.mutateAsync({ id: banner.id, input: { active: !banner.active } });
       toast({ title: banner.active ? t('bannerDisabled') : t('bannerEnabled') });
-    } catch (error) {
-      toast({ title: error instanceof Error ? error.message : t('serverConnectionError'), variant: 'destructive' });
+    } catch {
+      toast({ title: t('bannerSaveError'), variant: 'destructive' });
     }
   };
 
@@ -151,8 +151,8 @@ export function AdminBanners() {
     try {
       await deleteBanner.mutateAsync(banner.id);
       toast({ title: t('bannerDeleted') });
-    } catch (error) {
-      toast({ title: error instanceof Error ? error.message : t('serverConnectionError'), variant: 'destructive' });
+    } catch {
+      toast({ title: t('bannerDeleteError'), variant: 'destructive' });
     }
   };
 

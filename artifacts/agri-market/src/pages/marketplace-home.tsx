@@ -2,11 +2,15 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { Link, useLocation } from 'wouter';
 import { ChevronLeft, ChevronRight, LandPlot, LoaderCircle, MapPin, Plus, Tractor } from 'lucide-react';
 import { getListCategoriesQueryKey, getListListingsQueryKey, getListLocationsQueryKey, useListCategories, useListBanners, useListListings, useListLocations } from '@workspace/api-client-react';
+import type { Location } from '@workspace/api-client-react';
+import { Bar, BarChart, Cell, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import type { TooltipProps } from 'recharts';
 import { useToggleFavorite } from '@/lib/use-favorites';
 import { FadeIn, Stagger, StaggerItem } from '@/components/motion';
 import { HomeLoadDebugPanel } from '@/components/home-load-debug-panel';
 import { AppShell, EmptyState, ErrorState, ListingCard, ListingSkeleton, SearchBar, SectionLink, iconForCategory } from '@/components/marketplace-ui';
 import { translatedName, useLanguage } from '@/lib/language';
+import type { MarketplaceLanguage } from '@/lib/language';
 import { translateLocationName } from '@/lib/listing-localization';
 import { categoriesFallback } from './marketplace-shared';
 import type { Listing } from './marketplace-shared';
@@ -743,6 +747,97 @@ export function StorefrontsSection() {
   );
 }
 
+type RegionChartDatum = {
+  id: number;
+  name: string;
+  label: string;
+  count: number;
+};
+
+function RegionDistributionTooltip({ active, payload, formatNumber }: TooltipProps<number, string> & { formatNumber: (value: number) => string }) {
+  if (!active || !payload?.length) return null;
+  const datum = payload[0]?.payload as RegionChartDatum | undefined;
+  if (!datum) return null;
+  return (
+    <div className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-2.5 py-1.5 text-xs shadow-md">
+      <p className="font-semibold text-[hsl(var(--foreground))]">{datum.label}</p>
+      <p className="font-numeric text-[hsl(var(--muted-foreground))]" dir="ltr">{formatNumber(datum.count)}</p>
+    </div>
+  );
+}
+
+function RegionDistributionChart({
+  locations,
+  language,
+  formatNumber,
+  onSelectRegion,
+}: {
+  locations: Location[];
+  language: MarketplaceLanguage;
+  formatNumber: (value: number) => string;
+  onSelectRegion: (name: string) => void;
+}) {
+  const isRtl = language === 'ar';
+  const data: RegionChartDatum[] = locations.slice(0, 5).map((location) => ({
+    id: location.id,
+    name: location.name,
+    label: translateLocationName(location.name, language),
+    count: location.listingCount,
+  }));
+
+  return (
+    <ResponsiveContainer width="100%" height={232}>
+      <BarChart
+        data={data}
+        layout="vertical"
+        margin={{ top: 4, right: isRtl ? 4 : 30, left: isRtl ? 30 : 4, bottom: 4 }}
+        barCategoryGap={12}
+      >
+        <XAxis type="number" hide reversed={isRtl} domain={[0, (max: number) => Math.ceil(max * 1.2) || 1]} />
+        <YAxis
+          type="category"
+          dataKey="label"
+          orientation={isRtl ? 'right' : 'left'}
+          width={92}
+          axisLine={false}
+          tickLine={false}
+          tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }}
+        />
+        <Tooltip
+          cursor={{ fill: 'hsl(var(--muted)/.4)' }}
+          content={<RegionDistributionTooltip formatNumber={formatNumber} />}
+        />
+        <Bar dataKey="count" radius={isRtl ? [4, 0, 0, 4] : [0, 4, 4, 0]} maxBarSize={18} isAnimationActive={false}>
+          <LabelList
+            dataKey="count"
+            position={isRtl ? 'left' : 'right'}
+            formatter={(value: number) => formatNumber(value)}
+            className="font-numeric"
+            style={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
+          />
+          {data.map((entry) => (
+            <Cell
+              key={entry.id}
+              fill="hsl(var(--primary))"
+              className="cursor-pointer transition-opacity hover:opacity-80"
+              role="button"
+              tabIndex={0}
+              aria-label={`${entry.label}: ${formatNumber(entry.count)}`}
+              data-testid={`link-location-${entry.id}`}
+              onClick={() => onSelectRegion(entry.name)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  onSelectRegion(entry.name);
+                }
+              }}
+            />
+          ))}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}
 
 export function Home() {
   const debugLoad = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debug') === '1';
@@ -886,7 +981,7 @@ export function Home() {
       </section></FadeIn>
 
       <FadeIn enabled={false}><section className="mt-10 border-t border-[hsl(var(--border))] pt-8 sm:mt-14 sm:pt-10" data-testid="section-market-distribution">
-      <aside className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--secondary)/.45)] p-5"><div className="mb-6 flex items-center justify-between"><div><span className="mb-1 block text-[10px] font-bold tracking-[.14em] text-[hsl(var(--muted-foreground))]">{t('marketDistribution')}</span><h3 className="font-bold text-[hsl(var(--primary))]">{t('byRegion')}</h3></div><MapPin size={18} className="text-[hsl(var(--primary))]" /></div>{locationsQuery.isLoading ? <div className="space-y-4" aria-hidden="true">{[1,2,3,4,5].map((i) => <div key={i} className={`h-4 rounded bg-[hsl(var(--muted))] ${i > 2 ? 'hidden sm:block' : ''}`} />)}</div> : <div className="space-y-4">{(locationsQuery.data ?? []).slice(0, 5).map((location) => <Link key={location.id} href={`/listings?location=${encodeURIComponent(location.name)}`} className="group flex items-center justify-between text-xs" data-testid={`link-location-${location.id}`}><span className="flex items-center gap-2 font-semibold text-[hsl(var(--foreground))]"><span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--accent-foreground))] transition-transform group-hover:scale-150" />{translateLocationName(location.name, language)}</span><span className="font-numeric text-[10px] text-[hsl(var(--muted-foreground))]" dir="ltr">{formatNumber(location.listingCount)}</span></Link>)}</div>}</aside>
+      <aside className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--secondary)/.45)] p-5"><div className="mb-6 flex items-center justify-between"><div><span className="mb-1 block text-[10px] font-bold tracking-[.14em] text-[hsl(var(--muted-foreground))]">{t('marketDistribution')}</span><h3 className="font-bold text-[hsl(var(--primary))]">{t('byRegion')}</h3></div><MapPin size={18} className="text-[hsl(var(--primary))]" /></div>{locationsQuery.isLoading ? <div className="space-y-4" aria-hidden="true">{[1,2,3,4,5].map((i) => <div key={i} className={`h-4 rounded bg-[hsl(var(--muted))] ${i > 2 ? 'hidden sm:block' : ''}`} />)}</div> : <RegionDistributionChart locations={locationsQuery.data ?? []} language={language} formatNumber={formatNumber} onSelectRegion={(name) => setLocation(`/listings?location=${encodeURIComponent(name)}`)} />}</aside>
     </section></FadeIn>
       <FadeIn enabled={false}><section className="mt-10 flex flex-col items-start justify-between gap-5 overflow-hidden rounded-2xl bg-[hsl(var(--secondary)/.65)] p-6 sm:mt-14 sm:flex-row sm:items-center sm:p-8" data-testid="section-home-cta">
         <div className="min-w-0">

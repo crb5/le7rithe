@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { Link } from 'wouter';
 import { CheckCircle2, LoaderCircle, MessageCircle, Phone, Send } from 'lucide-react';
-import { useGetSupportSettings, useSendSupportMessage } from '@workspace/api-client-react';
+import { useGetSupportSettings, useListReports, useSendSupportMessage } from '@workspace/api-client-react';
 import { WhatsAppIcon } from '@/components/whatsapp-icon';
 import { AppShell, PageHeading } from '@/components/marketplace-ui';
 import { useLanguage } from '@/lib/language';
@@ -13,14 +12,7 @@ export function Support() {
   const { t } = useLanguage();
   const { toast } = useToast();
   const settingsQuery = useGetSupportSettings();
-  const reportsQuery = useQuery<{ items: Array<{ id: number; reason: string; details: string; status: string; createdAt: string; listing: { title: string } | null }> }>({
-    queryKey: ['my-reports'],
-    queryFn: async () => {
-      const response = await fetch('/api/reports', { credentials: 'same-origin' });
-      if (!response.ok) throw new Error(t('dataLoadError'));
-      return response.json();
-    },
-  });
+  const reportsQuery = useListReports();
   const sendSupport = useSendSupportMessage();
   const [message, setMessage] = useState('');
   const [requestContact, setRequestContact] = useState(false);
@@ -42,8 +34,8 @@ export function Support() {
           setRequestContact(false);
           toast({ title: t('supportMessageSent'), description: t('supportMessageSentDescription') });
         },
-        onError: (error) => {
-          toast({ title: t('supportMessageError'), description: error instanceof Error ? error.message : t('tryAgain'), variant: 'destructive' });
+        onError: () => {
+          toast({ title: t('supportMessageError'), description: t('tryAgain'), variant: 'destructive' });
         },
       },
     );

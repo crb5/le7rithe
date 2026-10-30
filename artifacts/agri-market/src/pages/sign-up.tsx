@@ -11,8 +11,8 @@ import {
   ENROLLMENT_FLOW_SLUG,
   startFlow,
   submitFlow,
-  flowFieldError,
-  flowNonFieldError,
+  translateFlowFieldError,
+  translateFlowNonFieldError,
   isFlowSuccess,
   isFlowDenied,
   isFlowUnsupported,
@@ -74,11 +74,11 @@ export function SignUp() {
       return;
     }
     if (isFlowDenied(next)) {
-      setError(flowNonFieldError(next) ?? t('authGenericError'));
+      setError(translateFlowNonFieldError(t, next) ?? t('authGenericError'));
       setStage('denied');
       return;
     }
-    setError(flowNonFieldError(next));
+    setError(translateFlowNonFieldError(t, next));
     if (next.component === 'ak-stage-prompt') { setStage('ready'); return; }
     if (isFlowUnsupported(next)) { setStage('unsupported'); return; }
     setStage('error');
@@ -187,7 +187,7 @@ export function SignUp() {
             required
             className="mt-2"
           />
-          <AuthFieldError message={flowFieldError(challenge, 'username')} />
+          <AuthFieldError message={translateFlowFieldError(t, challenge, 'username')} />
         </div>
         <div>
           <Label htmlFor="sign-up-name">{t('authNameLabel')}</Label>
@@ -200,7 +200,7 @@ export function SignUp() {
             required
             className="mt-2"
           />
-          <AuthFieldError message={flowFieldError(challenge, 'name')} />
+          <AuthFieldError message={translateFlowFieldError(t, challenge, 'name')} />
         </div>
         <div>
           <Label htmlFor="sign-up-email">{t('authEmailLabel')}</Label>
@@ -214,7 +214,7 @@ export function SignUp() {
             required
             className="mt-2"
           />
-          <AuthFieldError message={flowFieldError(challenge, 'email')} />
+          <AuthFieldError message={translateFlowFieldError(t, challenge, 'email')} />
         </div>
         <div>
           <Label htmlFor="sign-up-phone">{t('authPhoneLabel')}</Label>
@@ -244,7 +244,7 @@ export function SignUp() {
             required
             className="mt-2"
           />
-          <AuthFieldError message={flowFieldError(challenge, 'password')} />
+          <AuthFieldError message={translateFlowFieldError(t, challenge, 'password')} />
         </div>
         <div>
           <Label htmlFor="sign-up-password-repeat">{t('authPasswordRepeatLabel')}</Label>
@@ -258,7 +258,7 @@ export function SignUp() {
             required
             className="mt-2"
           />
-          <AuthFieldError message={flowFieldError(challenge, 'password_repeat')} />
+          <AuthFieldError message={translateFlowFieldError(t, challenge, 'password_repeat')} />
         </div>
         <div>
           <label className="flex items-start gap-2.5 text-sm text-foreground">

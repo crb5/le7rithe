@@ -4,6 +4,7 @@ import {
   useLayoutEffect,
   useRef,
   type KeyboardEvent,
+  type ReactNode,
   type RefObject,
 } from "react";
 import { Link } from "wouter";
@@ -26,6 +27,12 @@ type Props = {
   languageMenuOpen: boolean;
   onLanguageMenuOpenChange: (open: boolean) => void;
   menuLabel: string;
+  /** aria-label for the desktop horizontal nav landmark. */
+  navLabel?: string;
+  /** Primary nav links, rendered inline on desktop only (hidden on mobile, where `onMenuOpen` drives the drawer instead). */
+  desktopNav?: ReactNode;
+  /** Account / sign-in area, rendered inline on desktop only (mobile uses the drawer's own account area). */
+  accountSlot?: ReactNode;
 };
 
 function LanguageFlag({ language, testId }: { language: Lang; testId?: string }) {
@@ -366,6 +373,9 @@ export default function Header({
   languageMenuOpen,
   onLanguageMenuOpenChange,
   menuLabel,
+  navLabel,
+  desktopNav,
+  accountSlot,
 }: Props) {
   const textDirection = language === "AR" ? "rtl" : "ltr";
   const identityRef = useRef<HTMLDivElement>(null);
@@ -381,11 +391,21 @@ export default function Header({
       >
         <HeaderBrand direction={textDirection} />
       </div>
+      {desktopNav ? (
+        <nav className="sh-nav" aria-label={navLabel} dir={textDirection}>
+          {desktopNav}
+        </nav>
+      ) : null}
       <div
         ref={controlsRef}
         className={`sh-controls sh-controls--${textDirection}`}
         data-testid="header-tools"
       >
+        {accountSlot ? (
+          <div className="sh-account" dir={textDirection}>
+            {accountSlot}
+          </div>
+        ) : null}
         <HeaderLanguageSwitcher
           language={language}
           onLanguageChange={onLanguageChange}
