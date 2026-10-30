@@ -1230,10 +1230,11 @@ components:
         reviewCount: { type: integer }
     Listing:
       type: object
-      required: [id, title, category, categorySlug, price, currency, location, condition, imageUrl, images, seller, createdAt, featured, attributes, contactPhone, whatsappPhone, saleStatus, soldAt, saleRevertUntil, canRevertSale, rentalStatus, rentalSeasonArchivedAt, rentalAdminHiddenAt, rentedAt]
+      required: [id, title, status, category, categorySlug, price, currency, location, condition, imageUrl, images, seller, createdAt, featured, attributes, contactPhone, whatsappPhone, saleStatus, soldAt, saleRevertUntil, canRevertSale, rentalStatus, rentalSeasonArchivedAt, rentalAdminHiddenAt, rentedAt]
       properties:
         id: { type: integer }
         title: { type: string }
+        status: { type: string, enum: [draft, pending_payment, pending_review, active, rejected, suspended] }
         category: { type: string }
         categorySlug: { type: string }
         subcategory: { type: ["string", "null"] }

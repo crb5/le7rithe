@@ -9,11 +9,13 @@ import type { ListingAttributes } from './listingAttributes';
 import type { ListingCondition } from './listingCondition';
 import type { ListingRentalStatus } from './listingRentalStatus';
 import type { ListingSaleStatus } from './listingSaleStatus';
+import type { ListingStatus } from './listingStatus';
 import type { Seller } from './seller';
 
 export interface Listing {
   id: number;
   title: string;
+  status: ListingStatus;
   category: string;
   categorySlug: string;
   /** @nullable */

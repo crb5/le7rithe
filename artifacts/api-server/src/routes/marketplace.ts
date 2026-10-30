@@ -600,6 +600,7 @@ const formatListing = (row: {
 }) => ({
   id: row.listing.id,
   title: row.listing.title,
+  status: row.listing.status,
   category: row.category.name,
   categorySlug: row.category.slug,
   subcategory: row.subcategory?.name ?? null,
@@ -692,6 +693,8 @@ const ownerListingWhere = (sellerId: number) => and(
   eq(listingsTable.sellerId, sellerId),
   eq(listingsTable.status, "active"),
 );
+
+const ownerAnyStatusListingWhere = (sellerId: number) => eq(listingsTable.sellerId, sellerId);
 
 const normalizeTransactionReference = (value: string): string =>
   value.normalize("NFKC").trim().toLocaleLowerCase().replace(/[\s\-_.\/]/g, "");
@@ -1182,7 +1185,6 @@ router.get("/listings/:id", async (req, res): Promise<void> => {
   const [row] = await getRows(and(
     eq(listingsTable.id, parsed.data.id),
     eq(listingsTable.sellerId, actor.id),
-    eq(listingsTable.status, "rejected"),
   ));
   if (!row) {
     res.status(404).json({ error: "Listing not found" });
@@ -2636,7 +2638,7 @@ router.get("/dashboard/summary", async (req, res): Promise<void> => {
       .innerJoin(categoriesTable, eq(listingsTable.categoryId, categoriesTable.id))
       .leftJoin(subcategoriesTable, eq(listingsTable.subcategoryId, subcategoriesTable.id))
       .innerJoin(usersTable, eq(listingsTable.sellerId, usersTable.id))
-       .where(and(ownerListingWhere(actor.id), isNull(listingsTable.rentalSeasonArchivedAt)))
+       .where(and(ownerAnyStatusListingWhere(actor.id), isNull(listingsTable.rentalSeasonArchivedAt)))
       .orderBy(desc(listingsTable.createdAt))
       .limit(5),
     db.select({ listing: listingsTable, category: categoriesTable, subcategory: subcategoriesTable, seller: usersTable })

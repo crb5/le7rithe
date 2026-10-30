@@ -536,6 +536,7 @@ export const GetMarketPulseResponse = zod.object({
   "recentListings": zod.array(zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -616,6 +617,7 @@ export const ListListingsResponse = zod.object({
   "items": zod.array(zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -707,6 +709,7 @@ export const CreateListingBody = zod.object({
 export const CreateListingResponse = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -760,6 +763,7 @@ export const GetListingParams = zod.object({
 export const GetListingResponse = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -837,6 +841,7 @@ export const UpdateListingBody = zod.object({
 export const UpdateListingResponse = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -900,6 +905,7 @@ export const MarkListingSoldParams = zod.object({
 export const MarkListingSoldResponse = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -953,6 +959,7 @@ export const RevertListingSaleParams = zod.object({
 export const RevertListingSaleResponse = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -1006,6 +1013,7 @@ export const MarkListingLeasedParams = zod.object({
 export const MarkListingLeasedResponse = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -1059,6 +1067,7 @@ export const RenewRentalListingParams = zod.object({
 export const RenewRentalListingResponse = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -1143,6 +1152,7 @@ export const GetSellerProfileResponse = zod.object({
 export const ListSavedListingsResponseItem = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -1442,6 +1452,7 @@ export const GetDashboardSummaryResponse = zod.object({
   "recentListings": zod.array(zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -1486,6 +1497,7 @@ export const GetDashboardSummaryResponse = zod.object({
   "archivedRentalListings": zod.array(zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),
@@ -1538,6 +1550,7 @@ export const GetDashboardSummaryResponse = zod.object({
 export const ListSellerActiveListingsResponseItem = zod.object({
   "id": zod.number().int(),
   "title": zod.string(),
+  "status": zod.enum(['draft', 'pending_payment', 'pending_review', 'active', 'rejected', 'suspended']),
   "category": zod.string(),
   "categorySlug": zod.string(),
   "subcategory": zod.string().nullish(),

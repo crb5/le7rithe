@@ -41,6 +41,7 @@ export * from './listingInputCondition';
 export * from './listingRentalStatus';
 export * from './listingSaleStatus';
 export * from './listingSearchResult';
+export * from './listingStatus';
 export * from './listingUpdate';
 export * from './listListingsParams';
 export * from './listReports200';

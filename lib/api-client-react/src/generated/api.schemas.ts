@@ -231,6 +231,18 @@ export type MarketPulseTopCategory = {
   count: number;
 } | null;
 
+export type ListingStatus = typeof ListingStatus[keyof typeof ListingStatus];
+
+
+export const ListingStatus = {
+  draft: 'draft',
+  pending_payment: 'pending_payment',
+  pending_review: 'pending_review',
+  active: 'active',
+  rejected: 'rejected',
+  suspended: 'suspended',
+} as const;
+
 export type ListingCondition = typeof ListingCondition[keyof typeof ListingCondition];
 
 
@@ -269,6 +281,7 @@ export type ListingAttributes = { [key: string]: unknown };
 export interface Listing {
   id: number;
   title: string;
+  status: ListingStatus;
   category: string;
   categorySlug: string;
   /** @nullable */

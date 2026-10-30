@@ -9,6 +9,16 @@ import { useToast } from '@/hooks/use-toast';
 import type { Listing } from './marketplace-shared';
 import { invalidateListingViews, SaleControls, EditListingDialog } from './marketplace-seller-shared';
 
+const listingStatusLabel = (status: Listing['status'], t: ReturnType<typeof useLanguage>['t']): string | null => {
+  switch (status) {
+    case 'pending_review': return t('listingStatusPendingReview');
+    case 'pending_payment': return t('listingStatusPendingPayment');
+    case 'rejected': return t('listingStatusRejected');
+    case 'suspended': return t('listingStatusSuspended');
+    case 'draft': return t('listingStatusDraft');
+    case 'active': default: return null;
+  }
+};
 
 export function Dashboard() {
   const { language, t, formatDate } = useLanguage();
@@ -74,7 +84,7 @@ export function Dashboard() {
           <div className="h-14 w-16 shrink-0 overflow-hidden rounded-lg bg-[hsl(var(--secondary))]">
             <ListingImage images={listing.images} imageUrl={listing.imageUrl} category={listing} alt="" loading="lazy" thumbnail />
           </div>
-            <div className="min-w-0 flex-1"><h3 className="truncate text-xs font-bold">{listing.title}</h3><p className="mt-1 text-[10px] text-[hsl(var(--muted-foreground))]">{formatPrice(listing.price, listing.currency, language)} · <RelativePublishedTime value={listing.createdAt} />{listing.rentalSeasonArchivedAt ? <> · <span className="font-bold text-amber-800">{t('rentalArchivedLabel')}</span></> : listing.attributes?.saleType === 'rent' && listing.rentalStatus === 'leased' ? <> · <span className="font-bold text-[hsl(var(--destructive))]">{t('leased')}</span></> : listing.saleStatus === 'sold' ? <> · <span className="font-bold text-[hsl(var(--destructive))]">{t('sold')}</span></> : null}</p></div>
+            <div className="min-w-0 flex-1"><h3 className="truncate text-xs font-bold">{listing.title}</h3>{listingStatusLabel(listing.status, t) && <span className="mt-1 inline-block rounded-full bg-amber-100 px-2 py-0.5 text-[9px] font-bold text-amber-800" data-testid={`badge-listing-status-${listing.id}`}>{listingStatusLabel(listing.status, t)}</span>}<p className="mt-1 text-[10px] text-[hsl(var(--muted-foreground))]">{formatPrice(listing.price, listing.currency, language)} · <RelativePublishedTime value={listing.createdAt} />{listing.rentalSeasonArchivedAt ? <> · <span className="font-bold text-amber-800">{t('rentalArchivedLabel')}</span></> : listing.attributes?.saleType === 'rent' && listing.rentalStatus === 'leased' ? <> · <span className="font-bold text-[hsl(var(--destructive))]">{t('leased')}</span></> : listing.saleStatus === 'sold' ? <> · <span className="font-bold text-[hsl(var(--destructive))]">{t('sold')}</span></> : null}</p></div>
           <div className="flex flex-wrap items-center justify-end gap-1">{!listing.rentalSeasonArchivedAt && listing.saleStatus === 'available' && listing.rentalStatus !== 'leased' && <><button type="button" onClick={() => setEditing(listing)} className="rounded-lg p-2 text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--primary))]" aria-label={t('editListing')} data-testid={`button-edit-listing-${listing.id}`}><Edit3 size={15} /></button><button type="button" onClick={() => confirmDelete(listing)} className="rounded-lg p-2 text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--destructive)/.08)] hover:text-[hsl(var(--destructive))]" aria-label={t('deleteListing')} data-testid={`button-delete-listing-${listing.id}`}><Trash2 size={15} /></button></>}{!listing.rentalSeasonArchivedAt && <SaleControls listing={listing} onMarkSold={confirmMarkSold} onUndoSale={confirmUndoSale} markPending={listing.attributes?.saleType === 'rent' ? markLeased.isPending : markSold.isPending} undoPending={undoSale.isPending} />}</div>
         </div>) : <div className="p-8"><EmptyState title={t('noListingsYet')} description={t('noListingsYetDescription')} /></div>}</div>
       </section>
