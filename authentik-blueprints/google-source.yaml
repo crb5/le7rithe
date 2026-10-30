@@ -1,0 +1,21 @@
+version: 1
+metadata:
+  labels:
+    blueprints.goauthentik.io/instantiate: "true"
+  name: le7rithe - Google social login source
+entries:
+  # consumer_key/consumer_secret come from blueprint context (see
+  # scripts/setup-google-source.sh), never hardcoded here — this file is
+  # safe to commit.
+  - identifiers:
+      slug: le7rithe
+    model: authentik_sources_oauth.oauthsource
+    attrs:
+      name: le7rithe
+      provider_type: google
+      enabled: true
+      authentication_flow: !Find [authentik_flows.flow, [slug, default-authentication-flow]]
+      enrollment_flow: !Find [authentik_flows.flow, [slug, default-source-enrollment]]
+      user_matching_mode: identifier
+      consumer_key: !Context google_client_id
+      consumer_secret: !Context google_client_secret

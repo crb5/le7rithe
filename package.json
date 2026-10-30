@@ -12,6 +12,8 @@
   "scripts": {
     "build": "yarn run typecheck && yarn workspaces foreach -Ap --exclude workspace run build",
     "deploy": "node scripts/deploy-docker.mjs",
+    "setup-authentik": "bash scripts/setup-authentik.sh",
+    "setup-google-source": "bash scripts/setup-google-source.sh",
     "validate:development-schema": "yarn workspace @workspace/db run check:development-schema",
     "setup:e2e-auth": "node e2e/setup-auth.mjs",
     "test:e2e": "playwright test --config=e2e/playwright.config.ts",
