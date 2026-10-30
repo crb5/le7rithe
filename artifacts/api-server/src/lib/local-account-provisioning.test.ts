@@ -17,7 +17,7 @@ function fixture(existing: Account | null = null) {
   const inserts: LocalAccountDraft[] = [];
   const promotions: Account[] = [];
   const input = {
-    clerkUserId: subject.sub,
+    oidcSubject: subject.sub,
     existing,
     fallbackName: "Ordinary User",
     // Client/session email alone must never grant a role.
@@ -45,7 +45,7 @@ test("new subject + verified allowed email + no local account inserts an active 
   const account = await provisionLocalAccount(f.input, f.store);
   assert.equal(f.input.existing, null);
   assert.equal(f.inserts.length, 1);
-  assert.equal(f.inserts[0].clerkUserId, SUBJECT);
+  assert.equal(f.inserts[0].oidcSubject, SUBJECT);
   assert.equal(account.role, "admin");
   assert.equal(account.status, "active");
   assert.equal(account.email, "owner@example.test");
@@ -53,7 +53,7 @@ test("new subject + verified allowed email + no local account inserts an active 
 
 test("first authenticated use promotes an existing active ordinary account without replacing its ID", async () => {
   const existing: Account = {
-    id: 42, clerkUserId: SUBJECT, name: "Owner", email: null, initials: "O", role: "user", status: "active",
+    id: 42, oidcSubject: SUBJECT, name: "Owner", email: null, initials: "O", role: "user", status: "active",
   };
   const f = fixture(existing);
   const account = await provisionLocalAccount(f.input, f.store);
@@ -83,7 +83,7 @@ test("missing allowlist never grants administration", async () => {
 
 test("inactive local account is not promoted or reactivated", async () => {
   const f = fixture();
-  const existing = { id: 42, clerkUserId: SUBJECT, name: "Owner", email: null, initials: "O", role: "user", status: "suspended" };
+  const existing = { id: 42, oidcSubject: SUBJECT, name: "Owner", email: null, initials: "O", role: "user", status: "suspended" };
   const account = await provisionLocalAccount({ ...f.input, existing }, f.store);
   assert.equal(account.status, "suspended");
   assert.equal(account.role, "user");
@@ -102,12 +102,12 @@ test("an identity read failure does not silently create or promote an administra
 test("first marketplace use reconnects the retained owner instead of inserting a replacement", async () => {
   const f = fixture();
   f.store.reconnectAdministrator = async email => ({
-    id: 42, clerkUserId: f.input.clerkUserId, name: "Retained Owner",
+    id: 42, oidcSubject: f.input.oidcSubject, name: "Retained Owner",
     email, initials: "RO", role: "admin", status: "active",
   });
   const account = await provisionLocalAccount(f.input, f.store);
   assert.equal(account.id, 42);
-  assert.equal(account.clerkUserId, f.input.clerkUserId);
+  assert.equal(account.oidcSubject, f.input.oidcSubject);
   assert.equal(f.inserts.length, 0);
 });
 

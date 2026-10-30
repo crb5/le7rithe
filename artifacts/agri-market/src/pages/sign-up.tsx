@@ -190,34 +190,6 @@ export function SignUp() {
           <AuthFieldError message={flowFieldError(challenge, 'username')} />
         </div>
         <div>
-          <Label htmlFor="sign-up-password">{t('authPasswordLabel')}</Label>
-          <Input
-            id="sign-up-password"
-            name="password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            autoComplete="new-password"
-            required
-            className="mt-2"
-          />
-          <AuthFieldError message={flowFieldError(challenge, 'password')} />
-        </div>
-        <div>
-          <Label htmlFor="sign-up-password-repeat">{t('authPasswordRepeatLabel')}</Label>
-          <Input
-            id="sign-up-password-repeat"
-            name="password_repeat"
-            type="password"
-            value={passwordRepeat}
-            onChange={(event) => setPasswordRepeat(event.target.value)}
-            autoComplete="new-password"
-            required
-            className="mt-2"
-          />
-          <AuthFieldError message={flowFieldError(challenge, 'password_repeat')} />
-        </div>
-        <div>
           <Label htmlFor="sign-up-name">{t('authNameLabel')}</Label>
           <Input
             id="sign-up-name"
@@ -259,6 +231,34 @@ export function SignUp() {
             className="mt-2"
           />
           <AuthFieldError message={phoneError} />
+        </div>
+        <div>
+          <Label htmlFor="sign-up-password">{t('authPasswordLabel')}</Label>
+          <Input
+            id="sign-up-password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            autoComplete="new-password"
+            required
+            className="mt-2"
+          />
+          <AuthFieldError message={flowFieldError(challenge, 'password')} />
+        </div>
+        <div>
+          <Label htmlFor="sign-up-password-repeat">{t('authPasswordRepeatLabel')}</Label>
+          <Input
+            id="sign-up-password-repeat"
+            name="password_repeat"
+            type="password"
+            value={passwordRepeat}
+            onChange={(event) => setPasswordRepeat(event.target.value)}
+            autoComplete="new-password"
+            required
+            className="mt-2"
+          />
+          <AuthFieldError message={flowFieldError(challenge, 'password_repeat')} />
         </div>
         <div>
           <label className="flex items-start gap-2.5 text-sm text-foreground">

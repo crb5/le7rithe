@@ -222,7 +222,7 @@ async function submitPayment(page: Page, listing: Listing, reference: string): P
   try {
     await page.getByTestId('button-submit-payment').click();
     const proofUploadRequest = await proofUploadRequestPromise;
-    expect(proofUploadRequest.headers().authorization, 'Payment proof request-url must include the Clerk bearer token').toMatch(/^Bearer \S+$/);
+    expect(proofUploadRequest.headers().authorization, 'Payment proof request-url must include the bearer token').toMatch(/^Bearer \S+$/);
     const proofUploadResponse = await proofUploadResponsePromise;
     const proofUpload = await expectJson<{
       uploadURL: string;
@@ -252,7 +252,7 @@ async function submitPayment(page: Page, listing: Listing, reference: string): P
     expect(recordedProofFileUploadResponse, 'Payment proof file upload response was not received').toBeDefined();
     expect(proofFileUploadResponse.status(), 'Payment proof file upload must not be rejected as unauthorized').not.toBe(401);
     if (new URL(resolvedUploadURL).origin === pageOrigin) {
-      expect(proofFileUpload!.headers.authorization, 'Same-origin payment proof upload must include the Clerk bearer token').toMatch(/^Bearer \S+$/);
+      expect(proofFileUpload!.headers.authorization, 'Same-origin payment proof upload must include the bearer token').toMatch(/^Bearer \S+$/);
     }
 
     await expect(page).toHaveURL(/\/dashboard$/);
@@ -368,10 +368,10 @@ async function getListing(context: BrowserContext, title: string): Promise<Listi
 async function getPaymentProofAudits(
   context: BrowserContext,
   paymentId: number,
-): Promise<Array<{ action: string; resourceId: number | null; actorClerkUserId: string | null }>> {
+): Promise<Array<{ action: string; resourceId: number | null; actorOidcSubject: string | null }>> {
   const response = await context.request.get('/api/admin/audit-logs');
   const body = await expectJson<{
-    items: Array<{ action: string; resourceId: number | null; actorClerkUserId: string | null }>;
+    items: Array<{ action: string; resourceId: number | null; actorOidcSubject: string | null }>;
   }>(response, 200);
   return body.items.filter(
     (item) => item.action === 'payment.proof_viewed' && item.resourceId === paymentId,
@@ -450,7 +450,7 @@ async function reviewPayment(
     action: 'payment.proof_viewed',
     resourceId: payment.id,
   });
-  expect(auditsAfterAdminProofView[0].actorClerkUserId).toBeTruthy();
+  expect(auditsAfterAdminProofView[0].actorOidcSubject).toBeTruthy();
 
   if (moderatorContext) {
     const moderatorProofResponse = await moderatorContext.request.get(
@@ -551,7 +551,7 @@ test.describe('payment review flow', () => {
       });
 
       const users = await expectJson<{
-        items: Array<{ id: number; role: string; clerkUserId: string | null }>;
+        items: Array<{ id: number; role: string; oidcSubject: string | null }>;
       }>(await adminContext.request.get('/api/admin/users'), 200);
       const administrators = users.items.filter(
         (user) => user.role === 'admin',
@@ -563,7 +563,7 @@ test.describe('payment review flow', () => {
     }
   });
 
-  test('a changed Clerk administrator cannot create a second local administrator', async ({ browser }) => {
+  test('a changed identity-provider administrator cannot create a second local administrator', async ({ browser }) => {
     const adminContext = await browser.newContext({ storageState: adminStorageState });
     const secondaryAdminContext = await browser.newContext({ storageState: secondaryAdminStorageState });
     const adminPage = await adminContext.newPage();

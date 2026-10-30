@@ -7,29 +7,29 @@ type LegalConsentErrorResponse = {
 };
 
 export type LegalConsentRecord = {
-  clerkUserId: string;
+  oidcSubject: string;
   termsVersion: string;
   privacyVersion: string;
 };
 
 export type LegalConsentReader = (
-  clerkUserId: string,
+  oidcSubject: string,
   versions: LegalConsentVersions,
 ) => Promise<LegalConsentRecord | undefined>;
 
 export function createLegalConsentGuard(readConsent: LegalConsentReader) {
-  const hasCurrentConsent = async (clerkUserId: string | null | undefined): Promise<boolean> => {
-    if (!clerkUserId) return false;
+  const hasCurrentConsent = async (oidcSubject: string | null | undefined): Promise<boolean> => {
+    if (!oidcSubject) return false;
 
-    const accepted = await readConsent(clerkUserId, LEGAL_POLICY);
-    return accepted?.clerkUserId === clerkUserId && hasCurrentLegalConsent(accepted);
+    const accepted = await readConsent(oidcSubject, LEGAL_POLICY);
+    return accepted?.oidcSubject === oidcSubject && hasCurrentLegalConsent(accepted);
   };
 
   const requireCurrentConsent = async (
-    clerkUserId: string | null | undefined,
+    oidcSubject: string | null | undefined,
     res: LegalConsentErrorResponse,
   ): Promise<boolean> => {
-    if (await hasCurrentConsent(clerkUserId)) return true;
+    if (await hasCurrentConsent(oidcSubject)) return true;
 
     res.status(403).json({
       code: "LEGAL_CONSENT_REQUIRED",
@@ -41,9 +41,9 @@ export function createLegalConsentGuard(readConsent: LegalConsentReader) {
   return { hasCurrentConsent, requireCurrentConsent };
 }
 
-export function currentLegalConsentRecord(clerkUserId: string, locale: string) {
+export function currentLegalConsentRecord(oidcSubject: string, locale: string) {
   return {
-    clerkUserId,
+    oidcSubject,
     termsVersion: LEGAL_POLICY.termsVersion,
     privacyVersion: LEGAL_POLICY.privacyVersion,
     locale,

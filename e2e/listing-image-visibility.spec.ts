@@ -213,7 +213,7 @@ test.describe('listing image visibility', () => {
       if (adminMeResponse.status() !== 200) {
         test.skip(
           true,
-          'The configured administrator session is unavailable; refresh the Clerk storage state before this regression.',
+          'The configured administrator session is unavailable; refresh the storage state (run yarn setup:e2e-auth) before this regression.',
         );
         return;
       }

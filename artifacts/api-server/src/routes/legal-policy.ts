@@ -32,7 +32,7 @@ router.get("/legal-policy/consent", async (req, res): Promise<void> => {
     })
     .from(legalConsentsTable)
     .where(and(
-      eq(legalConsentsTable.clerkUserId, userId),
+      eq(legalConsentsTable.oidcSubject, userId),
       eq(legalConsentsTable.termsVersion, LEGAL_POLICY.termsVersion),
       eq(legalConsentsTable.privacyVersion, LEGAL_POLICY.privacyVersion),
     ))
@@ -79,7 +79,7 @@ router.post("/legal-policy/consent", async (req, res): Promise<void> => {
       })
       .from(legalConsentsTable)
       .where(and(
-        eq(legalConsentsTable.clerkUserId, userId),
+        eq(legalConsentsTable.oidcSubject, userId),
         eq(legalConsentsTable.termsVersion, LEGAL_POLICY.termsVersion),
         eq(legalConsentsTable.privacyVersion, LEGAL_POLICY.privacyVersion),
       ))

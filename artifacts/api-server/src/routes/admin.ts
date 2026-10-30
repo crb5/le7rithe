@@ -162,7 +162,7 @@ async function actorForRequest(req: Request): Promise<AdminActor> {
     process.env.ADMIN_ALLOWED_EMAILS,
   );
   if (!identity) return null;
-  const [existingActor] = await db.select().from(usersTable).where(eq(usersTable.clerkUserId, userId)).limit(1);
+  const [existingActor] = await db.select().from(usersTable).where(eq(usersTable.oidcSubject, userId)).limit(1);
   if (existingActor) {
     if (existingActor.status !== "active") return null;
     if (existingActor.role === "admin" && existingActor.email === identity.email) return existingActor;
@@ -179,7 +179,7 @@ async function actorForRequest(req: Request): Promise<AdminActor> {
     // of the old Clerk ID or the presence of an administrator in the old app.
     await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtext('marketplace_admin_bootstrap'))`);
 
-    const [actor] = await tx.select().from(usersTable).where(eq(usersTable.clerkUserId, userId)).limit(1);
+    const [actor] = await tx.select().from(usersTable).where(eq(usersTable.oidcSubject, userId)).limit(1);
     if (actor) {
       if (actor.status !== "active") return null;
       const [updated] = await tx.update(usersTable)
@@ -200,7 +200,7 @@ async function actorForRequest(req: Request): Promise<AdminActor> {
     if (legacyActor) {
       if (legacyActor.status !== "active") return null;
       const [reconnected] = await tx.update(usersTable)
-        .set({ clerkUserId: userId, email: identity.email })
+        .set({ oidcSubject: userId, email: identity.email })
         .where(eq(usersTable.id, legacyActor.id)).returning();
       return reconnected ?? null;
     }
@@ -208,19 +208,19 @@ async function actorForRequest(req: Request): Promise<AdminActor> {
     const displayName = identity.name;
     const initials = displayName.trim().split(/\s+/).slice(0, 2).map((part) => part[0] || "").join("") || "م";
     const [created] = await tx.insert(usersTable).values({
-      clerkUserId: userId,
+      oidcSubject: userId,
       name: displayName,
       email: identity.email,
       initials,
       role: "admin",
       status: "active",
-    }).onConflictDoNothing({ target: usersTable.clerkUserId }).returning();
+    }).onConflictDoNothing({ target: usersTable.oidcSubject }).returning();
     if (created) return created;
 
     const [existingAfterConflict] = await tx
       .select()
       .from(usersTable)
-      .where(eq(usersTable.clerkUserId, userId))
+      .where(eq(usersTable.oidcSubject, userId))
       .limit(1);
     return existingAfterConflict?.status === "active" && existingAfterConflict.role === "admin"
       ? existingAfterConflict : null;
@@ -348,7 +348,7 @@ async function audit(req: Request, action: string, resourceType: string, resourc
   const { userId } = getAuth(req);
   await db.insert(auditLogsTable).values({
     actorId: actor?.id ?? null,
-    actorClerkUserId: userId ?? null,
+    actorOidcSubject: userId ?? null,
     action,
     resourceType,
     resourceId,
@@ -489,7 +489,7 @@ router.post("/admin/password/change", async (req, res): Promise<void> => {
     return;
   }
 
-  const rateLimit = checkAdminPasswordRateLimit(req, actor.clerkUserId ?? String(actor.id));
+  const rateLimit = checkAdminPasswordRateLimit(req, actor.oidcSubject ?? String(actor.id));
   if (!rateLimit.allowed) {
     res.setHeader("Retry-After", String(rateLimit.retryAfterSeconds));
     res.status(429).json({ error: "Too many password attempts. Try again later." });
@@ -499,7 +499,7 @@ router.post("/admin/password/change", async (req, res): Promise<void> => {
   const credential = await findAdminCredential(actor.id);
   const valid = credential ? await verifyAdminPassword(currentPassword, credential.passwordHash) : false;
   if (!valid) {
-    recordAdminPasswordFailure(req, actor.clerkUserId ?? String(actor.id));
+    recordAdminPasswordFailure(req, actor.oidcSubject ?? String(actor.id));
     res.status(401).json({ error: "Invalid admin credentials" });
     return;
   }
@@ -512,7 +512,7 @@ router.post("/admin/password/change", async (req, res): Promise<void> => {
     .set({ revokedAt: new Date() })
     .where(and(eq(adminSessionsTable.userId, actor.id), isNull(adminSessionsTable.revokedAt)));
   await issueAdminSession(req, res, actor.id);
-  clearAdminPasswordFailures(req, actor.clerkUserId ?? String(actor.id));
+  clearAdminPasswordFailures(req, actor.oidcSubject ?? String(actor.id));
   res.json({ ok: true });
 });
 
@@ -1315,7 +1315,7 @@ router.patch("/admin/users/:id/verification", async (req, res): Promise<void> =>
     return;
   }
 
-  const { userId: actorClerkUserId } = getAuth(req);
+  const { userId: actorOidcSubject } = getAuth(req);
   const result = await db.transaction(async (tx) => {
     const [currentUser] = await tx
       .select({ id: usersTable.id, name: usersTable.name, verified: usersTable.verified })
@@ -1338,7 +1338,7 @@ router.patch("/admin/users/:id/verification", async (req, res): Promise<void> =>
 
     await tx.insert(auditLogsTable).values({
       actorId: actor.id,
-      actorClerkUserId: actorClerkUserId ?? null,
+      actorOidcSubject: actorOidcSubject ?? null,
       action: parsed.data.verified ? "user.verified" : "user.unverified",
       resourceType: "user",
       resourceId: id,
@@ -1502,7 +1502,7 @@ router.patch("/admin/payments/:id/status", async (req, res): Promise<void> => {
        }
       await tx.insert(auditLogsTable).values({
         actorId: actor?.id ?? null,
-        actorClerkUserId: actor?.clerkUserId ?? null,
+        actorOidcSubject: actor?.oidcSubject ?? null,
         action: `payment.${status}`,
         resourceType: "payment",
         resourceId: id,

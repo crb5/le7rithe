@@ -1,22 +1,17 @@
 import { expect, test } from '@playwright/test';
 import { resolve } from 'node:path';
+import { ensureSignedIn } from './authentik-session.mjs';
+import { seller, moderator, admin } from './personas.mjs';
 
 const baseURL =
   process.env.E2E_BASE_URL ??
   (process.env.REPLIT_DEV_DOMAIN
     ? `https://${process.env.REPLIT_DEV_DOMAIN}`
     : undefined);
-const clerkSecretKey = process.env.CLERK_SECRET_KEY;
 const initialAdminPassword = process.env.ADMIN_INITIAL_PASSWORD;
-const adminEmail = process.env.E2E_ADMIN_EMAIL ?? 'e2e-admin@example.com';
-const sellerEmail = process.env.E2E_SELLER_EMAIL ?? 'e2e-seller@example.com';
-const moderatorEmail = process.env.E2E_MODERATOR_EMAIL ?? 'e2e-moderator@example.com';
 const sellerStorageState =
   process.env.E2E_SELLER_STORAGE_STATE ?? resolve(process.cwd(), 'e2e/.auth/seller.json');
-const configuredAdminUserId =
-  process.env.E2E_ADMIN_CLERK_USER_ID ??
-  process.env.ADMIN_CLERK_USER_IDS?.split(',').map((value) => value.trim()).find(Boolean);
-const missingConfiguration = !baseURL || !clerkSecretKey;
+const missingConfiguration = !baseURL;
 const missingPasswordConfiguration = missingConfiguration || !initialAdminPassword;
 
 const artifactBasePath = baseURL
@@ -27,72 +22,16 @@ function artifactRoute(path: string) {
   return `${artifactBasePath}${path}` || path;
 }
 
-type ClerkUser = {
-  id: string;
-  email_addresses?: Array<{ email_address: string }>;
-};
-
-type ClerkUsersResponse = {
-  data?: ClerkUser[];
-};
-
-async function findClerkUserIdByEmail(email: string) {
-  const headers = {
-    Authorization: `Bearer ${clerkSecretKey}`,
-    'Content-Type': 'application/json',
-  };
-  const usersResponse = await fetch(
-    `https://api.clerk.com/v1/users?email_address=${encodeURIComponent(email)}&limit=10`,
-    { headers },
-  );
-  expect(usersResponse.ok, `Could not look up the E2E account (${usersResponse.status}).`).toBeTruthy();
-  const usersBody = (await usersResponse.json()) as ClerkUsersResponse | ClerkUser[];
-  const users = Array.isArray(usersBody) ? usersBody : usersBody.data ?? [];
-  return users.find((user) =>
-    user.email_addresses?.some((address) => address.email_address === email),
-  )?.id;
-}
-
-async function createClerkSignInTicket(userId: string) {
-  const headers = {
-    Authorization: `Bearer ${clerkSecretKey}`,
-    'Content-Type': 'application/json',
-  };
-  const ticketResponse = await fetch('https://api.clerk.com/v1/sign_in_tokens', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ user_id: userId, expires_in_seconds: 600 }),
-  });
-  expect(ticketResponse.ok, `Could not create a Clerk sign-in ticket (${ticketResponse.status}).`).toBeTruthy();
-  const ticket = (await ticketResponse.json()) as { token?: string };
-  expect(ticket.token).toBeTruthy();
-  return ticket.token!;
-}
-
-async function createAdminSignInTicket() {
-  const adminId = configuredAdminUserId ?? await findClerkUserIdByEmail(adminEmail);
-  expect(adminId, `No Clerk user exists for ${adminEmail}. Run yarn setup:e2e-auth first.`).toBeTruthy();
-  return createClerkSignInTicket(adminId!);
-}
-
-async function establishUserClerkSession(page: import('@playwright/test').Page, userId: string) {
-  const ticket = await createClerkSignInTicket(userId);
-  await page.goto(
-    `${artifactRoute('/sign-in')}?__clerk_ticket=${encodeURIComponent(ticket)}`,
-    { waitUntil: 'domcontentloaded' },
-  );
+async function establishUserSession(page: import('@playwright/test').Page, persona: { username: string; password: string; name: string; email: string }) {
+  await ensureSignedIn(page, persona);
   await expect.poll(
     async () => (await page.request.get('/api/account/me')).status(),
     { timeout: 30_000 },
   ).toBe(200);
 }
 
-async function establishAdminClerkSession(page: import('@playwright/test').Page) {
-  const ticket = await createAdminSignInTicket();
-  await page.goto(
-    `${artifactRoute('/sign-in')}?__clerk_ticket=${encodeURIComponent(ticket)}`,
-    { waitUntil: 'domcontentloaded' },
-  );
+async function establishAdminSession(page: import('@playwright/test').Page) {
+  await ensureSignedIn(page, admin);
   await expect.poll(
     async () => (await page.request.get('/api/admin/me')).status(),
     { timeout: 30_000 },
@@ -103,7 +42,7 @@ async function establishAdminClerkSession(page: import('@playwright/test').Page)
 test.describe('admin login route', () => {
   test.skip(
     missingConfiguration,
-    'Set E2E_BASE_URL (or REPLIT_DEV_DOMAIN) and CLERK_SECRET_KEY to run the admin login browser regression.',
+    'Set E2E_BASE_URL (or REPLIT_DEV_DOMAIN) to run the admin login browser regression.',
   );
 
   test('hides admin routes and APIs from visitors and ordinary users', async ({ browser }) => {
@@ -141,7 +80,7 @@ test.describe('admin login route', () => {
 
   test.skip(
     missingPasswordConfiguration,
-    'Set ADMIN_INITIAL_PASSWORD in addition to the Clerk and base URL configuration to run the password initialization regression.',
+    'Set ADMIN_INITIAL_PASSWORD in addition to the base URL configuration to run the password initialization regression.',
   );
 
   test('logs in and renders the admin overview across languages and screen sizes', async ({ browser }) => {
@@ -149,7 +88,7 @@ test.describe('admin login route', () => {
     const page = await context.newPage();
 
     try {
-      await establishAdminClerkSession(page);
+      await establishAdminSession(page);
 
       const initialMeResponse = await page.request.get('/api/admin/me');
       expect(initialMeResponse.ok()).toBeTruthy();
@@ -159,7 +98,7 @@ test.describe('admin login route', () => {
       };
       test.skip(
         initialMe.role !== 'admin',
-        'The configured E2E Clerk identity is not allowlisted as an administrator.',
+        `The E2E admin account (${admin.email}) is not allowlisted as an administrator — add it to ADMIN_ALLOWED_EMAILS on the target server.`,
       );
       expect(['configured', 'ready']).toContain(initialMe.passwordSetupStatus);
 
@@ -245,7 +184,7 @@ test.describe('admin login route', () => {
 
   test.skip(
     missingPasswordConfiguration,
-    'Set ADMIN_INITIAL_PASSWORD in addition to the Clerk and base URL configuration to run the catalog password-boundary regression.',
+    'Set ADMIN_INITIAL_PASSWORD in addition to the base URL configuration to run the catalog password-boundary regression.',
   );
 
   test('requires the administrator password before catalog mutations', async ({ browser }) => {
@@ -253,7 +192,7 @@ test.describe('admin login route', () => {
     const page = await context.newPage();
 
     try {
-      await establishAdminClerkSession(page);
+      await establishAdminSession(page);
 
       const categoriesResponse = await page.request.get('/api/categories');
       expect(categoriesResponse.status()).toBe(200);
@@ -355,7 +294,7 @@ test.describe('admin login route', () => {
 
   test.skip(
     missingPasswordConfiguration,
-    'Set the Clerk, admin-password, and preview configuration to run the verification badge regression.',
+    'Set ADMIN_INITIAL_PASSWORD and the base URL configuration to run the verification badge regression.',
   );
 
   test('only admins can grant or remove verification and the badge follows the saved state', async ({ browser }) => {
@@ -376,26 +315,31 @@ test.describe('admin login route', () => {
     let moderatorSessionReady = false;
 
     try {
-      const sellerUserId = await findClerkUserIdByEmail(sellerEmail);
-      if (sellerUserId) {
-        await establishUserClerkSession(sellerPage, sellerUserId);
+      try {
+        await establishUserSession(sellerPage, seller);
         const sellerProfileResponse = await sellerPage.request.get('/api/account/me');
         if (sellerProfileResponse.ok()) {
           sellerProfile = await sellerProfileResponse.json() as { id: number | null; verified: boolean };
         }
+      } catch {
+        // Seller session unavailable — covered by the sellerProfile?.id checks below.
       }
 
-      const moderatorUserId = await findClerkUserIdByEmail(moderatorEmail);
-      if (moderatorUserId) {
-        await establishUserClerkSession(moderatorPage, moderatorUserId);
+      try {
+        await establishUserSession(moderatorPage, moderator);
         moderatorSessionReady = true;
+      } catch {
+        // Moderator session unavailable — covered by the moderatorSessionReady checks below.
       }
 
-      await establishAdminClerkSession(adminPage);
+      await establishAdminSession(adminPage);
       const adminMeResponse = await adminPage.request.get('/api/admin/me');
       expect(adminMeResponse.ok()).toBeTruthy();
       const adminMe = await adminMeResponse.json() as { role?: string | null };
-      test.skip(adminMe.role !== 'admin', 'The configured E2E Clerk identity is not allowlisted as an administrator.');
+      test.skip(
+        adminMe.role !== 'admin',
+        `The E2E admin account (${admin.email}) is not allowlisted as an administrator — add it to ADMIN_ALLOWED_EMAILS on the target server.`,
+      );
 
       const loginResponse = await adminPage.request.post('/api/admin/password/login', {
         data: { password: initialAdminPassword },

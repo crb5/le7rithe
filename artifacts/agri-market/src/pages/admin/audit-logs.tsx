@@ -25,7 +25,7 @@ export function AdminAuditLogs() {
       log.action,
       log.resourceType,
       log.resourceId,
-      log.actorClerkUserId,
+      log.actorOidcSubject,
       JSON.stringify(log.details ?? {}),
     ].join(' ').toLocaleLowerCase();
     return searchableText.includes(normalizedSearch);
@@ -109,8 +109,8 @@ export function AdminAuditLogs() {
                       <span className="font-numeric" dir="ltr">{log.resourceId ? formatNumber(Number(log.resourceId)) : t('notAvailable')}</span>
                     </AdminTd>
                     <AdminTd>
-                      <div className="text-[11px] truncate max-w-[120px]" title={log.actorClerkUserId || t('system')}>
-                        {log.actorClerkUserId || t('system')}
+                      <div className="text-[11px] truncate max-w-[120px]" title={log.actorOidcSubject || t('system')}>
+                        {log.actorOidcSubject || t('system')}
                       </div>
                     </AdminTd>
                     <AdminTd>

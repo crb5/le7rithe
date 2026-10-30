@@ -1,7 +1,7 @@
 import { allowedAdminEmails, verifiedAdminIdentity, type VerifiableIdentity } from "./admin-identity";
 
 export type LocalAccountDraft = {
-  clerkUserId: string;
+  oidcSubject: string;
   name: string;
   email: string | null;
   initials: string;
@@ -11,7 +11,7 @@ export type LocalAccountDraft = {
 
 export async function provisionLocalAccount<T extends { role: string; status: string }>(
   input: {
-    clerkUserId: string;
+    oidcSubject: string;
     existing: T | null;
     fallbackName: string;
     fallbackEmail: string | null;
@@ -30,7 +30,7 @@ export async function provisionLocalAccount<T extends { role: string; status: st
     return input.existing;
   }
   const administrator = allowedAdminEmails(input.allowedEmails).size > 0
-    ? verifiedAdminIdentity(store.loadIdentity(), input.clerkUserId, input.allowedEmails)
+    ? verifiedAdminIdentity(store.loadIdentity(), input.oidcSubject, input.allowedEmails)
     : null;
   if (input.existing) {
     return administrator ? store.promote(input.existing, administrator.email) : input.existing;
@@ -41,7 +41,7 @@ export async function provisionLocalAccount<T extends { role: string; status: st
   }
   const name = administrator?.name ?? input.fallbackName;
   return store.create({
-    clerkUserId: input.clerkUserId,
+    oidcSubject: input.oidcSubject,
     name,
     email: administrator?.email ?? input.fallbackEmail,
     initials: name.trim().split(/\s+/).slice(0, 2).map(part => part[0] || "").join("") || "م",

@@ -105,7 +105,7 @@ import {
 import { normalizeListingPhones, normalizeMauritaniaPhone } from "../lib/mauritania-phone";
 import { notifyNewBuyerMessage } from "../lib/whatsapp";
 import {
-  hasCurrentLegalConsentForClerkUser,
+  hasCurrentLegalConsentForOidcSubject,
   requireCurrentLegalConsent,
 } from "../lib/legal-consent-store";
 import { getAdminSessionCookie, hashAdminSessionToken } from "../lib/admin-auth";
@@ -131,7 +131,7 @@ const authenticatedMarketplaceUser = async (req: Request, res: Response) => {
     res.status(401).json({ error: "Authentication required" });
     return null;
   }
-  const [existing] = await db.select().from(usersTable).where(eq(usersTable.clerkUserId, auth.userId));
+  const [existing] = await db.select().from(usersTable).where(eq(usersTable.oidcSubject, auth.userId));
   if (existing) {
     if (existing.status !== "active") {
       res.status(403).json({ error: "Account is suspended" });
@@ -147,7 +147,7 @@ const authenticatedMarketplaceUser = async (req: Request, res: Response) => {
       : "مستخدم";
   const email = typeof claims.email === "string" ? claims.email : null;
   return provisionLocalAccount({
-    clerkUserId: auth.userId,
+    oidcSubject: auth.userId,
     existing: existing ?? null,
     fallbackName: displayName,
     fallbackEmail: email,
@@ -159,7 +159,7 @@ const authenticatedMarketplaceUser = async (req: Request, res: Response) => {
       // the same local owner/password as first use of the admin routes.
       await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtext('marketplace_admin_bootstrap'))`);
       const [concurrent] = await tx.select().from(usersTable)
-        .where(eq(usersTable.clerkUserId, auth.userId!)).limit(1);
+        .where(eq(usersTable.oidcSubject, auth.userId!)).limit(1);
       if (concurrent) {
         if (concurrent.status !== "active") throw new Error("Local administrator is inactive");
         const [promoted] = await tx.update(usersTable)
@@ -176,15 +176,15 @@ const authenticatedMarketplaceUser = async (req: Request, res: Response) => {
       if (!legacyActor) return null;
       if (legacyActor.status !== "active") throw new Error("Local administrator is inactive");
       const [reconnected] = await tx.update(usersTable)
-        .set({ clerkUserId: auth.userId!, email: verifiedEmail })
+        .set({ oidcSubject: auth.userId!, email: verifiedEmail })
         .where(eq(usersTable.id, legacyActor.id)).returning();
       return reconnected;
     }),
     create: async values => {
       const [created] = await db.insert(usersTable).values(values)
         .onConflictDoUpdate({
-          target: usersTable.clerkUserId,
-          set: values.role === "admin" ? { role: "admin", email: values.email } : { clerkUserId: values.clerkUserId },
+          target: usersTable.oidcSubject,
+          set: values.role === "admin" ? { role: "admin", email: values.email } : { oidcSubject: values.oidcSubject },
           setWhere: eq(usersTable.status, "active"),
         }).returning();
       if (!created) throw new Error("Local account provisioning failed");
@@ -208,7 +208,7 @@ const requireAdminForMarketplace = async (
 ): Promise<void> => {
   const { userId } = getAuth(req);
   const [actor] = userId
-    ? await db.select().from(usersTable).where(eq(usersTable.clerkUserId, userId)).limit(1)
+    ? await db.select().from(usersTable).where(eq(usersTable.oidcSubject, userId)).limit(1)
     : [];
   const actorFailure = adminRouteAccessFailure(actor ?? null, false);
   if (actorFailure?.status === 404) {
@@ -248,7 +248,7 @@ router.use("/admin/regions", requireAdminForMarketplace);
 const marketplaceUserForRequest = async (req: Request) => {
   const { userId } = getAuth(req);
   if (!userId) return null;
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.clerkUserId, userId));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.oidcSubject, userId));
   return user ?? null;
 };
 
@@ -995,7 +995,7 @@ router.get("/market-pulse", async (req, res): Promise<void> => {
   await ensureSeed();
   const { userId } = getAuth(req);
   const candidateActor = await marketplaceUserForRequest(req);
-  const actor = userId && candidateActor && await hasCurrentLegalConsentForClerkUser(userId)
+  const actor = userId && candidateActor && await hasCurrentLegalConsentForOidcSubject(userId)
     ? candidateActor
     : null;
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
@@ -1050,7 +1050,7 @@ router.get("/listings", async (req, res): Promise<void> => {
     await ensureSeed();
     const { userId } = getAuth(req);
     const candidateActor = await marketplaceUserForRequest(req);
-    const actor = userId && candidateActor && await hasCurrentLegalConsentForClerkUser(userId)
+    const actor = userId && candidateActor && await hasCurrentLegalConsentForOidcSubject(userId)
       ? candidateActor
       : null;
     const featuredQuery = req.query.featured;
@@ -1155,7 +1155,7 @@ router.get("/listings/:id", async (req, res): Promise<void> => {
   if (publicRow) {
     const { userId } = getAuth(req);
     const candidateActor = await marketplaceUserForRequest(req);
-    const actor = userId && candidateActor && await hasCurrentLegalConsentForClerkUser(userId)
+    const actor = userId && candidateActor && await hasCurrentLegalConsentForOidcSubject(userId)
       ? candidateActor
       : null;
     const savedIds = await getSavedIds([publicRow.listing.id], actor?.id);
@@ -2585,7 +2585,7 @@ router.delete("/account/me", async (req, res): Promise<void> => {
       // The local account and all of its data are removed here. Removing the
       // corresponding identity-provider (Authentik) user would require the
       // provider's admin API and is intentionally left to a separate process.
-      deleteClerkUser: async () => {},
+      deleteIdentityProviderUser: async () => {},
     });
     if (!deleted) {
       res.status(404).json({ error: "Account not found" });

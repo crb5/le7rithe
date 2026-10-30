@@ -19,12 +19,9 @@ export function isIdentityProtectedPath(path: string): boolean {
       '/dashboard',
       '/dashboard/active-listings',
       '/account',
-      '/account/complete-phone-profile',
     ].includes(path)
     || /^\/reports\/[^/]+$/.test(path)
-    || /^\/admin(?:\/|$)/.test(path) && path !== '/admin/login'
-    || path.startsWith('/account/complete-signup-phone')
-    || path.startsWith('/account/complete-signup-email');
+    || /^\/admin(?:\/|$)/.test(path) && path !== '/admin/login';
 }
 
 const PUBLIC_MARKETPLACE_QUERY_PATHS = new Set([

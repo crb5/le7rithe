@@ -20,14 +20,14 @@ export function createMarketplaceAccountDeletionStore(
   objectStorage: ObjectStorageService,
 ): AccountDeletionStore {
   return {
-    begin: async (clerkUserId) => {
+    begin: async (oidcSubject) => {
       const account = await db.transaction(async (tx) => {
         const [user] = await tx.select({
           id: usersTable.id,
           status: usersTable.status,
         })
           .from(usersTable)
-          .where(eq(usersTable.clerkUserId, clerkUserId))
+          .where(eq(usersTable.oidcSubject, oidcSubject))
           .for("update");
 
         if (!user) return { localUserId: null as number | null };
@@ -57,21 +57,21 @@ export function createMarketplaceAccountDeletionStore(
         ...ownedPayments.flatMap(({ proofImageUrl }) => proofImageUrl ? [proofImageUrl] : []),
       ];
       const personalObjectPaths = await objectStorage.listOwnedPersonalDataObjectPaths(
-        clerkUserId,
+        oidcSubject,
         knownPaths,
       );
 
-      return { clerkUserId, personalObjectPaths };
+      return { oidcSubject, personalObjectPaths };
     },
 
-    eraseMarketplaceData: async (clerkUserId) => {
+    eraseMarketplaceData: async (oidcSubject) => {
       const knownPaths = await db.transaction(async (tx) => {
       const [user] = await tx.select({
         id: usersTable.id,
         status: usersTable.status,
       })
         .from(usersTable)
-        .where(eq(usersTable.clerkUserId, clerkUserId))
+        .where(eq(usersTable.oidcSubject, oidcSubject))
         .for("update");
       if (user && user.status !== "pending_deletion") {
         throw new Error("Account deletion was not marked pending");
@@ -159,10 +159,10 @@ export function createMarketplaceAccountDeletionStore(
           .set({ updatedBy: null })
           .where(eq(supportSettingsTable.updatedBy, user.id));
         await tx.update(auditLogsTable)
-          .set({ actorId: null, actorClerkUserId: null, details: {} })
+          .set({ actorId: null, actorOidcSubject: null, details: {} })
           .where(or(
             eq(auditLogsTable.actorId, user.id),
-            eq(auditLogsTable.actorClerkUserId, clerkUserId),
+            eq(auditLogsTable.actorOidcSubject, oidcSubject),
           ));
         await tx.update(usersTable).set({
           name: "Deleted account",
@@ -178,23 +178,23 @@ export function createMarketplaceAccountDeletionStore(
       }
 
       await tx.update(legalConsentsTable)
-        .set({ clerkUserId: null, locale: null })
-        .where(eq(legalConsentsTable.clerkUserId, clerkUserId));
+        .set({ oidcSubject: null, locale: null })
+        .where(eq(legalConsentsTable.oidcSubject, oidcSubject));
       await tx.delete(phoneVerificationSessionsTable)
-        .where(eq(phoneVerificationSessionsTable.clerkUserId, clerkUserId));
+        .where(eq(phoneVerificationSessionsTable.oidcSubject, oidcSubject));
 
       return [
         ...ownedListings.flatMap(({ imageUrl, images }) => [imageUrl, ...images]),
         ...ownedPayments.flatMap(({ proofImageUrl }) => proofImageUrl ? [proofImageUrl] : []),
       ];
       });
-      return objectStorage.listOwnedPersonalDataObjectPaths(clerkUserId, knownPaths);
+      return objectStorage.listOwnedPersonalDataObjectPaths(oidcSubject, knownPaths);
     },
 
-    finalize: async (clerkUserId) => {
+    finalize: async (oidcSubject) => {
       await db.delete(usersTable)
         .where(and(
-          eq(usersTable.clerkUserId, clerkUserId),
+          eq(usersTable.oidcSubject, oidcSubject),
           eq(usersTable.status, "pending_deletion"),
         ));
     },

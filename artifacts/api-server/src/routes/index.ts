@@ -7,7 +7,7 @@ import legalPolicyRouter from "./legal-policy";
 const router: IRouter = Router();
 
 // Liveness must remain public so the deployment platform can determine whether
-// the process is alive without needing a Clerk session.
+// the process is alive without needing an authenticated session.
 router.use(healthRouter);
 
 // Individual route handlers enforce authentication for private mutations and

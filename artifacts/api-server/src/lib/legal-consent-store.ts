@@ -2,28 +2,28 @@ import { and, eq } from "drizzle-orm";
 import { db, legalConsentsTable } from "@workspace/db";
 import { createLegalConsentGuard } from "./legal-consent";
 
-const legalConsentGuard = createLegalConsentGuard(async (clerkUserId, versions) => {
+const legalConsentGuard = createLegalConsentGuard(async (oidcSubject, versions) => {
   const [accepted] = await db
     .select({
-      clerkUserId: legalConsentsTable.clerkUserId,
+      oidcSubject: legalConsentsTable.oidcSubject,
       termsVersion: legalConsentsTable.termsVersion,
       privacyVersion: legalConsentsTable.privacyVersion,
     })
     .from(legalConsentsTable)
     .where(and(
-      eq(legalConsentsTable.clerkUserId, clerkUserId),
+      eq(legalConsentsTable.oidcSubject, oidcSubject),
       eq(legalConsentsTable.termsVersion, versions.termsVersion),
       eq(legalConsentsTable.privacyVersion, versions.privacyVersion),
     ))
     .limit(1);
-  return accepted?.clerkUserId
+  return accepted?.oidcSubject
     ? {
-        clerkUserId: accepted.clerkUserId,
+        oidcSubject: accepted.oidcSubject,
         termsVersion: accepted.termsVersion,
         privacyVersion: accepted.privacyVersion,
       }
     : undefined;
 });
 
-export const hasCurrentLegalConsentForClerkUser = legalConsentGuard.hasCurrentConsent;
+export const hasCurrentLegalConsentForOidcSubject = legalConsentGuard.hasCurrentConsent;
 export const requireCurrentLegalConsent = legalConsentGuard.requireCurrentConsent;

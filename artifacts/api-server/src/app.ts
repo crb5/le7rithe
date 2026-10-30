@@ -66,10 +66,6 @@ const mutationRateLimiter = createRequestRateLimiter({
   windowMs: 15 * 60 * 1000,
   max: 120,
   keyGenerator: requestRateLimitKey,
-  failClosed: (req) =>
-    req.path.startsWith("/auth/phone/") ||
-    req.path === "/auth/send-code" ||
-    req.path === "/auth/verify-code",
 });
 const adminPasswordLoginRateLimiter = createRequestRateLimiter({
   limiterKey: "admin-password-login",

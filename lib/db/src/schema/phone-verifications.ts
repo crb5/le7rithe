@@ -6,7 +6,7 @@ export const phoneVerificationSessionsTable = pgTable(
   "marketplace_phone_verification_sessions",
   {
     id: serial("id").primaryKey(),
-    clerkUserId: text("clerk_user_id"),
+    oidcSubject: text("oidc_subject"),
     verificationId: text("verification_id").notNull(),
     phone: text("phone").notNull(),
     purpose: text("purpose").notNull().default("link"),
@@ -18,7 +18,7 @@ export const phoneVerificationSessionsTable = pgTable(
   },
   (table) => ({
     verificationIdUnique: uniqueIndex("marketplace_phone_verification_id_unique").on(table.verificationId),
-    userSentAtIndex: index("marketplace_phone_verification_user_sent_at_idx").on(table.clerkUserId, table.sentAt),
+    userSentAtIndex: index("marketplace_phone_verification_user_sent_at_idx").on(table.oidcSubject, table.sentAt),
   }),
 );
 

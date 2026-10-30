@@ -8,7 +8,7 @@ import {
   shouldShowAuthLoadingScreen,
 } from './auth-query-cache';
 
-test('only protected paths use the full-page Clerk loading state', () => {
+test('only protected paths use the full-page auth loading state', () => {
   assert.equal(isIdentityProtectedPath('/saved'), true);
   assert.equal(isIdentityProtectedPath('/account'), true);
   assert.equal(isIdentityProtectedPath('/account/complete-signup-phone'), true);

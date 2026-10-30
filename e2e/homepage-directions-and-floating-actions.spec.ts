@@ -1,56 +1,18 @@
 import { expect, test, type Browser, type Page } from '@playwright/test';
+import { ensureSignedIn } from './authentik-session.mjs';
+import { seller } from './personas.mjs';
 
 const baseURL =
   process.env.E2E_BASE_URL ??
   (process.env.REPLIT_DEV_DOMAIN
     ? `https://${process.env.REPLIT_DEV_DOMAIN}`
     : undefined);
-const clerkSecretKey = process.env.CLERK_SECRET_KEY;
-const sellerEmail = process.env.E2E_SELLER_EMAIL ?? 'e2e-seller@example.com';
 const mobileViewport = { width: 390, height: 844 };
 const localeCases = [
   { language: 'ar', direction: 'rtl' },
   { language: 'fr', direction: 'ltr' },
   { language: 'en', direction: 'ltr' },
 ] as const;
-
-type ClerkUser = {
-  id: string;
-  email_addresses?: Array<{ email_address: string }>;
-};
-
-type ClerkUsersResponse = {
-  data?: ClerkUser[];
-};
-
-async function createExistingSellerSignInTicket() {
-  const headers = {
-    Authorization: `Bearer ${clerkSecretKey}`,
-    'Content-Type': 'application/json',
-  };
-  const usersResponse = await fetch(
-    `https://api.clerk.com/v1/users?email_address=${encodeURIComponent(sellerEmail)}&limit=10`,
-    { headers },
-  );
-  expect(usersResponse.ok, `Could not look up the E2E seller (${usersResponse.status}).`).toBeTruthy();
-
-  const body = (await usersResponse.json()) as ClerkUsersResponse | ClerkUser[];
-  const users = Array.isArray(body) ? body : body.data ?? [];
-  const sellerId = users.find((user) =>
-    user.email_addresses?.some((address) => address.email_address === sellerEmail),
-  )?.id;
-  test.skip(!sellerId, 'An existing E2E seller account is required to check the signed-in support button.');
-
-  const ticketResponse = await fetch('https://api.clerk.com/v1/sign_in_tokens', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ user_id: sellerId, expires_in_seconds: 600 }),
-  });
-  expect(ticketResponse.ok, `Could not create a temporary sign-in ticket (${ticketResponse.status}).`).toBeTruthy();
-  const ticket = (await ticketResponse.json()) as { token?: string };
-  expect(ticket.token).toBeTruthy();
-  return ticket.token!;
-}
 
 async function useMobilePage(browser: Browser) {
   const context = await browser.newContext({
@@ -165,17 +127,14 @@ test.describe('homepage directions and floating actions on mobile', () => {
   });
 
   test.skip(
-    !baseURL || !clerkSecretKey,
-    'Set Clerk test credentials and a preview URL to check signed-in support controls.',
+    !baseURL,
+    'Set E2E_BASE_URL (or REPLIT_DEV_DOMAIN) to check signed-in support controls.',
   );
 
   test('the support and add buttons keep their positions and hide/reappear in all three locales', async ({ browser }) => {
     const { context, page } = await useMobilePage(browser);
     try {
-      const ticket = await createExistingSellerSignInTicket();
-      await page.goto(`/sign-in?__clerk_ticket=${encodeURIComponent(ticket)}`, {
-        waitUntil: 'domcontentloaded',
-      });
+      await ensureSignedIn(page, seller);
       await expect.poll(async () => (await page.request.get('/api/account/me')).status()).toBe(200);
       await page.goto('/');
 

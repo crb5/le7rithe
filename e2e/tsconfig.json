@@ -3,7 +3,9 @@
   "compilerOptions": {
     "lib": ["ES2022", "DOM"],
     "types": ["node", "@playwright/test"],
-    "noEmit": true
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true
   },
   "include": ["*.ts"]
 }

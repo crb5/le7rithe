@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 
 const execFileAsync = promisify(execFile);
 
-setup("provision report-flow Clerk sessions", async () => {
+setup("provision report-flow test sessions", async () => {
   try {
     await execFileAsync("yarn", ["run", "validate:development-schema"], {
       env: process.env,

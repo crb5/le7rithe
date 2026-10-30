@@ -168,7 +168,7 @@ test.describe('administrator logout confirmation', () => {
       ) {
         test.skip(
           true,
-          'The configured administrator session is not authorized for the local admin portal; refresh the Clerk storage state and local administrator role before this regression.',
+          'The configured administrator session is not authorized for the local admin portal; refresh the storage state (run yarn setup:e2e-auth) and local administrator role before this regression.',
         );
       }
 
