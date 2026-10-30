@@ -413,6 +413,8 @@ const en = {
   authGenericError: 'Something went wrong. Please try again.', authInvalidCredentials: 'Incorrect username or password.',
   authContinueSecure: 'Continue in a secure window', authTryAgain: 'Try again',
   authPhoneLabel: 'Phone number', authInvalidPhone: 'Enter a valid Mauritania phone number.',
+  authUsernameLabel: 'Username', authPasswordRepeatLabel: 'Confirm password',
+  authNameLabel: 'Name', authEmailLabel: 'Email',
   authAgreePrefix: 'I agree to the', authAgreeAnd: 'and',
   authAgreeRequired: 'You must agree to the Terms of Service and Privacy Policy to continue.',
 } as const;

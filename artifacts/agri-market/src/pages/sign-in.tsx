@@ -22,8 +22,13 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 
-type Stage = 'loading' | 'identification' | 'password' | 'completing' | 'unsupported' | 'denied' | 'error';
+type Stage = 'loading' | 'ready' | 'completing' | 'unsupported' | 'denied' | 'error';
 
+/**
+ * Identification and password are two separate Authentik stages under the
+ * hood, submitted as two chained requests — but both fields are shown
+ * together on one screen, so the person never sees that split.
+ */
 export function SignIn() {
   const { t } = useLanguage();
   const { isLoaded, user } = useUser();
@@ -52,8 +57,10 @@ export function SignIn() {
       return;
     }
     setError(flowNonFieldError(next));
-    if (next.component === 'ak-stage-identification') { setStage('identification'); return; }
-    if (next.component === 'ak-stage-password') { setStage('password'); return; }
+    if (next.component === 'ak-stage-identification' || next.component === 'ak-stage-password') {
+      setStage('ready');
+      return;
+    }
     if (isFlowUnsupported(next)) { setStage('unsupported'); return; }
     setStage('error');
   }
@@ -61,8 +68,6 @@ export function SignIn() {
   function restart() {
     setStage('loading');
     setError(null);
-    setUid('');
-    setPassword('');
     void startFlow(LOGIN_FLOW_SLUG).then(handleChallenge).catch(() => setStage('error'));
   }
 
@@ -74,27 +79,17 @@ export function SignIn() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded, user]);
 
-  async function submitIdentification(event: FormEvent) {
+  async function submit(event: FormEvent) {
     event.preventDefault();
     setSubmitting(true);
     setError(null);
     try {
-      const body: Record<string, unknown> = { uid_field: uid };
-      if (challenge?.password_fields) body.password = password;
-      handleChallenge(await submitFlow(LOGIN_FLOW_SLUG, body));
-    } catch {
-      setError(t('authGenericError'));
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  async function submitPassword(event: FormEvent) {
-    event.preventDefault();
-    setSubmitting(true);
-    setError(null);
-    try {
-      handleChallenge(await submitFlow(LOGIN_FLOW_SLUG, { password }));
+      const first = challenge?.password_fields ? { uid_field: uid, password } : { uid_field: uid };
+      let next = await submitFlow(LOGIN_FLOW_SLUG, first);
+      if (next.component === 'ak-stage-password') {
+        next = await submitFlow(LOGIN_FLOW_SLUG, { password });
+      }
+      handleChallenge(next);
     } catch {
       setError(t('authGenericError'));
     } finally {
@@ -128,7 +123,6 @@ export function SignIn() {
     );
   }
 
-  const showPasswordWithIdentification = stage === 'identification' && Boolean(challenge?.password_fields);
   const ownReturnPath = `/sign-in?redirect_url=${encodeURIComponent(redirectTo)}`;
   const googleUrl = socialSourceUrl(challenge, ownReturnPath);
 
@@ -152,71 +146,40 @@ export function SignIn() {
         </>
       )}
 
-      {stage === 'identification' && (
-        <form onSubmit={submitIdentification} className="space-y-4">
-          <div>
-            <Label htmlFor="sign-in-uid">{t('authIdentifierLabel')}</Label>
-            <Input
-              id="sign-in-uid"
-              name="username"
-              value={uid}
-              onChange={(event) => setUid(event.target.value)}
-              autoComplete="username"
-              autoFocus
-              required
-              className="mt-2"
-            />
-            <AuthFieldError message={flowFieldError(challenge, 'uid_field')} />
-          </div>
-          {showPasswordWithIdentification && (
-            <div>
-              <Label htmlFor="sign-in-password-combined">{t('authPasswordLabel')}</Label>
-              <Input
-                id="sign-in-password-combined"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                autoComplete="current-password"
-                required
-                className="mt-2"
-              />
-              <AuthFieldError message={flowFieldError(challenge, 'password')} />
-            </div>
-          )}
-          <AuthFieldError message={error} />
-          <Button type="submit" disabled={submitting || !uid} className="w-full">
-            {submitting ? <Loader2 size={18} className="animate-spin" /> : t('authContinue')}
-          </Button>
-        </form>
-      )}
-
-      {stage === 'password' && (
-        <form onSubmit={submitPassword} className="space-y-4">
-          <div>
-            <Label htmlFor="sign-in-password">{t('authPasswordLabel')}</Label>
-            <Input
-              id="sign-in-password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              autoComplete="current-password"
-              autoFocus
-              required
-              className="mt-2"
-            />
-            <AuthFieldError message={flowFieldError(challenge, 'password')} />
-          </div>
-          <AuthFieldError message={error} />
-          <Button type="submit" disabled={submitting || !password} className="w-full">
-            {submitting ? <Loader2 size={18} className="animate-spin" /> : t('authContinue')}
-          </Button>
-          <Button type="button" variant="ghost" className="w-full" onClick={restart}>
-            {t('authBackToIdentifier')}
-          </Button>
-        </form>
-      )}
+      <form onSubmit={submit} className="space-y-4">
+        <div>
+          <Label htmlFor="sign-in-uid">{t('authIdentifierLabel')}</Label>
+          <Input
+            id="sign-in-uid"
+            name="username"
+            value={uid}
+            onChange={(event) => setUid(event.target.value)}
+            autoComplete="username"
+            autoFocus
+            required
+            className="mt-2"
+          />
+          <AuthFieldError message={flowFieldError(challenge, 'uid_field')} />
+        </div>
+        <div>
+          <Label htmlFor="sign-in-password">{t('authPasswordLabel')}</Label>
+          <Input
+            id="sign-in-password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            autoComplete="current-password"
+            required
+            className="mt-2"
+          />
+          <AuthFieldError message={flowFieldError(challenge, 'password')} />
+        </div>
+        <AuthFieldError message={error} />
+        <Button type="submit" disabled={submitting || !uid || !password} className="w-full">
+          {submitting ? <Loader2 size={18} className="animate-spin" /> : t('authContinue')}
+        </Button>
+      </form>
     </AuthShell>
   );
 }
