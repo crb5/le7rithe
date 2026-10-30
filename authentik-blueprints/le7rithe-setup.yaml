@@ -1,0 +1,163 @@
+version: 1
+metadata:
+  labels:
+    blueprints.goauthentik.io/instantiate: "true"
+  name: le7rithe - OIDC provider, application & enrollment flow
+entries:
+  # --- Username/password registration flow (drives the custom /sign-up page
+  # headlessly — see agri-market/src/pages/sign-up.tsx and lib/oidc-flow.ts).
+  - identifiers:
+      slug: default-enrollment-flow
+    model: authentik_flows.flow
+    id: enrollment-flow
+    attrs:
+      name: Default enrollment Flow
+      title: Welcome to authentik!
+      designation: enrollment
+      authentication: require_unauthenticated
+  - id: prompt-field-username
+    model: authentik_stages_prompt.prompt
+    identifiers:
+      name: default-enrollment-field-username
+    attrs:
+      field_key: username
+      label: Username
+      type: username
+      required: true
+      placeholder: Username
+      placeholder_expression: false
+      order: 0
+  - identifiers:
+      name: default-enrollment-field-password
+    id: prompt-field-password
+    model: authentik_stages_prompt.prompt
+    attrs:
+      field_key: password
+      label: Password
+      type: password
+      required: true
+      placeholder: Password
+      placeholder_expression: false
+      order: 0
+  - identifiers:
+      name: default-enrollment-field-password-repeat
+    id: prompt-field-password-repeat
+    model: authentik_stages_prompt.prompt
+    attrs:
+      field_key: password_repeat
+      label: Password (repeat)
+      type: password
+      required: true
+      placeholder: Password (repeat)
+      placeholder_expression: false
+      order: 1
+  - identifiers:
+      name: default-enrollment-field-name
+    id: prompt-field-name
+    model: authentik_stages_prompt.prompt
+    attrs:
+      field_key: name
+      label: Name
+      type: text
+      required: true
+      placeholder: Name
+      placeholder_expression: false
+      order: 0
+  - identifiers:
+      name: default-enrollment-field-email
+    id: prompt-field-email
+    model: authentik_stages_prompt.prompt
+    attrs:
+      field_key: email
+      label: Email
+      type: email
+      required: true
+      placeholder: Email
+      placeholder_expression: false
+      order: 1
+  - identifiers:
+      name: default-enrollment-prompt-second
+    id: default-enrollment-prompt-second
+    model: authentik_stages_prompt.promptstage
+    attrs:
+      fields:
+        - !KeyOf prompt-field-name
+        - !KeyOf prompt-field-email
+  - identifiers:
+      name: default-enrollment-prompt-first
+    id: default-enrollment-prompt-first
+    model: authentik_stages_prompt.promptstage
+    attrs:
+      fields:
+        - !KeyOf prompt-field-username
+        - !KeyOf prompt-field-password
+        - !KeyOf prompt-field-password-repeat
+  - identifiers:
+      name: default-enrollment-user-login
+    id: default-enrollment-user-login
+    model: authentik_stages_user_login.userloginstage
+  - identifiers:
+      name: default-enrollment-user-write
+    id: default-enrollment-user-write
+    model: authentik_stages_user_write.userwritestage
+    attrs:
+      user_creation_mode: always_create
+  - identifiers:
+      target: !KeyOf enrollment-flow
+      stage: !KeyOf default-enrollment-prompt-first
+      order: 10
+    model: authentik_flows.flowstagebinding
+  - identifiers:
+      target: !KeyOf enrollment-flow
+      stage: !KeyOf default-enrollment-prompt-second
+      order: 11
+    model: authentik_flows.flowstagebinding
+  - identifiers:
+      target: !KeyOf enrollment-flow
+      stage: !KeyOf default-enrollment-user-write
+      order: 20
+    model: authentik_flows.flowstagebinding
+  - identifiers:
+      target: !KeyOf enrollment-flow
+      stage: !KeyOf default-enrollment-user-login
+      order: 100
+    model: authentik_flows.flowstagebinding
+
+  # --- OAuth2/OIDC provider + application for the app itself.
+  #
+  # authorization_flow is pinned to *implicit* consent from the start — using
+  # explicit consent here silently shows Authentik's own hosted consent
+  # screen after every custom login/signup, which defeats the whole point of
+  # the app's custom auth pages. Found the hard way on the first deployment;
+  # baked in here so a fresh server never hits it.
+  - identifiers:
+      name: le7rithe
+    id: provider
+    model: authentik_providers_oauth2.oauth2provider
+    attrs:
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      invalidation_flow: !Find [authentik_flows.flow, [slug, default-provider-invalidation-flow]]
+      client_type: public
+      redirect_uris:
+        - matching_mode: strict
+          url: https://le7rithe.com/auth/callback
+        - matching_mode: strict
+          url: https://le7rithe.com/
+        - matching_mode: strict
+          url: http://localhost:5173/auth/callback
+      sub_mode: hashed_user_id
+      include_claims_in_id_token: true
+      access_token_validity: hours=8
+      refresh_token_validity: days=30
+      signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [name, "authentik default OAuth Mapping: OpenID 'email'"]]
+        - !Find [authentik_providers_oauth2.scopemapping, [name, "authentik default OAuth Mapping: OpenID 'profile'"]]
+        - !Find [authentik_providers_oauth2.scopemapping, [name, "authentik default OAuth Mapping: OpenID 'openid'"]]
+  - identifiers:
+      slug: agri-market
+    model: authentik_core.application
+    attrs:
+      name: Le7rithe
+      provider: !KeyOf provider
+      open_in_new_tab: false

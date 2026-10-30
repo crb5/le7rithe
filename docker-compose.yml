@@ -6,31 +6,32 @@
 #      AUTHENTIK_SECRET_KEY (openssl rand -base64 48), PG passwords, SESSION_SECRET.
 #   2. docker compose up -d
 #   3. Open http://localhost:9000/if/flow/initial-setup/ to create the Authentik
-#      admin, then create an OAuth2/OIDC Provider + Application (slug: agri-market),
-#      redirect URI http://localhost:5173/auth/callback (and your prod URL).
-#      Enable a Google social source + an email/OTP stage as desired. Set the
-#      provider's Authorization flow to "default-provider-authorization-
-#      implicit-consent" (not the "explicit-consent" one) — this is your own
-#      first-party app, so there's no reason to show a consent screen between
-#      the custom login and landing back in the app.
-#   4. Put the provider's Client ID into OIDC_CLIENT_ID / VITE_OIDC_CLIENT_ID and
-#      re-up the app.
-#   5. The app's own /sign-in page (agri-market/src/pages/sign-in.tsx) drives
-#      Authentik's authentication flow through its Flow Executor API so
-#      Authentik's hosted UI is never shown for username/password login. It
-#      assumes the default flow slug "default-authentication-flow" — override
-#      via VITE_OIDC_LOGIN_FLOW_SLUG if you rename it. A stage it doesn't
-#      recognize (e.g. an OTP/MFA stage you enabled) falls back to Authentik's
-#      hosted page rather than getting stuck. The "Continue with Google"
-#      button's URL is read live off the flow's identification challenge
-#      (its `sources` field), not guessed from a slug.
-#   6. /sign-up is Google-only for now: there is no self-service
-#      username/password enrollment flow on this stack (only the built-in
-#      "default-source-enrollment", which just asks a *new* Google sign-in
-#      for a username — it isn't a general sign-up form). A phone+password
-#      enrollment flow needs an SMS provider (Twilio or a generic SMS
-#      gateway) wired into an Authentik "SMS Authenticator Setup" stage
-#      first; nothing here depends on that yet.
+#      admin.
+#   4. Run ./scripts/setup-authentik.sh (requires `docker compose` on PATH; run
+#      it from this directory). It applies authentik-blueprints/le7rithe-setup.yaml,
+#      which creates the OAuth2/OIDC Provider + Application (slug: agri-market,
+#      with the Authorization flow correctly set to implicit consent from the
+#      start — using explicit consent there silently shows Authentik's own
+#      hosted consent screen after every custom login/signup, defeating the
+#      whole point of the custom auth pages; found the hard way on the first
+#      deployment, so it's baked into the blueprint now) and the username/
+#      password Enrollment flow the /sign-up page drives. It's idempotent —
+#      safe to re-run any time, including on an already-configured server.
+#   5. Add a Google social source + an email/OTP stage yourself if desired
+#      (not part of the blueprint — needs your own Google OAuth credentials).
+#   6. Put the provider's Client ID (shown by the setup script, or in the
+#      admin UI) into OIDC_CLIENT_ID / VITE_OIDC_CLIENT_ID and re-up the app.
+#   7. The app's own /sign-in and /sign-up pages (agri-market/src/pages,
+#      lib/oidc-flow.ts) drive Authentik's flows through its Flow Executor API
+#      so Authentik's hosted UI is never shown for username/password login or
+#      registration. They assume the default flow slugs
+#      "default-authentication-flow" / "default-enrollment-flow" — override
+#      via VITE_OIDC_LOGIN_FLOW_SLUG / VITE_OIDC_ENROLLMENT_FLOW_SLUG if you
+#      rename them. A stage they don't recognize (e.g. an OTP/MFA stage you
+#      enabled) falls back to Authentik's hosted page rather than getting
+#      stuck. The "Continue with Google" button's URL is read live off the
+#      flow's identification challenge (its `sources` field), not guessed
+#      from a slug.
 
 x-authentik-env: &authentik-env
   AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?set AUTHENTIK_SECRET_KEY}
@@ -133,6 +134,8 @@ services:
       authentik-redis:
         condition: service_started
     # No public port: Caddy fronts it as auth.le7rithe.com → authentik-server:9000.
+    volumes:
+      - ./authentik-blueprints:/blueprints/custom:ro
 
   authentik-worker:
     image: ghcr.io/goauthentik/server:2024.10
@@ -143,6 +146,8 @@ services:
         condition: service_healthy
       authentik-redis:
         condition: service_started
+    volumes:
+      - ./authentik-blueprints:/blueprints/custom:ro
 
 volumes:
   app-objects:
