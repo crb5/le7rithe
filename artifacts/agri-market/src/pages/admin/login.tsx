@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useUser, useSignInRedirect } from '@/lib/auth';
+import { useUser } from '@/lib/auth';
 import { useLocation } from 'wouter';
 import { Loader2, LockKeyhole } from 'lucide-react';
 import { Logo } from '@/components/marketplace-ui';
@@ -12,7 +12,6 @@ type AdminPasswordLoginError = Error & { code?: string };
 
 export function AdminLogin() {
   const { user, isLoaded } = useUser();
-  const signInRedirect = useSignInRedirect();
   const [, setLocation] = useLocation();
   const { language, meta, t } = useLanguage();
   const { data: me, isLoading: isMeLoading } = useAdminMe();
@@ -23,10 +22,11 @@ export function AdminLogin() {
     if (user && me?.adminSessionActive) setLocation('/admin', { replace: true });
   }, [me?.adminSessionActive, setLocation, user]);
 
-  // A signed-out visitor authenticates with the identity provider first.
+  // A signed-out visitor authenticates through our own sign-in page first
+  // (not a direct signInRedirect() — that would show Authentik's hosted UI).
   useEffect(() => {
-    if (isLoaded && !user) void signInRedirect('/admin/login');
-  }, [isLoaded, user, signInRedirect]);
+    if (isLoaded && !user) setLocation('/sign-in?redirect_url=%2Fadmin%2Flogin', { replace: true });
+  }, [isLoaded, user, setLocation]);
 
   if (!isLoaded || (user && isMeLoading)) {
     return null;

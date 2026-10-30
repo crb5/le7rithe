@@ -222,7 +222,7 @@ export function AdminListings() {
                 ))}
                 {items.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-[hsl(153_12%_43%)]">
+                    <td colSpan={6} className="px-4 py-12 text-center text-sm text-[hsl(153_12%_43%)]">
                       {t('adminNoMatchingListings')}
                     </td>
                   </tr>

@@ -57,7 +57,7 @@ export function AdminRegions() {
   const regions = query.data ?? [];
   const save = () => {
     if (!draft) return;
-    if (editingId) updateRegion.mutate({ id: editingId, data: draft }, { onSuccess: () => { setDraft(null); setEditingId(null); invalidate(); } });
+    if (editingId !== null) updateRegion.mutate({ id: editingId, data: draft }, { onSuccess: () => { setDraft(null); setEditingId(null); invalidate(); } });
     else createRegion.mutate({ data: draft }, { onSuccess: () => { setDraft(null); invalidate(); } });
   };
   return <div className="flex h-full min-w-0 flex-1 flex-col">
