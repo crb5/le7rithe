@@ -26,7 +26,9 @@ export const oidcConfig: AuthProviderProps = {
   authority: import.meta.env.VITE_OIDC_ISSUER ?? '',
   client_id: import.meta.env.VITE_OIDC_CLIENT_ID ?? '',
   redirect_uri: redirectUri,
-  post_logout_redirect_uri: window.location.origin,
+  // Trailing slash to exactly match the registered redirect URI on the
+  // provider (strict matching) — see authentik-blueprints/le7rithe-setup.yaml.
+  post_logout_redirect_uri: `${window.location.origin}/`,
   scope: 'openid profile email',
   userStore: new WebStorageStateStore({ store: window.localStorage }),
   onSigninCallback: () => {
@@ -87,9 +89,22 @@ async function signOutTo(
   oidc: ReturnType<typeof useOidcAuth>,
   opts?: { redirectUrl?: string },
 ): Promise<void> {
+  // Clearing only the local token (oidc.removeUser()) leaves the Authentik
+  // session cookie alive — since that cookie is now shared across
+  // le7rithe.com (AUTHENTIK_COOKIE_DOMAIN), the user would get silently
+  // re-authenticated on their next visit. signoutRedirect() does a real
+  // RP-initiated logout: it clears the local token AND ends the session at
+  // Authentik via its end_session_endpoint before returning here.
   try {
+    await oidc.signoutRedirect({
+      post_logout_redirect_uri: opts?.redirectUrl
+        ? new URL(opts.redirectUrl, window.location.origin).toString()
+        : `${window.location.origin}/`,
+    });
+  } catch {
+    // Authentik unreachable, or the session was already gone — fall back to
+    // at least clearing the local token so the app doesn't look signed in.
     await oidc.removeUser();
-  } finally {
     window.location.href = opts?.redirectUrl ?? '/';
   }
 }
