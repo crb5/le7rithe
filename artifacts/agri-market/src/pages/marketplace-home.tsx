@@ -777,7 +777,6 @@ function RegionDistributionChart({
   formatNumber: (value: number) => string;
   onSelectRegion: (name: string) => void;
 }) {
-  const isRtl = language === 'ar';
   const data: RegionChartDatum[] = locations.slice(0, 5).map((location) => ({
     id: location.id,
     name: location.name,
@@ -785,20 +784,27 @@ function RegionDistributionChart({
     count: location.listingCount,
   }));
 
+  // recharts' SVG coordinate system doesn't follow CSS `dir`, and mirroring
+  // it by hand (reversed axis + flipped orientation/margins) left the plot
+  // area mis-sized — bars overflowing the card and region-name labels
+  // clipped. Keeping the chart itself always left-to-right (bars grow from
+  // the label toward the count, same as the working admin analytics chart in
+  // admin-analytics-charts.tsx) renders correctly in both directions; only
+  // the label *text* needs to be localized, which translateLocationName
+  // above already does.
   return (
     <ResponsiveContainer width="100%" height={232}>
       <BarChart
         data={data}
         layout="vertical"
-        margin={{ top: 4, right: isRtl ? 4 : 30, left: isRtl ? 30 : 4, bottom: 4 }}
+        margin={{ top: 4, right: 36, left: 4, bottom: 4 }}
         barCategoryGap={12}
       >
-        <XAxis type="number" hide reversed={isRtl} domain={[0, (max: number) => Math.ceil(max * 1.2) || 1]} />
+        <XAxis type="number" hide domain={[0, (max: number) => Math.ceil(max * 1.2) || 1]} />
         <YAxis
           type="category"
           dataKey="label"
-          orientation={isRtl ? 'right' : 'left'}
-          width={92}
+          width={120}
           axisLine={false}
           tickLine={false}
           tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }}
@@ -807,10 +813,10 @@ function RegionDistributionChart({
           cursor={{ fill: 'hsl(var(--muted)/.4)' }}
           content={<RegionDistributionTooltip formatNumber={formatNumber} />}
         />
-        <Bar dataKey="count" radius={isRtl ? [4, 0, 0, 4] : [0, 4, 4, 0]} maxBarSize={18} isAnimationActive={false}>
+        <Bar dataKey="count" radius={[0, 4, 4, 0]} maxBarSize={18} isAnimationActive={false}>
           <LabelList
             dataKey="count"
-            position={isRtl ? 'left' : 'right'}
+            position="right"
             formatter={(value: number) => formatNumber(value)}
             className="font-numeric"
             style={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
