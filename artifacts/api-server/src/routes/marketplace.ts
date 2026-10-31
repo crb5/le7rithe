@@ -60,15 +60,11 @@ import {
   ListListingsQueryParams,
   ListListingsResponse,
   ListLocationsResponse,
-  ListMessagesResponse,
   ListRegionsResponse,
   ListSavedListingsResponse,
   ListSellerActiveListingsResponse,
-  MarkMessageReadResponse,
   ListSubcategoriesParams,
   ListSubcategoriesResponse,
-  SendMessageBody,
-  SendMessageResponse,
   GetSupportSettingsResponse,
   SendSupportMessageBody,
   SendSupportMessageResponse,
@@ -103,7 +99,7 @@ import {
   listingImageRequiresConsent,
 } from "../lib/listing-image-access";
 import { normalizeListingPhones, normalizeMauritaniaPhone } from "../lib/mauritania-phone";
-import { notifyNewBuyerMessage } from "../lib/whatsapp";
+import { invalidRequestBody } from "../lib/validation-error";
 import {
   hasCurrentLegalConsentForOidcSubject,
   requireCurrentLegalConsent,
@@ -820,7 +816,7 @@ router.get("/categories/:slug/subcategories", async (req, res): Promise<void> =>
   await ensureSeed();
   const parsed = ListSubcategoriesParams.safeParse(req.params);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const [category] = await db.select({ id: categoriesTable.id }).from(categoriesTable).where(eq(categoriesTable.slug, parsed.data.slug));
@@ -841,7 +837,7 @@ router.post("/admin/categories", async (req, res): Promise<void> => {
   await ensureSeed();
   const parsed = CreateCategoryBody.safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const [category] = await db.insert(categoriesTable).values(parsed.data).returning();
@@ -870,7 +866,7 @@ router.delete("/admin/categories/:id", async (req, res): Promise<void> => {
   await ensureSeed();
   const params = DeleteCategoryParams.safeParse(req.params);
   if (!params.success) {
-    res.status(400).json({ error: params.error.message });
+    res.status(400).json(invalidRequestBody(params.error));
     return;
   }
   const [category] = await db.update(categoriesTable).set({ active: false }).where(eq(categoriesTable.id, params.data.id)).returning();
@@ -913,7 +909,7 @@ router.delete("/admin/subcategories/:id", async (req, res): Promise<void> => {
   await ensureSeed();
   const params = DeleteSubcategoryParams.safeParse(req.params);
   if (!params.success) {
-    res.status(400).json({ error: params.error.message });
+    res.status(400).json(invalidRequestBody(params.error));
     return;
   }
   const [subcategory] = await db.update(subcategoriesTable).set({ active: false }).where(eq(subcategoriesTable.id, params.data.id)).returning();
@@ -938,7 +934,7 @@ router.post("/admin/regions", async (req, res): Promise<void> => {
   await ensureSeed();
   const parsed = CreateRegionBody.safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const [region] = await db.insert(regionsTable).values(parsed.data).returning();
@@ -967,7 +963,7 @@ router.delete("/admin/regions/:id", async (req, res): Promise<void> => {
   await ensureSeed();
   const params = DeleteRegionParams.safeParse(req.params);
   if (!params.success) {
-    res.status(400).json({ error: params.error.message });
+    res.status(400).json(invalidRequestBody(params.error));
     return;
   }
   const [region] = await db.update(regionsTable).set({ active: false }).where(eq(regionsTable.id, params.data.id)).returning();
@@ -1063,7 +1059,7 @@ router.get("/listings", async (req, res): Promise<void> => {
         : req.query;
     const parsed = ListListingsQueryParams.safeParse(normalizedQuery);
     if (!parsed.success) {
-      res.status(400).json({ error: parsed.error.message });
+      res.status(400).json(invalidRequestBody(parsed.error));
       return;
     }
     const params = parsed.data;
@@ -1147,7 +1143,7 @@ router.get("/listings/:id", async (req, res): Promise<void> => {
   await ensureSeed();
   const parsed = GetListingParams.safeParse(req.params);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const publicVisibility = and(
@@ -1525,7 +1521,7 @@ router.post("/listings", async (req, res): Promise<void> => {
     if (parsed.data.imageUrl) parsed.data.imageUrl = canonicalListingImageReference(parsed.data.imageUrl);
   }
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const normalizedPhones = normalizeListingPhones(parsed.data);
@@ -1606,11 +1602,11 @@ router.patch("/listings/:id", async (req, res): Promise<void> => {
     parsed.data.images = parsed.data.images.map(canonicalListingImageReference);
   }
   if (!params.success) {
-    res.status(400).json({ error: params.error.message });
+    res.status(400).json(invalidRequestBody(params.error));
     return;
   }
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const [existingListing] = await db
@@ -1675,7 +1671,7 @@ router.post("/listings/:id/sold", async (req, res): Promise<void> => {
   if (!actor) return;
   const parsed = GetListingParams.safeParse(req.params);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
 
@@ -1725,7 +1721,7 @@ router.post("/listings/:id/revert-sale", async (req, res): Promise<void> => {
   if (!actor) return;
   const parsed = GetListingParams.safeParse(req.params);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
 
@@ -1782,7 +1778,7 @@ router.post("/listings/:id/lease", async (req, res): Promise<void> => {
   if (!actor) return;
   const parsed = GetListingParams.safeParse(req.params);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const result = await db.transaction(async (tx) => {
@@ -1821,7 +1817,7 @@ router.post("/listings/:id/renew", async (req, res): Promise<void> => {
   if (!actor) return;
   const parsed = GetListingParams.safeParse(req.params);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const result = await db.transaction(async (tx) => {
@@ -2270,7 +2266,7 @@ router.delete("/listings/:id", async (req, res): Promise<void> => {
   if (!actor) return;
   const parsed = DeleteListingParams.safeParse(req.params);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   try {
@@ -2321,12 +2317,12 @@ router.post("/listings/:id/favorite", async (req, res): Promise<void> => {
   if (!actor) return;
   const parsed = SetListingFavoriteParams.safeParse(req.params);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const body = SetListingFavoriteBody.safeParse(req.body);
   if (!body.success) {
-    res.status(400).json({ error: body.error.message });
+    res.status(400).json(invalidRequestBody(body.error));
     return;
   }
   if (body.data.saved) {
@@ -2357,117 +2353,6 @@ router.get("/saved-listings", async (req, res): Promise<void> => {
   res.json(ListSavedListingsResponse.parse(rows.map((row) => formatListing({ ...row, isSaved: true }))));
 });
 
-router.use("/messages", (_req, res): void => {
-  res.setHeader("Cache-Control", "no-store");
-  res.status(410).json({ error: "Internal buyer-seller messaging is no longer available" });
-});
-
-router.get("/messages", async (req, res): Promise<void> => {
-  await ensureSeed();
-  const actor = await authenticatedMarketplaceUser(req, res);
-  if (!actor) return;
-  const rows = await db.select({ message: messagesTable, listing: listingsTable, sender: usersTable })
-    .from(messagesTable)
-    .innerJoin(listingsTable, eq(messagesTable.listingId, listingsTable.id))
-    .innerJoin(usersTable, eq(messagesTable.senderId, usersTable.id))
-    .where(or(eq(messagesTable.recipientId, actor.id), eq(messagesTable.senderId, actor.id)))
-    .orderBy(desc(messagesTable.createdAt));
-  const items = await Promise.all(rows.slice(0, 100).map(async (row) => {
-    const isIncoming = row.message.recipientId === actor.id;
-    const [counterparty] = await db.select({ name: usersTable.name })
-      .from(usersTable)
-      .where(eq(usersTable.id, isIncoming ? row.message.senderId : row.message.recipientId))
-      .limit(1);
-    return {
-      id: row.message.id,
-      listingId: row.message.listingId,
-      listingTitle: row.listing.title,
-      senderName: counterparty?.name ?? row.sender.name,
-      preview: row.message.body,
-      createdAt: row.message.createdAt,
-      unread: isIncoming ? row.message.unread : false,
-    };
-  }));
-  res.json(ListMessagesResponse.parse(items));
-});
-
-router.patch("/messages/:id/read", async (req, res): Promise<void> => {
-  await ensureSeed();
-  const actor = await authenticatedMarketplaceUser(req, res);
-  if (!actor) return;
-  const id = parsePaymentId(req.params.id);
-  if (!id) {
-    res.status(400).json({ error: "Invalid message id" });
-    return;
-  }
-  const [message] = await db.update(messagesTable)
-    .set({ unread: false })
-    .where(and(
-      eq(messagesTable.id, id),
-      eq(messagesTable.recipientId, actor.id),
-    ))
-    .returning({ id: messagesTable.id });
-  if (!message) {
-    res.status(404).json({ error: "Message not found" });
-    return;
-  }
-  res.json(MarkMessageReadResponse.parse({ ok: true }));
-});
-
-router.post("/messages", async (req, res): Promise<void> => {
-  await ensureSeed();
-  const actor = await authenticatedMarketplaceUser(req, res);
-  if (!actor) return;
-  const parsed = SendMessageBody.safeParse(req.body);
-  if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
-    return;
-  }
-  const [listing] = await db.select().from(listingsTable).where(eq(listingsTable.id, parsed.data.listingId));
-  if (!listing) {
-    res.status(404).json({ error: "Listing not found" });
-    return;
-  }
-  if (listing.status !== "active") {
-    res.status(404).json({ error: "Listing not found" });
-    return;
-  }
-  if (listing.saleStatus !== "available") {
-    res.status(409).json({ error: "Sold listings cannot receive messages" });
-    return;
-  }
-  if (listing.sellerId === actor.id) {
-    res.status(400).json({ error: "You cannot message yourself" });
-    return;
-  }
-  const [message] = await db.insert(messagesTable).values({
-    listingId: listing.id,
-    senderId: actor.id,
-    recipientId: listing.sellerId,
-    body: parsed.data.body,
-  }).returning();
-  await db.insert(notificationsTable).values({
-    userId: listing.sellerId,
-    listingId: listing.id,
-    title: "رسالة جديدة حول إعلانك",
-    body: parsed.data.body,
-    type: "message",
-    read: false,
-  });
-  const [seller] = await db.select({ phone: usersTable.phone, phoneVerifiedAt: usersTable.phoneVerifiedAt })
-    .from(usersTable).where(eq(usersTable.id, listing.sellerId)).limit(1);
-  if (seller?.phoneVerifiedAt) notifyNewBuyerMessage(seller.phone, listing.title);
-  res.status(201).json(SendMessageResponse.parse({
-    id: message.id,
-    listingId: message.listingId,
-    listingTitle: listing.title,
-    senderName: actor.name,
-    preview: message.body,
-    createdAt: message.createdAt,
-    unread: message.unread,
-  }));
-});
-
 router.get("/support", async (req, res): Promise<void> => {
   const actor = await authenticatedMarketplaceUser(req, res);
   if (!actor) return;
@@ -2486,7 +2371,7 @@ router.post("/support", async (req, res): Promise<void> => {
   if (!actor) return;
   const parsed = SendSupportMessageBody.safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
   const [report] = await db.insert(reportsTable).values({
@@ -2533,7 +2418,7 @@ router.patch("/account/me", async (req, res): Promise<void> => {
 
   const parsed = UpdateMyAccountProfileBody.strict().safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
 

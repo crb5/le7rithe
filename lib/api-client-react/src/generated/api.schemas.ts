@@ -445,22 +445,6 @@ export interface FavoriteState {
   saved: boolean;
 }
 
-export interface Message {
-  id: number;
-  listingId: number;
-  listingTitle: string;
-  senderName: string;
-  preview: string;
-  createdAt: string;
-  unread: boolean;
-}
-
-export interface MessageInput {
-  listingId: number;
-  /** @minLength 1 */
-  body: string;
-}
-
 export interface SupportSettings {
   phone: string;
   whatsappPhone: string;
@@ -688,10 +672,6 @@ page?: PageParameter;
  * @maximum 50
  */
 limit?: LimitParameter;
-};
-
-export type MarkMessageRead200 = {
-  ok: boolean;
 };
 
 export type ListReports200 = {

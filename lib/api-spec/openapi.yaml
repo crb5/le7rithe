@@ -16,8 +16,6 @@ tags:
     description: Marketplace browsing and listings
   - name: account
     description: Account and saved listings
-  - name: messages
-    description: Buyer and seller messages
   - name: support
     description: Direct support contact
   - name: dashboard
@@ -648,57 +646,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Listing"
-  /messages:
-    get:
-      operationId: listMessages
-      tags: [messages]
-      summary: List account messages
-      responses:
-        "200":
-          description: Messages
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Message"
-    post:
-      operationId: sendMessage
-      tags: [messages]
-      summary: Send a message to a seller
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/MessageInput"
-      responses:
-        "201":
-          description: Sent message
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
-  /messages/{id}/read:
-    patch:
-      operationId: markMessageRead
-      tags: [messages]
-      summary: Mark a received message as read
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema: { type: integer, minimum: 1 }
-      responses:
-        "200":
-          description: Message marked as read
-          content:
-            application/json:
-              schema:
-                type: object
-                required: [ok]
-                properties:
-                  ok: { type: boolean }
   /support:
     get:
       operationId: getSupportSettings
@@ -1330,23 +1277,6 @@ components:
       required: [saved]
       properties:
         saved: { type: boolean }
-    Message:
-      type: object
-      required: [id, listingId, listingTitle, senderName, preview, createdAt, unread]
-      properties:
-        id: { type: integer }
-        listingId: { type: integer }
-        listingTitle: { type: string }
-        senderName: { type: string }
-        preview: { type: string }
-        createdAt: { type: string, format: date-time }
-        unread: { type: boolean }
-    MessageInput:
-      type: object
-      required: [listingId, body]
-      properties:
-        listingId: { type: integer }
-        body: { type: string, minLength: 1 }
     SupportSettings:
       type: object
       required: [phone, whatsappPhone]

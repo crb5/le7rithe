@@ -38,15 +38,46 @@ const allowedOrigins = (process.env.CORS_ORIGINS ?? "")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
-app.use(cors({
-  origin: allowedOrigins.length ? allowedOrigins : false,
-  credentials: true,
+// Use a per-request origin-validation delegate (rather than a static
+// `credentials: true`) so `Access-Control-Allow-Credentials` is only ever
+// sent alongside an actually-allowed `Access-Control-Allow-Origin` — never
+// for a rejected origin.
+app.use(cors((req, callback) => {
+  const origin = req.header("Origin");
+  if (origin && allowedOrigins.includes(origin)) {
+    callback(null, { origin: true, credentials: true });
+    return;
+  }
+  callback(null, { origin: false });
 }));
-app.use((_req, res, next) => {
+// A pure JSON API response renders nothing, so it gets the strictest
+// possible CSP. Everything else (the SPA HTML shell served below, its
+// bundled same-origin JS/CSS/images, and the SEO robots.txt/sitemap.xml
+// text responses) needs a policy that actually lets the page load its own
+// resources: the shell has one inline bootstrap <script> and one inline
+// <style> block (see artifacts/agri-market/index.html) and no third-party
+// origins — all images/fonts are same-origin and the Authentik
+// flow-executor calls go through the same-origin /authentik-api proxy (see
+// Caddyfile) — so `'self'` plus `'unsafe-inline'` for script/style covers it
+// without needing a nonce.
+const API_RESPONSE_CSP = "default-src 'none'";
+const SHELL_RESPONSE_CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join("; ");
+app.use((req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
   res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+  res.setHeader("Content-Security-Policy", req.path.startsWith("/api") ? API_RESPONSE_CSP : SHELL_RESPONSE_CSP);
   if (process.env.NODE_ENV === "production") {
     res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
   }
@@ -106,6 +137,14 @@ app.use((req, res, next) => {
 
 app.use("/api", router);
 
+// Any /api/* path not matched by a real route above: respond with JSON
+// (not Express's default HTML "Cannot GET ..." page). Registered after all
+// real API routes and before the SPA catch-all below, so it only affects
+// unmatched API paths.
+app.use("/api", (_req, res) => {
+  res.status(404).json({ error: "Not found" });
+});
+
 // SEO: dynamic robots.txt + sitemap.xml (served before the static SPA).
 app.use(seoRouter);
 
@@ -149,10 +188,12 @@ if (staticDir) {
 
   app.use(express.static(staticDir, { index: false }));
   app.use((req, res, next) => {
-    if (req.method !== "GET" || req.path.startsWith("/api")) {
+    if ((req.method !== "GET" && req.method !== "HEAD") || req.path.startsWith("/api")) {
       next();
       return;
     }
+    // `res.sendFile` (via the `send` package) handles HEAD correctly on its
+    // own — same headers/status as GET, with no body.
     res.sendFile(indexPath);
   });
 }

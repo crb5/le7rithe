@@ -38,6 +38,7 @@ import {
   withListingImageProcessing,
 } from "../lib/listing-image-processing";
 import { ENABLE_PAID_LISTINGS } from "../lib/features";
+import { invalidRequestBody } from "../lib/validation-error";
 import { loadPaymentProofResponse } from "../lib/paymentProof";
 import { invalidSupportPhoneField } from "../lib/mauritania-phone";
 import { notifyListingApproved, notifyListingRejected, notifyPaymentConfirmed } from "../lib/whatsapp";
@@ -1311,7 +1312,7 @@ router.patch("/admin/users/:id/verification", async (req, res): Promise<void> =>
 
   const parsed = userVerificationBody.safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
 

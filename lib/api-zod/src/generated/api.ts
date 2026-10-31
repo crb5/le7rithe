@@ -1198,58 +1198,6 @@ export const ListSavedListingsResponse = zod.array(ListSavedListingsResponseItem
 
 
 /**
- * @summary List account messages
- */
-export const ListMessagesResponseItem = zod.object({
-  "id": zod.number().int(),
-  "listingId": zod.number().int(),
-  "listingTitle": zod.string(),
-  "senderName": zod.string(),
-  "preview": zod.string(),
-  "createdAt": zod.coerce.date(),
-  "unread": zod.boolean()
-})
-export const ListMessagesResponse = zod.array(ListMessagesResponseItem)
-
-
-/**
- * @summary Send a message to a seller
- */
-
-
-
-export const SendMessageBody = zod.object({
-  "listingId": zod.number().int(),
-  "body": zod.string().min(1)
-})
-
-export const SendMessageResponse = zod.object({
-  "id": zod.number().int(),
-  "listingId": zod.number().int(),
-  "listingTitle": zod.string(),
-  "senderName": zod.string(),
-  "preview": zod.string(),
-  "createdAt": zod.coerce.date(),
-  "unread": zod.boolean()
-})
-
-
-/**
- * @summary Mark a received message as read
- */
-
-
-
-export const MarkMessageReadParams = zod.object({
-  "id": zod.coerce.number().int().min(1)
-})
-
-export const MarkMessageReadResponse = zod.object({
-  "ok": zod.boolean()
-})
-
-
-/**
  * @summary Get support contact settings
  */
 export const GetSupportSettingsResponse = zod.object({

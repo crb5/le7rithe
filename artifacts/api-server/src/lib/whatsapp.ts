@@ -17,7 +17,7 @@ import { normalizeMauritaniaPhone } from "./mauritania-phone";
 
 const GRAPH_API_VERSION = "v19.0";
 
-type TemplateName = "listing_approved" | "listing_rejected" | "new_buyer_message" | "payment_confirmed";
+type TemplateName = "listing_approved" | "listing_rejected" | "payment_confirmed";
 
 function isConfigured(): boolean {
   return Boolean(process.env.WHATSAPP_ACCESS_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID);
@@ -78,10 +78,6 @@ export function notifyListingApproved(phone: string | null | undefined, sellerNa
 
 export function notifyListingRejected(phone: string | null | undefined, listingTitle: string): void {
   void sendTemplate(phone, "listing_rejected", [listingTitle]);
-}
-
-export function notifyNewBuyerMessage(phone: string | null | undefined, listingTitle: string): void {
-  void sendTemplate(phone, "new_buyer_message", [listingTitle]);
 }
 
 export function notifyPaymentConfirmed(phone: string | null | undefined, amount: string, currency: string): void {

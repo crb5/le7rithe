@@ -10,6 +10,7 @@ import {
 } from "@workspace/api-zod";
 import { LEGAL_POLICY, hasCurrentLegalConsent } from "../lib/legal-policy";
 import { currentLegalConsentRecord } from "../lib/legal-consent";
+import { invalidRequestBody } from "../lib/validation-error";
 
 const router: IRouter = Router();
 
@@ -55,7 +56,7 @@ router.post("/legal-policy/consent", async (req, res): Promise<void> => {
 
   const parsed = RecordLegalConsentBody.safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: parsed.error.message });
+    res.status(400).json(invalidRequestBody(parsed.error));
     return;
   }
 

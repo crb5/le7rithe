@@ -16,7 +16,7 @@ test("every actual /admin route is registered behind its production gate, except
   ]);
   const routePattern = /router\.(get|post|put|patch|delete)\(["'](\/admin[^"']*)["']/g;
   const routes = [...adminSource.matchAll(routePattern)];
-  assert.equal(routes.length, 41, "Update the reviewed admin route inventory when a route is added or removed");
+  assert.equal(routes.length, 42, "Update the reviewed admin route inventory when a route is added or removed");
 
   for (const route of routes) {
     const method = route[1].toUpperCase();
@@ -73,8 +73,6 @@ test("the actual listing and account write routes use strict request schemas", (
 test("owner-facing routes keep database predicates scoped to the simulated actor", () => {
   assert.match(marketplaceSource, /eq\(listingsTable\.id, params\.data\.id\), eq\(listingsTable\.sellerId, actor\.id\)/);
   assert.match(marketplaceSource, /eq\(listingsTable\.id, parsed\.data\.id\),\s*eq\(listingsTable\.sellerId, actor\.id\)/);
-  assert.match(marketplaceSource, /eq\(messagesTable\.recipientId, actor\.id\)/);
-  assert.match(marketplaceSource, /eq\(messagesTable\.senderId, actor\.id\)/);
   assert.match(marketplaceSource, /eq\(notificationsTable\.userId, actor\.id\)/);
   assert.match(marketplaceSource, /eq\(savedListingsTable\.userId, actor\.id\)/);
   assert.match(marketplaceSource, /eq\(reportsTable\.reporterId, actor\.id\)/);
